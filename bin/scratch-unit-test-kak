@@ -43,7 +43,7 @@ kak -ui dummy -n -e '
         source ~/a/scratch-unit-test.kak/sample-test-suites/simple.kak
     )
     buffer *debug*
-    write /tmp/debug.txt
+    write %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/debug.txt")
     hook global NormalIdle .* quit
 '
 
@@ -54,5 +54,5 @@ if test "$fifo_holder_pid" -gt 0; then
     kill "$fifo_holder_pid"
 fi
 
-cat /tmp/debug.txt
+cat "$SCRATCH_UNIT_TEST_DIR/debug.txt"
 cat "$scratch_dir/log"
