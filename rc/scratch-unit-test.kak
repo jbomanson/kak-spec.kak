@@ -52,7 +52,6 @@ evaluate-commands %sh(
         exit 1;
     fi >&2
     # Set up a fifo.
-    mkfifo "$SCRATCH_UNIT_TEST_DIR/fifo"
     kak_quote set-option global scratch_unit_test_fifo "$SCRATCH_UNIT_TEST_DIR/fifo"
     # Keep the fifo open.
     sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
@@ -61,10 +60,9 @@ evaluate-commands %sh(
     {
         scratch_unit_test_translate \
             "$SCRATCH_UNIT_TEST_DIR/fifo" \
-            >"$SCRATCH_UNIT_TEST_LOG" \
+            >"$SCRATCH_UNIT_TEST_DIR/log" \
             2>&1
     } >/dev/null 2>&1 </dev/null &
-    printf "%s\n" "echo -debug fifo: $scratch_dir/fifo"
 )
 
 echo -debug scratch_unit_test_fifo: "%opt(scratch_unit_test_fifo)"

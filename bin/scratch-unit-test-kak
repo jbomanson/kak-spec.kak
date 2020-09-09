@@ -10,8 +10,12 @@ clean_up () {
 
 trap clean_up EXIT
 
-env SCRATCH_UNIT_TEST_DIR="$scratch_dir" SCRATCH_UNIT_TEST_LOG="$scratch_dir/log" \
-    kak -ui dummy -n -e '
+SCRATCH_UNIT_TEST_DIR="$scratch_dir"
+export SCRATCH_UNIT_TEST_DIR
+
+mkfifo "$SCRATCH_UNIT_TEST_DIR/fifo"
+
+kak -ui dummy -n -e '
     try %(
         source ~/a/scratch-unit-test.kak/rc/scratch-unit-test.kak
         source ~/a/scratch-unit-test.kak/rc/scratch-commands.kak
