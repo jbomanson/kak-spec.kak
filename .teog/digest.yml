@@ -1,12 +1,12 @@
 ---
 bin/scratch-unit-test-kak.err: empty
 bin/scratch-unit-test-kak.out:
-  size: { lines: 41, words: 80, bytes: 1006 }
+  size: { lines: 4, words: 19, bytes: 132 }
   first: "*** This is the debug buffer, where debug info will be written ***"
-  last: quit
-  hash: 45edbbfd5d58cd7ab4acf8f2ac45ed73c3ac15c6
+  last: About to read '€TMP/fifo'
+  hash: 2baf9afe3cc669320e7a27d0668f87a47910805b
 teog:
-  input: d8b515e5aa2e6d7190a26472e1b0fafd504dbc2a
+  input: e55b5838f3a049346bd4bae766c3a41f8db40deb
   status: 0
-  total: 81cf981b4f868932afd4955e4e8626b1b835d518
+  total: 14603cd2a9a63f85b88dd83b69b5e41b820c40d1
   version: 8
