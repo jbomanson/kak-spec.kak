@@ -45,24 +45,12 @@ evaluate-commands %sh(
         printf "%s\n" "echo -debug scratch-unit-test.kak: sourced but inactive"
         exit
     fi
-    PATH="$kak_opt_scratch_unit_test_path:$PATH"
     eval "$kak_opt_scratch_commands_sh_prelude"
-    if ! which "scratch_unit_test_translate" >/dev/null; then
-        echo "${0##*/}: missing executable \"scratch_unit_test_translate\"";
-        exit 1;
-    fi >&2
     # Set up a fifo.
     kak_quote set-option global scratch_unit_test_fifo "$SCRATCH_UNIT_TEST_DIR/fifo"
     # Keep the fifo open.
     sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
     kak_quote set-option global scratch_unit_test_fifo_holder_pid $!
-    # Listen to the fifo.
-    {
-        scratch_unit_test_translate \
-            "$SCRATCH_UNIT_TEST_DIR/fifo" \
-            >"$SCRATCH_UNIT_TEST_DIR/log" \
-            2>&1
-    } >/dev/null 2>&1 </dev/null &
 )
 
 echo -debug scratch_unit_test_fifo: "%opt(scratch_unit_test_fifo)"

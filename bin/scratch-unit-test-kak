@@ -15,6 +15,20 @@ export SCRATCH_UNIT_TEST_DIR
 
 mkfifo "$SCRATCH_UNIT_TEST_DIR/fifo"
 
+PATH="${0%/*}/../rc/scratch-unit-test:$PATH"
+if ! which "scratch_unit_test_translate" >/dev/null; then
+    echo "${0##*/}: missing executable \"scratch_unit_test_translate\"";
+    exit 1;
+fi >&2
+
+# Listen to the fifo.
+{
+    scratch_unit_test_translate \
+        "$SCRATCH_UNIT_TEST_DIR/fifo" \
+        >"$SCRATCH_UNIT_TEST_DIR/log" \
+        2>&1
+} >/dev/null 2>&1 </dev/null &
+
 kak -ui dummy -n -e '
     try %(
         source ~/a/scratch-unit-test.kak/rc/scratch-unit-test.kak
