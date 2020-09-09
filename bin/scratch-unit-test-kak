@@ -1,5 +1,8 @@
 #! /bin/sh
 
+SCRATCH_UNIT_TEST_PRELUDE_SH="$(cat "${0%/*}/../lib/prelude.sh")"
+export SCRATCH_UNIT_TEST_PRELUDE_SH
+
 scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/scratch-unit-test-kak.XXXXXXXX")
 
 clean_up () {
