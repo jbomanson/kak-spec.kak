@@ -20,9 +20,6 @@ declare-option -hidden str scratch_unit_test_suite_file
 # TODO.
 declare-option -hidden str scratch_unit_test_context_message
 
-# TODO
-declare-option -hidden str scratch_unit_test_fifo
-
 declare-option -hidden str scratch_commands_sh_prelude %(
     kak_quote () {
         local delimiter=""
@@ -38,18 +35,6 @@ declare-option -hidden str scratch_commands_sh_prelude %(
         printf "\n"
     }
 )
-
-evaluate-commands %sh(
-    if ! test -d "$SCRATCH_UNIT_TEST_DIR"; then
-        printf "%s\n" "echo -debug scratch-unit-test.kak: sourced but inactive"
-        exit
-    fi
-    eval "$kak_opt_scratch_commands_sh_prelude"
-    # Set up a fifo.
-    kak_quote set-option global scratch_unit_test_fifo "$SCRATCH_UNIT_TEST_DIR/fifo"
-)
-
-echo -debug scratch_unit_test_fifo: "%opt(scratch_unit_test_fifo)"
 
 define-command scratch-unit-test-assert \
     -params .. \
@@ -98,12 +83,12 @@ Logs the <output> and <error> of <assertion.' \
     evaluate-commands -save-regs a %(
         set-register a %arg(@)
         nop %sh(
-            if test -w "$kak_opt_scratch_unit_test_fifo"; then
+            if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
                 {
                     printf "%s\n" "log"
                     printf "%s\n" "$kak_quoted_reg_a" | wc -l
                     printf "%s\n" "$kak_quoted_reg_a"
-                } >"$kak_opt_scratch_unit_test_fifo"
+                } >"$SCRATCH_UNIT_TEST_DIR/fifo"
             fi
         )
     )
