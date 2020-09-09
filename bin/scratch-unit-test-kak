@@ -44,7 +44,7 @@ eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
     kak_quote source "$root_dir/rc/scratch-commands.kak"
     for argument
     do
-        kak_quote source "$argument"
+        kak_quote try "$(kak_quote source "$argument")"
     done
 } >"$SCRATCH_UNIT_TEST_DIR/source.kak"
 

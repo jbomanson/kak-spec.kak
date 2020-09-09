@@ -1,12 +1,12 @@
 ---
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
-  size: { lines: 39, words: 76, bytes: 862 }
+  size: { lines: 40, words: 77, bytes: 895 }
   first: "*** This is the debug buffer, where debug info will be written ***"
   last: quit
-  hash: b9f762b0a648dc75aee396217a1920aeea31110f
+  hash: e35f6bd2e1072b3026c968be815ed03e765b9ef0
 teog:
-  input: f6f0bf6c5f9012263bba7fa7a4b332c88f2979fa
+  input: '083478dc68b9520003ddcc9fece8401b78594222'
   status: 0
-  total: f4b1453b241fa9214f228f498816e78b0d400f77
+  total: 2995f5bdae324468985b76eedcd7dd9846d1f5ba
   version: 8
