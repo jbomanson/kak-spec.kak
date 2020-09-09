@@ -6,14 +6,6 @@ provide-module scratch-unit-test %~
 
 require-module scratch-commands
 
-declare-option \
-    -docstring 'The total number of expectation failures and raised errors' \
-    int scratch_unit_test_failure_count 0
-
-declare-option \
-    -docstring 'The total number of tests so far' \
-    int scratch_unit_test_test_count 0
-
 # TODO.
 declare-option -hidden str scratch_unit_test_suite_file
 

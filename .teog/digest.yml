@@ -12,7 +12,7 @@ sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   last: quit
   hash: aec8ccdc5cb6a71d49b0ca75e133ebf27abee6d4
 teog:
-  input: a844dcbb8cd914f1b5c6e00200fca7a759deca84
+  input: 0be8334404d63afab9a9948b5b8974bab23f1a7d
   status: 0
-  total: 72a62af7a884b7cb9701e2de00e384bfc54e94c8
+  total: be40f0fdd1a0fe94c2d9b54dfe86314330ca41f5
   version: 8
