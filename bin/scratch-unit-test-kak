@@ -29,6 +29,10 @@ fi >&2
         2>&1
 } >/dev/null 2>&1 </dev/null &
 
+# Keep the fifo open.
+sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
+fifo_holder_pid=$!
+
 kak -ui dummy -n -e '
     try %(
         source ~/a/scratch-unit-test.kak/rc/scratch-unit-test.kak
@@ -39,5 +43,13 @@ kak -ui dummy -n -e '
     write /tmp/debug.txt
     hook global NormalIdle .* quit
 '
+
+if test -p "$SCRATCH_UNIT_TEST_DIR/fifo"; then
+    printf "%s\n" "quit" >"$SCRATCH_UNIT_TEST_DIR/fifo"
+fi
+if test "$fifo_holder_pid" -gt 0; then
+    kill "$fifo_holder_pid"
+fi
+
 cat /tmp/debug.txt
 cat "$scratch_dir/log"

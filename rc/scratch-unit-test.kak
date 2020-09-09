@@ -22,7 +22,6 @@ declare-option -hidden str scratch_unit_test_context_message
 
 # TODO
 declare-option -hidden str scratch_unit_test_fifo
-declare-option -hidden str scratch_unit_test_fifo_holder_pid
 
 declare-option -hidden str scratch_commands_sh_prelude %(
     kak_quote () {
@@ -48,25 +47,9 @@ evaluate-commands %sh(
     eval "$kak_opt_scratch_commands_sh_prelude"
     # Set up a fifo.
     kak_quote set-option global scratch_unit_test_fifo "$SCRATCH_UNIT_TEST_DIR/fifo"
-    # Keep the fifo open.
-    sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
-    kak_quote set-option global scratch_unit_test_fifo_holder_pid $!
 )
 
 echo -debug scratch_unit_test_fifo: "%opt(scratch_unit_test_fifo)"
-
-hook -always global KakEnd .* %(
-    %sh(
-        {
-            if test -p "$kak_opt_scratch_unit_test_fifo"; then
-                printf "%s\n" "quit" >"$kak_opt_scratch_unit_test_fifo"
-            fi
-            if test "$kak_opt_scratch_unit_test_fifo_holder_pid" -gt 0; then
-                kill "$kak_opt_scratch_unit_test_fifo_holder_pid"
-            fi
-        } 2>&1 </dev/null &
-    )
-)
 
 define-command scratch-unit-test-assert \
     -params .. \
