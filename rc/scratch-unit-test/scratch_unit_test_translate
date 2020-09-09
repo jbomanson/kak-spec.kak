@@ -1,0 +1,325 @@
+#! /usr/bin/env -S ruby --disable=gems
+
+require "shellwords"
+
+STARTUP_MONOTONIC_TIME = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+class TranslationException < RuntimeError
+end
+
+def with_color(text, color)
+  # TODO: Disable if the output is not a terminal.
+  # Source of color codes:
+  # https://misc.flogisoft.com/bash/tip_colors_and_formatting
+  code =
+    case color
+    when :red                      then 31
+    when :green                    then 32
+    when :yellow                   then 33
+    when :blue                     then 34
+    when :magenta                  then 35
+    when :cyan                     then 36
+    when :light_gray               then 37
+    when :dark_gray                then 90
+    when :light_red                then 91
+    when :light_green              then 92
+    when :light_yellow             then 93
+    when :light_blue               then 94
+    when :light_magenta            then 95
+    when :light_cyan               then 96
+    when :white                    then 97
+    when :default_background       then 49
+    when :black_background         then 40
+    when :red_background           then 41
+    when :green_background         then 42
+    when :yellow_background        then 43
+    when :blue_background          then 44
+    when :magenta_background       then 45
+    when :cyan_background          then 46
+    when :light_gray_background    then 47
+    when :dark_gray_background     then 100
+    when :light_red_background     then 101
+    when :light_green_background   then 102
+    when :light_yellow_background  then 103
+    when :light_blue_background    then 104
+    when :light_magenta_background then 105
+    when :light_cyan_background    then 106
+    when :white_background         then 107
+    else raise "Unrecognized color: #{color}"
+    end
+  "\e[#{code}m#{text}\e[0m"
+end
+
+def throw(*args)
+  raise TranslationException.new(*args)
+end
+
+FileWithLines = Struct.new(:name) do
+  def lines
+    @lines ||= File.readlines(name)
+  end
+end
+
+TestCase = Struct.new(:file_with_lines, :context, :kakoune_command_name, :output, :error, :title, :input) do
+  def brief
+    context.empty? ? title : "#{context} #{title}"
+  end
+
+  # A regular expression that approximates how the original kakoune command call
+  # that created this test case probably looks like.
+  def kakoune_call_regex
+    @kakoune_call_regex ||=
+      begin
+        title_regex = Regexp.escape(title)
+        /#{kakoune_command_name}\s+(#{title_regex}\b|"#{title_regex}"|'#{title_regex}')/
+      end
+  end
+
+  def shell_command_details
+    line_index = file_with_lines.lines.index {|line| line =~ kakoune_call_regex}
+    line_detail = line_index ? ":#{line_index + 1}" : ""
+    with_color("some dummy command #{file_with_lines.name}#{line_detail}", :red) +
+      with_color(" # #{title}", :light_blue)
+  end
+end
+
+def filter_block_line(line)
+  # Highlight trailing whitespace.
+  line.gsub(/\s+$/) {|text| with_color(text, :red_background)} +
+    if line.end_with?("\n")
+      ""
+    else
+      "\n"
+    end
+end
+
+def format_block(title, text, check_end = false)
+  string = "\n"
+  string << "    #{title}:\n"
+  text.each_line.each_with_index do |line, index|
+    string << with_color("    %3i|" % (index + 1), :light_blue)
+    string << filter_block_line(line)
+  end
+  if check_end && !text.end_with?("\n")
+    string << "    %3s " % ""
+    string << "(no trailing newline)\n"
+  end
+  string
+end
+
+module Assertion
+  def progress_tick
+    if pass?
+      with_color(".", :green)
+    else
+      with_color("F", :red)
+    end
+  end
+
+  def failure_details(index)
+    string = ""
+    string << "  #{with_color("#{index})", :red)} #{test_case.title}\n"
+    string
+  end
+end
+
+OutputAssertion = Struct.new(:test_case, :expected_output) do
+  include Assertion
+
+  def pass?
+    if @pass.nil?
+      @pass = test_case.error.empty? &&
+        test_case.output == expected_output
+    end
+    @pass
+  end
+
+  def failure_details(index)
+    check_end =
+      [test_case.input, expected_output, test_case.output].select do |text|
+        !text.empty?
+      end.map do |text|
+        text.end_with?("\n")
+      end.uniq.size != 1
+    string = ""
+    string << super
+    string << format_block("Input", test_case.input, check_end)
+    if expected_output != test_case.output
+      string << format_block("Expected output", expected_output, check_end)
+      string << format_block("Actual output", test_case.output, check_end)
+    end
+    unless test_case.error.empty?
+      string << format_block("Unexpected error", test_case.error)
+    end
+    string
+  end
+end
+
+ErrorAssertion = Struct.new(:test_case, :expected_error_regex) do
+  include Assertion
+
+  def pass?
+    if @pass.nil?
+      @pass =
+        (
+          !test_case.error.empty? &&
+            test_case.error =~ /#{expected_error_regex}/
+        ) ? true : false
+    end
+    @pass
+  end
+
+  def failure_details(index)
+    string = ""
+    string << super
+    string << format_block("Input", test_case.input)
+    string << format_block("Output", test_case.output)
+    string << format_block("Expected error regex", expected_error_regex)
+    string << format_block("Actual error", test_case.error)
+    string
+  end
+end
+
+class Presenter
+  attr_reader :assertions
+
+  def initialize
+    @assertions = []
+  end
+
+  # <context_file> <output> <error> <assertion> <arg>...
+  def present_log(array)
+    file,
+      context,
+      kakoune_command_name,
+      output,
+      error,
+      title,
+      input,
+      matcher,
+      expected_value,
+      *command =
+        array
+    file_with_lines = FileWithLines.new(file)
+    test_case =
+      TestCase.new(
+        file_with_lines,
+        context,
+        kakoune_command_name,
+        output,
+        error,
+        title,
+        input,
+      )
+    assertion =
+      case matcher
+      when "output" then OutputAssertion
+      when "error"  then ErrorAssertion
+      else throw "Unexpected assertion type: '#{assertion}'"
+      end.new(test_case, expected_value)
+    @assertions << assertion
+    print assertion.progress_tick
+  end
+
+  def with_status_color(text)
+    with_color(text, pass? ? :green : :red)
+  end
+
+  def failure_count
+    @failure_count ||= assertions.count { |assertion| !assertion.pass? }
+  end
+
+  def pass?
+    failure_count == 0
+  end
+
+  def present_failed_example_details
+    return if pass?
+    puts
+    puts "Failures:"
+    assertions.each_with_index do |assertion, index|
+      next if assertion.pass?
+      puts
+      puts assertion.failure_details(index + 1)
+    end
+  end
+
+  def present_summary_briefly
+    elapsed_time =
+      Process.clock_gettime(Process::CLOCK_MONOTONIC) - STARTUP_MONOTONIC_TIME
+    puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
+    puts with_status_color(
+      "#{assertions.size} examples, " +
+      "#{failure_count} failures"
+    )
+  end
+
+  # Summarises failed examples in a way that shows files and line numbers.
+  def present_failed_example_summary
+    return if pass?
+    puts
+    puts "Failed examples:"
+    puts
+    puts(
+      assertions.reject(&:pass?).map do |assertion|
+        assertion.test_case.shell_command_details
+      end
+    )
+  end
+
+  def present_summary
+    puts
+    present_failed_example_details
+    puts unless pass?
+    present_summary_briefly
+    present_failed_example_summary
+  end
+end
+
+def stubbornly
+  begin
+    yield
+  rescue TranslationException => e
+    puts e
+  end
+end
+
+def main(fifo)
+  File.write("/tmp/alive", "starting " + %x(date))
+
+  unless File.exist?(fifo)
+    puts "Usage: scratch_unit_test_translate <fifo>"
+    puts "Error: file does not exist: \"#{fifo}\""
+    exit
+  end
+
+  puts "About to read '#{fifo}'"
+  presenter = Presenter.new
+  File.open(fifo, "r") do |io|
+    while task = io.gets
+      stubbornly do
+        case task.chomp
+        when "quit"
+          presenter.present_summary
+          puts "quit"
+          break
+        when "log"
+          lines = io.gets.to_i
+          arguments = io.take(lines).join.shellsplit
+          presenter.present_log(arguments)
+        else
+          throw "Unexpected task: '#{task}'"
+        end
+      end
+    end
+  end
+end
+
+begin
+  main(ARGV.shift)
+rescue => e
+  puts e.to_s
+  puts e.backtrace
+end
+
+File.write("/tmp/alive", "done " + %x(date))

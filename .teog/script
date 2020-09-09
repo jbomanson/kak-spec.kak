@@ -1,0 +1,4 @@
+#! /bin/sh
+
+s=bin/scratch-unit-test-kak
+"$s" >"$s.out" 2>"$s.err"

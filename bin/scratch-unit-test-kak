@@ -1,0 +1,25 @@
+#! /bin/sh
+
+scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/scratch-unit-test-kak.XXXXXXXX")
+
+clean_up () {
+    code=$?
+    rm -r "$scratch_dir"
+    exit $code
+}
+
+trap clean_up EXIT
+
+env SCRATCH_UNIT_TEST_DIR="$scratch_dir" SCRATCH_UNIT_TEST_LOG="$scratch_dir/log" \
+    kak -ui dummy -n -e '
+    try %(
+        source ~/a/scratch-unit-test.kak/rc/scratch-unit-test.kak
+        source ~/a/scratch-unit-test.kak/rc/scratch-commands.kak
+        source ~/a/scratch-unit-test.kak/sample-test-suites/simple.kak
+    )
+    buffer *debug*
+    write /tmp/debug.txt
+    hook global NormalIdle .* quit
+'
+cat /tmp/debug.txt
+cat "$scratch_dir/log"
