@@ -1,4 +1,9 @@
 #! /bin/sh
 
+stabilize ()
+{
+    sed "s,$PWD/,," | sed -r 's,[0-9]+\.[0-9]+,x,g'
+}
+
 s=bin/scratch-unit-test-kak
-"$s" >"$s.out" 2>"$s.err"
+"$s" | stabilize >"$s.out" 2>"$s.err"
