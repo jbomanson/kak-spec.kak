@@ -41,7 +41,7 @@ declare-option -hidden str scratch_commands_sh_prelude %(
 )
 
 evaluate-commands %sh(
-    if ! test "$SCRATCH_UNIT_TEST_LOG"; then
+    if ! test -d "$SCRATCH_UNIT_TEST_DIR"; then
         printf "%s\n" "echo -debug scratch-unit-test.kak: sourced but inactive"
         exit
     fi
@@ -52,16 +52,15 @@ evaluate-commands %sh(
         exit 1;
     fi >&2
     # Set up a fifo.
-    scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/scratch-unit-test.kak.XXXXXXXX")
-    mkfifo "$scratch_dir/fifo"
-    kak_quote set-option global scratch_unit_test_fifo "$scratch_dir/fifo"
+    mkfifo "$SCRATCH_UNIT_TEST_DIR/fifo"
+    kak_quote set-option global scratch_unit_test_fifo "$SCRATCH_UNIT_TEST_DIR/fifo"
     # Keep the fifo open.
-    sleep 100000d >"$scratch_dir/fifo" 2>&1 </dev/null &
+    sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
     kak_quote set-option global scratch_unit_test_fifo_holder_pid $!
     # Listen to the fifo.
     {
         scratch_unit_test_translate \
-            "$scratch_dir/fifo" \
+            "$SCRATCH_UNIT_TEST_DIR/fifo" \
             >"$SCRATCH_UNIT_TEST_LOG" \
             2>&1
     } >/dev/null 2>&1 </dev/null &
@@ -73,17 +72,13 @@ echo -debug scratch_unit_test_fifo: "%opt(scratch_unit_test_fifo)"
 hook -always global KakEnd .* %(
     %sh(
         {
-            printf "%s" "fifo: $kak_opt_scratch_unit_test_fifo"
-            printf "%s" "fifo_holder_pid: $kak_opt_scratch_unit_test_fifo_holder_pid"
             if test -p "$kak_opt_scratch_unit_test_fifo"; then
                 printf "%s\n" "quit" >"$kak_opt_scratch_unit_test_fifo"
             fi
             if test "$kak_opt_scratch_unit_test_fifo_holder_pid" -gt 0; then
                 kill "$kak_opt_scratch_unit_test_fifo_holder_pid"
             fi
-            rm -rf "$(dirname "$kak_opt_scratch_unit_test_fifo")"
-            printf "%s" "$kak_opt_scratch_unit_test_fifo"
-        } >/tmp/removeme 2>&1 </dev/null &
+        } 2>&1 </dev/null &
     )
 )
 

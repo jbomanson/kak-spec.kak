@@ -1,12 +1,12 @@
 ---
 bin/scratch-unit-test-kak.err: empty
 bin/scratch-unit-test-kak.out:
-  size: { lines: 41, words: 80, bytes: 1046 }
+  size: { lines: 41, words: 80, bytes: 1011 }
   first: "*** This is the debug buffer, where debug info will be written ***"
   last: quit
-  hash: d14a3dc8f9426ed69789464a2af7acf542c6417a
+  hash: 2d499a8fe3c89c2fda88a0fc81af6a9a21112d54
 teog:
-  input: e6180ecba74505fa38e03408ccf30552b2e63d89
+  input: a737859fd0cf17d668ce825155d78725cc83c90e
   status: 0
-  total: c6816978f13759b347fde1c7f1a495dcb7b4b0ce
+  total: 1eba8f6aa0513c22a042588a5b959f8475aee36b
   version: 8
