@@ -6,5 +6,7 @@ stabilize ()
         sed -r 's,/tmp/scratch-unit-test-kak\.[^/]*,€SCRATCH_UNIT_TEST_DIR,g'
 }
 
-s=bin/scratch-unit-test-kak
-"$s" | stabilize >"$s.out" 2>"$s.err"
+for sample in sample-test-suites/*.kak
+do
+    bin/scratch-unit-test-kak "$sample" | stabilize >"$sample.out" 2>"$sample.err"
+done

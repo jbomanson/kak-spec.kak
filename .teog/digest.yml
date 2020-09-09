@@ -1,12 +1,12 @@
 ---
-bin/scratch-unit-test-kak.err: empty
-bin/scratch-unit-test-kak.out:
-  size: { lines: 39, words: 76, bytes: 918 }
+sample-test-suites/simple.kak.err: empty
+sample-test-suites/simple.kak.out:
+  size: { lines: 39, words: 76, bytes: 862 }
   first: "*** This is the debug buffer, where debug info will be written ***"
   last: quit
-  hash: de2e90d5fbfa258422a516c1867c3077b9982b2e
+  hash: b9f762b0a648dc75aee396217a1920aeea31110f
 teog:
-  input: fb6ae3c7d8c1dfbfd962f2e31bc4fc237191c557
+  input: f6f0bf6c5f9012263bba7fa7a4b332c88f2979fa
   status: 0
-  total: a7fc1e7105720f0b9d8f49bc702e8832b22d9613
+  total: f4b1453b241fa9214f228f498816e78b0d400f77
   version: 8

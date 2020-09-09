@@ -1,6 +1,8 @@
 #! /bin/sh
 
-SCRATCH_UNIT_TEST_PRELUDE_SH="$(cat "${0%/*}/../lib/prelude.sh")"
+root_dir="$( ( cd "${0%/*}/.."; pwd ) )"
+
+SCRATCH_UNIT_TEST_PRELUDE_SH="$(cat "$root_dir/lib/prelude.sh")"
 export SCRATCH_UNIT_TEST_PRELUDE_SH
 
 scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/scratch-unit-test-kak.XXXXXXXX")
@@ -36,12 +38,18 @@ fi >&2
 sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
 fifo_holder_pid=$!
 
+eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
+{
+    kak_quote source "$root_dir/rc/scratch-unit-test.kak"
+    kak_quote source "$root_dir/rc/scratch-commands.kak"
+    for argument
+    do
+        kak_quote source "$argument"
+    done
+} >"$SCRATCH_UNIT_TEST_DIR/source.kak"
+
 kak -ui dummy -n -e '
-    try %(
-        source ~/a/scratch-unit-test.kak/rc/scratch-unit-test.kak
-        source ~/a/scratch-unit-test.kak/rc/scratch-commands.kak
-        source ~/a/scratch-unit-test.kak/sample-test-suites/simple.kak
-    )
+    source %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/source.kak")
     buffer *debug*
     write %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/debug.txt")
     hook global NormalIdle .* quit
