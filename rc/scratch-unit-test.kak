@@ -96,7 +96,7 @@ Evaluates <commands> so that any assertions in them have context information.' \
 %(
     evaluate-commands %sh(
         test "$kak_opt_scratch_unit_test_suite_file" && printf "%s" "nop"
-    ) fail "scratch-unit-test-context: must be called within scratch-unit-test-suite"
+    ) fail "scratch-unit-test-context: %arg(1): must be called within scratch-unit-test-suite"
     set-option global scratch_unit_test_context_message "%arg(1)"
     evaluate-commands "%arg(2)"
     set-option global scratch_unit_test_context_message ""

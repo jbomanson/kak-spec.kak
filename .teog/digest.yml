@@ -7,12 +7,12 @@ sample-test-suites/simple.kak.out:
   hash: e35f6bd2e1072b3026c968be815ed03e765b9ef0
 sample-test-suites/wrong-usage-context-outside-suite.kak.err: empty
 sample-test-suites/wrong-usage-context-outside-suite.kak.out:
-  size: { lines: 8, words: 32, bytes: 309 }
+  size: { lines: 8, words: 34, bytes: 323 }
   first: "*** This is the debug buffer, where debug info will be written ***"
   last: quit
-  hash: d5e515ac3025f2ed540946e5e955ebb27052e516
+  hash: aec8ccdc5cb6a71d49b0ca75e133ebf27abee6d4
 teog:
-  input: 1f19c9d3d8fc0edbb226d8644367378b2d2be61b
+  input: a844dcbb8cd914f1b5c6e00200fca7a759deca84
   status: 0
-  total: 505c36d9ea9ce7e106f8f6b11b8a244406f3535c
+  total: 72a62af7a884b7cb9701e2de00e384bfc54e94c8
   version: 8
