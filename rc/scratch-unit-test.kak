@@ -1,7 +1,3 @@
-declare-option -hidden str scratch_unit_test_path %sh(
-    printf "%s" "${kak_source%.kak}"
-)
-
 provide-module scratch-unit-test %~
 
 require-module scratch-commands
