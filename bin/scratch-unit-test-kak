@@ -52,7 +52,7 @@ kak -ui dummy -n -e '
     source %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/source.kak")
     buffer *debug*
     write %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/debug.txt")
-    hook global NormalIdle .* quit
+    quit
 '
 
 if test -p "$SCRATCH_UNIT_TEST_DIR/fifo"; then
