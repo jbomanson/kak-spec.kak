@@ -1,25 +1,25 @@
 ---
 sample-test-suites/fail-in-test-suite.kak.err: empty
 sample-test-suites/fail-in-test-suite.kak.out:
-  size: { lines: 7, words: 35, bytes: 248 }
+  size: { lines: 17, words: 46, bytes: 412 }
   first: "*** This is the debug buffer, where debug info will be written ***"
-  last: "\e[32m0 examples, 0 failures\e[0m"
-  hash: dbdd1be65d1d68d0ba00ccb04982b4a8993d089f
+  last: "\e[94m      1|\e[0mThis is a failure message"
+  hash: a5732e00144deb8f9fa74335f82438e9a7a08a07
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
-  size: { lines: 37, words: 71, bytes: 810 }
+  size: { lines: 37, words: 73, bytes: 820 }
   first: "*** This is the debug buffer, where debug info will be written ***"
   last: "\e[31msome dummy command €PWD/sample-test-suites/simple.kak:10\e[0m\e[94m
     # raise joo\e[0m"
-  hash: f06bd9a1065bf5e289253cb495edec0e0bf0e91b
+  hash: 99efe76f95bce30209ea908a2beb6bf89b5890a5
 sample-test-suites/wrong-usage-context-outside-suite.kak.err: empty
 sample-test-suites/wrong-usage-context-outside-suite.kak.out:
-  size: { lines: 6, words: 29, bytes: 272 }
+  size: { lines: 6, words: 31, bytes: 282 }
   first: "*** This is the debug buffer, where debug info will be written ***"
-  last: "\e[32m0 examples, 0 failures\e[0m"
-  hash: cebadc74a820eda23f8ad78b48439ae876833e33
+  last: "\e[32m0 examples, 0 failures, 0 errors\e[0m"
+  hash: b2682513be253b5ca0dcc32a8706aaa251d8e245
 teog:
-  input: 3801f54f34db3ee5f0c525ef88130eb9f1a95ef7
+  input: 540698dd8754ca113f589f843cfc9b034bbd5477
   status: 0
-  total: de332565cb02c18adcd7a1c1271b82f1c82d940e
+  total: a0f70c3687b9211cc86be86eaee4458223e774eb
   version: 8

@@ -240,11 +240,27 @@ module Assertion
   end
 end
 
+NonAssertionError = Struct.new(:suite, :message) do
+  def progress_tick
+    Terminal.in_color("E", :red)
+  end
+
+  def non_assertion_error_details
+    string = ""
+    string << "  #{Terminal.in_color("?)", :red)} Error\n"
+    string << format_block("Suite", suite)
+    string << format_block("Message", message)
+    string
+  end
+end
+
 class Presenter
   attr_reader :assertions
+  attr_reader :non_assertion_errors
 
   def initialize
     @assertions = []
+    @non_assertion_errors = []
   end
 
   def present_assertion(assertion)
@@ -252,12 +268,9 @@ class Presenter
     print assertion.progress_tick
   end
 
-  def present_error(arguments)
-    puts "failure outside of tests: #{arguments.join(" ")}"
-  end
-
-  def with_status_color(text)
-    Terminal.in_color(text, pass? ? :green : :red)
+  def present_error(error)
+    @non_assertion_errors << error
+    print error.progress_tick
   end
 
   def failure_count
@@ -265,11 +278,11 @@ class Presenter
   end
 
   def pass?
-    failure_count == 0
+    non_assertion_errors.empty? && failure_count == 0
   end
 
   def present_failed_example_details
-    return if pass?
+    return if failure_count == 0
     puts
     puts "Failures:"
     assertions.each_with_index do |assertion, index|
@@ -279,19 +292,9 @@ class Presenter
     end
   end
 
-  def present_summary_briefly
-    elapsed_time =
-      Process.clock_gettime(Process::CLOCK_MONOTONIC) - STARTUP_MONOTONIC_TIME
-    puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
-    puts with_status_color(
-      "#{assertions.size} examples, " +
-      "#{failure_count} failures"
-    )
-  end
-
   # Summarises failed examples in a way that shows files and line numbers.
   def present_failed_example_summary
-    return if pass?
+    return if failure_count == 0
     puts
     puts "Failed examples:"
     puts
@@ -302,12 +305,38 @@ class Presenter
     )
   end
 
+  # Summarises failed examples in a way that shows files and line numbers.
+  def present_non_assertion_error_summary
+    return if non_assertion_errors.empty?
+    puts
+    puts "Errors other than assertion failures:"
+    puts
+    puts(
+      non_assertion_errors.map do |error|
+        error.non_assertion_error_details
+      end
+    )
+  end
+
+  def present_summary_briefly
+    elapsed_time =
+      Process.clock_gettime(Process::CLOCK_MONOTONIC) - STARTUP_MONOTONIC_TIME
+    puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
+    puts Terminal.in_color(
+      "#{assertions.size} examples, " +
+      "#{failure_count} failures, " +
+      "#{non_assertion_errors.size} errors",
+      pass? ? :green : :red
+    )
+  end
+
   def present_summary
     puts
     present_failed_example_details
     puts unless pass?
     present_summary_briefly
     present_failed_example_summary
+    present_non_assertion_error_summary
   end
 end
 
@@ -340,10 +369,11 @@ def main(fifo)
         when "quit"
           presenter.present_summary
           break
-        when "error"
+        when "non assertion error"
           lines = io.gets.to_i
           arguments = io.take(lines).join.shellsplit
-          presenter.present_error(arguments)
+          suite, *message = arguments
+          presenter.present_error(NonAssertionError.new(suite, message.join(" ")))
         when "log"
           lines = io.gets.to_i
           arguments = io.take(lines).join.shellsplit

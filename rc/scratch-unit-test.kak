@@ -78,14 +78,17 @@ define-command scratch-unit-test-suite \
         set-option global scratch_unit_test_suite_file ""
     ) catch %(
         # Send the error as a command to the translator.
-        nop %sh(
-            if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
-                {
-                    printf "%s\n" "error"
-                    printf "%s\n" "$kak_error" | wc -l
-                    printf "%s\n" "$kak_error"
-                } >"$SCRATCH_UNIT_TEST_DIR/fifo"
-            fi
+        evaluate-commands -save-regs a %(
+            set-register a %arg(1) %val(error)
+            nop %sh(
+                if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
+                    {
+                        printf "%s\n" "non assertion error"
+                        printf "%s\n" "$kak_quoted_reg_a" | wc -l
+                        printf "%s\n" "$kak_quoted_reg_a"
+                    } >"$SCRATCH_UNIT_TEST_DIR/fifo"
+                fi
+            )
         )
         # Re-raise the caught error.
         fail "%val(error)"
