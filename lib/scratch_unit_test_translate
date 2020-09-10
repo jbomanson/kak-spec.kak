@@ -352,6 +352,16 @@ def stubbornly
   end
 end
 
+# Reads a message consisting of an array of strings from an IO.
+# @returns [Array<String>, nil]
+def read_message(io)
+  if header_line = io.gets
+    size_in_lines = header_line.to_i
+    size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
+    io.take(size_in_lines).join.shellsplit
+  end
+end
+
 # Reads commands from a fifo until the "quit" command arrives.
 # The commands can consist of one or more lines.
 # The first line must indicate the type of the command.
@@ -364,11 +374,9 @@ def main(fifo)
 
   presenter = Presenter.new
   File.open(fifo, "r") do |io|
-    while header_line = io.gets
+    while message_components = read_message(io)
       stubbornly do
-        size_in_lines = header_line.to_i
-        size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
-        task, *arguments = io.take(size_in_lines).join.shellsplit
+        task, *arguments = message_components
         case task.chomp
         when "message_assert"
           presenter.present_assertion(Assertion.from_arguments(arguments))
