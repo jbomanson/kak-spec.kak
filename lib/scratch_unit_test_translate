@@ -109,6 +109,40 @@ def format_block(title, text, check_end = false)
 end
 
 module Assertion
+  # <context_file> <output> <error> <assertion> <arg>...
+  def self.from_arguments(array)
+    # Unpack the arguments.
+    file,
+      context,
+      kakoune_command_name,
+      output,
+      error,
+      title,
+      input,
+      matcher,
+      expected_value,
+      *command =
+        array
+    # Convert the argumens into higher level objects.
+    file_with_lines = FileWithLines.new(file)
+    case matcher
+    when "output" then OutputAssertion
+    when "error"  then ErrorAssertion
+    else throw "Unexpected assertion type: '#{assertion}'"
+    end.new(
+      TestCase.new(
+        file_with_lines,
+        context,
+        kakoune_command_name,
+        output,
+        error,
+        title,
+        input,
+      ),
+      expected_value,
+    )
+  end
+
   def progress_tick
     if pass?
       with_color(".", :green)
@@ -188,38 +222,7 @@ class Presenter
     @assertions = []
   end
 
-  # <context_file> <output> <error> <assertion> <arg>...
-  def present_log(array)
-    # Unpack the arguments.
-    file,
-      context,
-      kakoune_command_name,
-      output,
-      error,
-      title,
-      input,
-      matcher,
-      expected_value,
-      *command =
-        array
-    # Convert the argumens into higher level objects.
-    file_with_lines = FileWithLines.new(file)
-    test_case =
-      TestCase.new(
-        file_with_lines,
-        context,
-        kakoune_command_name,
-        output,
-        error,
-        title,
-        input,
-      )
-    assertion =
-      case matcher
-      when "output" then OutputAssertion
-      when "error"  then ErrorAssertion
-      else throw "Unexpected assertion type: '#{assertion}'"
-      end.new(test_case, expected_value)
+  def present_assertion(assertion)
     @assertions << assertion
     print assertion.progress_tick
   end
@@ -310,7 +313,7 @@ def main(fifo)
         when "log"
           lines = io.gets.to_i
           arguments = io.take(lines).join.shellsplit
-          presenter.present_log(arguments)
+          presenter.present_assertion(Assertion.from_arguments(arguments))
         else
           throw "Unexpected task: '#{task}'"
         end
