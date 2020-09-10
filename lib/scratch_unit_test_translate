@@ -7,6 +7,7 @@ STARTUP_MONOTONIC_TIME = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 class TranslationException < RuntimeError
 end
 
+# Wraps a string with terminal color codes.
 def with_color(text, color)
   # TODO: Disable if the output is not a terminal.
   # Source of color codes:
@@ -189,6 +190,7 @@ class Presenter
 
   # <context_file> <output> <error> <assertion> <arg>...
   def present_log(array)
+    # Unpack the arguments.
     file,
       context,
       kakoune_command_name,
@@ -200,6 +202,7 @@ class Presenter
       expected_value,
       *command =
         array
+    # Convert the argumens into higher level objects.
     file_with_lines = FileWithLines.new(file)
     test_case =
       TestCase.new(
@@ -284,6 +287,9 @@ def stubbornly
   end
 end
 
+# Reads commands from a fifo until the "quit" command arrives.
+# The commands can consist of one or more lines.
+# The first line must indicate the type of the command.
 def main(fifo)
   File.write("/tmp/alive", "starting " + %x(date))
 
