@@ -12,6 +12,13 @@ sample-test-suites/simple.kak.out:
   last: "\e[31msome dummy command €PWD/sample-test-suites/simple.kak:10\e[0m\e[94m
     # raise joo\e[0m"
   hash: 99efe76f95bce30209ea908a2beb6bf89b5890a5
+sample-test-suites/test-suite-missing-file.kak.err: empty
+sample-test-suites/test-suite-missing-file.kak.out:
+  size: { lines: 17, words: 65, bytes: 520 }
+  first: "*** This is the debug buffer, where debug info will be written ***"
+  last: "\e[94m      1|\e[0mscratch-unit-test-suite: expected a kakoune source file
+    as the first argument"
+  hash: cb6ca49a45fa64fb61d2f1b125bc900cdc1731fa
 sample-test-suites/wrong-usage-context-outside-suite.kak.err: empty
 sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   size: { lines: 19, words: 52, bytes: 507 }
@@ -19,7 +26,7 @@ sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   last: "\e[94m      1|\e[0mscratch-unit-test-context: can only be called within scratch-unit-test-suite"
   hash: da58faea4d4bf80fdf7463533d5d98ea81d2fdd3
 teog:
-  input: 779d92304437e4123fe7cd3dea967dfad5f163eb
+  input: 9f1b9b50af1a9fe2e1ee86f5c9ac802359e72f99
   status: 0
-  total: 569a7185cac29f4dfbd54ffbcce89eac85b7f894
+  total: 6840f15ae6b6888ad1459309e390ddb9e20e1f14
   version: 8
