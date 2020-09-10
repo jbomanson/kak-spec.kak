@@ -1,4 +1,10 @@
 ---
+sample-test-suites/fail-in-test-suite.kak.err: empty
+sample-test-suites/fail-in-test-suite.kak.out:
+  size: { lines: 7, words: 35, bytes: 248 }
+  first: "*** This is the debug buffer, where debug info will be written ***"
+  last: "\e[32m0 examples, 0 failures\e[0m"
+  hash: dbdd1be65d1d68d0ba00ccb04982b4a8993d089f
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
   size: { lines: 37, words: 71, bytes: 810 }
@@ -13,7 +19,7 @@ sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   last: "\e[32m0 examples, 0 failures\e[0m"
   hash: cebadc74a820eda23f8ad78b48439ae876833e33
 teog:
-  input: 632b6ac543280d78c5f3be82a8cdd3c6173ab03d
+  input: 87c46a3d4c45f6b6eca1f6aecf2f1446c48c4e23
   status: 0
-  total: d51bc12c788118df8f425943c03c44172b0dd504
+  total: f87ecc0c5ac5ad2cc8eed497c43f2395e6f71265
   version: 8

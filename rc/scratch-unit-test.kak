@@ -77,6 +77,17 @@ define-command scratch-unit-test-suite \
         evaluate-commands "%arg(2)"
         set-option global scratch_unit_test_suite_file ""
     ) catch %(
+        # Send the error as a command to the translator.
+        nop %sh(
+            if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
+                {
+                    printf "%s\n" "error"
+                    printf "%s\n" "$kak_error" | wc -l
+                    printf "%s\n" "$kak_error"
+                } >"$SCRATCH_UNIT_TEST_DIR/fifo"
+            fi
+        )
+        # Re-raise the caught error.
         fail "%val(error)"
     )
 )

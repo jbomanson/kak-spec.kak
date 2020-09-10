@@ -252,6 +252,10 @@ class Presenter
     print assertion.progress_tick
   end
 
+  def present_error(arguments)
+    puts "failure outside of tests: #{arguments.join(" ")}"
+  end
+
   def with_status_color(text)
     Terminal.in_color(text, pass? ? :green : :red)
   end
@@ -333,6 +337,10 @@ def main(fifo)
         when "quit"
           presenter.present_summary
           break
+        when "error"
+          lines = io.gets.to_i
+          arguments = io.take(lines).join.shellsplit
+          presenter.present_error(arguments)
         when "log"
           lines = io.gets.to_i
           arguments = io.take(lines).join.shellsplit
