@@ -26,7 +26,7 @@ sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   last: "\e[94m      1|\e[0mscratch-unit-test-context: can only be called within scratch-unit-test-suite"
   hash: da58faea4d4bf80fdf7463533d5d98ea81d2fdd3
 teog:
-  input: 9f1b9b50af1a9fe2e1ee86f5c9ac802359e72f99
+  input: c0433dc0e4a4730ff7ccd4a64ab47dd82361eecc
   status: 0
-  total: 6840f15ae6b6888ad1459309e390ddb9e20e1f14
+  total: 9ea807146abd634d3c7e535ac8593080ca8592a3
   version: 8
