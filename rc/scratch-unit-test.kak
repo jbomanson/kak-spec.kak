@@ -37,31 +37,13 @@ define-command scratch-unit-test-log \
     -docstring 'scratch-unit-test-log <error> <arg>...:
 Logs the output and error of an assertion.' \
 %(
-    scratch-unit-test-log-impl \
+    scratch-unit-test-send \
+        "message_assert" \
         "%opt(scratch_unit_test_suite_file)" \
         "%opt(scratch_unit_test_context_message)" \
         scratch-unit-test-assert \
         "%opt(scratch_commands_output)" \
         %arg(@)
-)
-
-define-command scratch-unit-test-log-impl \
-    -hidden \
-    -params .. \
-    -docstring 'scratch-unit-test-log-impl <suite_file> <context_message> <command-name> <output> <error> <assertion> <arg>...:
-Logs the <output> and <error> of <assertion.' \
-%(
-    evaluate-commands -save-regs a %(
-        set-register a "message_assert" %arg(@)
-        nop %sh(
-            if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
-                {
-                    printf "%s\n" "$kak_quoted_reg_a" | wc -l
-                    printf "%s\n" "$kak_quoted_reg_a"
-                } >"$SCRATCH_UNIT_TEST_DIR/fifo"
-            fi
-        )
-    )
 )
 
 define-command scratch-unit-test-suite \
@@ -77,19 +59,28 @@ define-command scratch-unit-test-suite \
         set-option global scratch_unit_test_suite_file ""
     ) catch %(
         # Send the error as a command to the translator.
-        evaluate-commands -save-regs a %(
-            set-register a "message_non_assertion_error" %arg(1) %val(error)
-            nop %sh(
-                if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
-                    {
-                        printf "%s\n" "$kak_quoted_reg_a" | wc -l
-                        printf "%s\n" "$kak_quoted_reg_a"
-                    } >"$SCRATCH_UNIT_TEST_DIR/fifo"
-                fi
-            )
-        )
+        scratch-unit-test-send "message_non_assertion_error" %arg(1) %val(error)
         # Re-raise the caught error.
         fail "%val(error)"
+    )
+)
+
+define-command scratch-unit-test-send \
+    -hidden \
+    -params 1.. \
+    -docstring 'scratch-unit-test-send <message-name> [<argument>]+:
+send a message to scratch_unit_test_translate' \
+%(
+    evaluate-commands -save-regs a %(
+        set-register a %arg(@)
+        nop %sh(
+            if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
+                {
+                    printf "%s\n" "$kak_quoted_reg_a" | wc -l
+                    printf "%s\n" "$kak_quoted_reg_a"
+                } >"$SCRATCH_UNIT_TEST_DIR/fifo"
+            fi
+        )
     )
 )
 

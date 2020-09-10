@@ -19,7 +19,7 @@ sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   last: "\e[32m0 examples, 0 failures, 0 errors\e[0m"
   hash: b2682513be253b5ca0dcc32a8706aaa251d8e245
 teog:
-  input: 5fcdc67fab86dc75491e364c084c24283a719a1a
+  input: f6ca9c96a1ed148b998897a0ac13b49219975a87
   status: 0
-  total: 5a7868b58f033dede8de05ab51d5bbb72ada691d
+  total: 957c49458b1cf0967d6e981afc6f44c1a0473cb3
   version: 8

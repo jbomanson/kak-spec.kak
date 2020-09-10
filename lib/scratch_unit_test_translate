@@ -140,7 +140,7 @@ module Assertion
     case matcher
     when "output" then Assertion::Output
     when "error"  then Assertion::Error
-    else throw "Unexpected assertion type: '#{assertion}'"
+    else throw "Unexpected assertion type: '#{matcher}'"
     end.new(
       TestCase.new(
         file_with_lines,
