@@ -53,7 +53,7 @@ define-command scratch-unit-test-suite \
     try %(
         evaluate-commands %sh(
             test -f "$1" && printf "%s" "nop"
-        ) fail "scratch-unit-test-suite: should be given a kakoune source file as the first argument"
+        ) fail "scratch-unit-test-suite: expected a kakoune source file as the first argument"
         set-option global scratch_unit_test_suite_file "%arg(1)"
         evaluate-commands "%arg(2)"
     ) catch %(
@@ -73,7 +73,7 @@ Evaluates <commands> so that any assertions in them have context information.' \
     try %(
         evaluate-commands %sh(
             test "$kak_opt_scratch_unit_test_suite_file" && printf "%s" "nop"
-        ) fail "scratch-unit-test-context: %arg(1): must be called within scratch-unit-test-suite"
+        ) fail "scratch-unit-test-context: can only be called within scratch-unit-test-suite"
         set-option global scratch_unit_test_context_message "%arg(1)"
         evaluate-commands "%arg(2)"
     ) catch %(
