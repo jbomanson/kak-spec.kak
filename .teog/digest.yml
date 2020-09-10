@@ -14,12 +14,13 @@ sample-test-suites/simple.kak.out:
   hash: 99efe76f95bce30209ea908a2beb6bf89b5890a5
 sample-test-suites/wrong-usage-context-outside-suite.kak.err: empty
 sample-test-suites/wrong-usage-context-outside-suite.kak.out:
-  size: { lines: 6, words: 31, bytes: 282 }
+  size: { lines: 19, words: 54, bytes: 527 }
   first: "*** This is the debug buffer, where debug info will be written ***"
-  last: "\e[32m0 examples, 0 failures, 0 errors\e[0m"
-  hash: b2682513be253b5ca0dcc32a8706aaa251d8e245
+  last: "\e[94m      1|\e[0mscratch-unit-test-context: Some context: must be called
+    within scratch-unit-test-suite"
+  hash: 499173976c846ed66f5c7a30541067af8abfdb2c
 teog:
-  input: 5e65ca076b7dffb3549f5c106b0c228e32dbef4c
+  input: 1266b63ed319ae867072d0cd753ffe7f203caa08
   status: 0
-  total: ebde53a31e637d58175436962f4c825401166a62
+  total: 71eb3dbaadd623b8553b20d1d1fc8f41ef7f3d7d
   version: 8
