@@ -1,18 +1,19 @@
 ---
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
-  size: { lines: 40, words: 77, bytes: 895 }
+  size: { lines: 37, words: 71, bytes: 810 }
   first: "*** This is the debug buffer, where debug info will be written ***"
-  last: quit
-  hash: e35f6bd2e1072b3026c968be815ed03e765b9ef0
+  last: "\e[31msome dummy command €PWD/sample-test-suites/simple.kak:10\e[0m\e[94m
+    # raise joo\e[0m"
+  hash: f06bd9a1065bf5e289253cb495edec0e0bf0e91b
 sample-test-suites/wrong-usage-context-outside-suite.kak.err: empty
 sample-test-suites/wrong-usage-context-outside-suite.kak.out:
-  size: { lines: 8, words: 34, bytes: 323 }
+  size: { lines: 6, words: 29, bytes: 272 }
   first: "*** This is the debug buffer, where debug info will be written ***"
-  last: quit
-  hash: aec8ccdc5cb6a71d49b0ca75e133ebf27abee6d4
+  last: "\e[32m0 examples, 0 failures\e[0m"
+  hash: cebadc74a820eda23f8ad78b48439ae876833e33
 teog:
-  input: 61560b8ccdcbf372a54f2a49cee32d9b6f66fd1d
+  input: 6d369a2917d35df51fdacff406119ddd1a3dfaf7
   status: 0
-  total: a530794f6da90403b60eaa18794770269e038300
+  total: 5632fe3f968e71cc21b3a3edbba1bb53fa62a46b
   version: 8

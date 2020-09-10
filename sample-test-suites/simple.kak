@@ -5,7 +5,6 @@ declare-option -hidden str sut_simple_source %sh(
 )
 
 scratch-unit-test-suite "%opt(sut_simple_source)" %(
-    echo -debug "scratch-unit-test-own-test-suite"
     evaluate-commands -save-regs n %(
         scratch-unit-test-assert "nop" "abc" output "oops" nop
         scratch-unit-test-assert "raise joo" "" error  "joo" raise joo

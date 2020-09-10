@@ -293,7 +293,6 @@ def main(fifo)
     exit
   end
 
-  puts "About to read '#{fifo}'"
   presenter = Presenter.new
   File.open(fifo, "r") do |io|
     while task = io.gets
@@ -301,7 +300,6 @@ def main(fifo)
         case task.chomp
         when "quit"
           presenter.present_summary
-          puts "quit"
           break
         when "log"
           lines = io.gets.to_i
