@@ -4,7 +4,7 @@ require "shellwords"
 
 STARTUP_MONOTONIC_TIME = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
-class TranslationException < RuntimeError
+class TranslationException < StandardError
 end
 
 module Terminal
@@ -314,8 +314,11 @@ end
 def stubbornly
   begin
     yield
-  rescue TranslationException => e
-    puts e
+  rescue StandardError => e
+    puts
+    puts "Caught unexpected Ruby exception: #{e}"
+    puts e.backtrace
+    puts
   end
 end
 
