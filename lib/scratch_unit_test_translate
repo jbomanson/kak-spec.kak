@@ -307,8 +307,6 @@ end
 # The commands can consist of one or more lines.
 # The first line must indicate the type of the command.
 def main(fifo)
-  File.write("/tmp/alive", "starting " + %x(date))
-
   unless File.exist?(fifo)
     puts "Usage: scratch_unit_test_translate <fifo>"
     puts "Error: file does not exist: \"#{fifo}\""
@@ -341,5 +339,3 @@ rescue => e
   puts e.to_s
   puts e.backtrace
 end
-
-File.write("/tmp/alive", "done " + %x(date))
