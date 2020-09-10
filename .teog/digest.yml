@@ -7,11 +7,11 @@ sample-test-suites/fail-in-test-suite.kak.out:
   hash: a5732e00144deb8f9fa74335f82438e9a7a08a07
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
-  size: { lines: 37, words: 73, bytes: 820 }
+  size: { lines: 37, words: 73, bytes: 819 }
   first: "*** This is the debug buffer, where debug info will be written ***"
-  last: "\e[31msome dummy command €PWD/sample-test-suites/simple.kak:10\e[0m\e[94m
+  last: "\e[31msome dummy command €PWD/sample-test-suites/simple.kak:6\e[0m\e[94m
     # raise joo\e[0m"
-  hash: 99efe76f95bce30209ea908a2beb6bf89b5890a5
+  hash: 1aef98bba2d59a42e746357f9f45ca0e9bea5309
 sample-test-suites/test-suite-missing-file.kak.err: empty
 sample-test-suites/test-suite-missing-file.kak.out:
   size: { lines: 17, words: 65, bytes: 520 }
@@ -26,7 +26,7 @@ sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   last: "\e[94m      1|\e[0mscratch-unit-test-context: can only be called within scratch-unit-test-suite"
   hash: da58faea4d4bf80fdf7463533d5d98ea81d2fdd3
 teog:
-  input: c0433dc0e4a4730ff7ccd4a64ab47dd82361eecc
+  input: 1460148572624836a0ceb3231f1b7f3e72ffe645
   status: 0
-  total: 9ea807146abd634d3c7e535ac8593080ca8592a3
+  total: 219668a14bc98f6a42f32769638b53f79a1c1af9
   version: 8

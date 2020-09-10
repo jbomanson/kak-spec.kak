@@ -1,10 +1,6 @@
 require-module scratch-unit-test
 
-declare-option -hidden str sut_simple_source %sh(
-    printf "%s" "${kak_source}"
-)
-
-scratch-unit-test-suite "%opt(sut_simple_source)" %(
+scratch-unit-test-suite "%val(source)" %(
     evaluate-commands -save-regs n %(
         scratch-unit-test-assert "nop" "abc" output "oops" nop
         scratch-unit-test-assert "raise joo" "" error  "joo" raise joo
