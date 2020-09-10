@@ -100,4 +100,6 @@ send a message to scratch_unit_test_translate' \
     )
 )
 
+scratch-unit-test-send message_init "%val(session)"
+
 ~
