@@ -344,6 +344,9 @@ end
 def stubbornly
   begin
     yield
+  rescue TranslationException => e
+    puts
+    puts e
   rescue StandardError => e
     puts
     puts "Caught unexpected Ruby exception: #{e}"
@@ -390,7 +393,7 @@ def main(fifo)
           presenter.present_summary
           break
         else
-          throw "Unexpected task: '#{task}'"
+          throw "Unexpected task: #{([task] + arguments).shelljoin}"
         end
       end
     end
