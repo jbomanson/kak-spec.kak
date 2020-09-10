@@ -363,20 +363,19 @@ def main(fifo)
 
   presenter = Presenter.new
   File.open(fifo, "r") do |io|
-    while task = io.gets
+    while header_line = io.gets
       stubbornly do
+        size_in_lines = header_line.to_i
+        size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
+        task, *arguments = io.take(size_in_lines).join.shellsplit
         case task.chomp
         when "quit"
           presenter.present_summary
           break
         when "non assertion error"
-          lines = io.gets.to_i
-          arguments = io.take(lines).join.shellsplit
           suite, *message = arguments
           presenter.present_error(NonAssertionError.new(suite, message.join(" ")))
         when "log"
-          lines = io.gets.to_i
-          arguments = io.take(lines).join.shellsplit
           presenter.present_assertion(Assertion.from_arguments(arguments))
         else
           throw "Unexpected task: '#{task}'"

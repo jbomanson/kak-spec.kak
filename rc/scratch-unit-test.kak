@@ -52,11 +52,10 @@ define-command scratch-unit-test-log-impl \
 Logs the <output> and <error> of <assertion.' \
 %(
     evaluate-commands -save-regs a %(
-        set-register a %arg(@)
+        set-register a "log" %arg(@)
         nop %sh(
             if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
                 {
-                    printf "%s\n" "log"
                     printf "%s\n" "$kak_quoted_reg_a" | wc -l
                     printf "%s\n" "$kak_quoted_reg_a"
                 } >"$SCRATCH_UNIT_TEST_DIR/fifo"
@@ -79,11 +78,10 @@ define-command scratch-unit-test-suite \
     ) catch %(
         # Send the error as a command to the translator.
         evaluate-commands -save-regs a %(
-            set-register a %arg(1) %val(error)
+            set-register a "non assertion error" %arg(1) %val(error)
             nop %sh(
                 if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
                     {
-                        printf "%s\n" "non assertion error"
                         printf "%s\n" "$kak_quoted_reg_a" | wc -l
                         printf "%s\n" "$kak_quoted_reg_a"
                     } >"$SCRATCH_UNIT_TEST_DIR/fifo"

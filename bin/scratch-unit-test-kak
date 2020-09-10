@@ -57,7 +57,7 @@ kak -ui dummy -n -e '
 '
 
 if test -p "$SCRATCH_UNIT_TEST_DIR/fifo"; then
-    printf "%s\n" "quit" >"$SCRATCH_UNIT_TEST_DIR/fifo"
+    printf "%s\n" "1" "quit" >"$SCRATCH_UNIT_TEST_DIR/fifo"
 fi
 if test "$fifo_holder_pid" -gt 0; then
     kill "$fifo_holder_pid"
