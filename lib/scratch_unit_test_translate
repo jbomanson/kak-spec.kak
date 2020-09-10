@@ -369,14 +369,14 @@ def main(fifo)
         size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
         task, *arguments = io.take(size_in_lines).join.shellsplit
         case task.chomp
-        when "message_quit"
-          presenter.present_summary
-          break
+        when "message_assert"
+          presenter.present_assertion(Assertion.from_arguments(arguments))
         when "message_non_assertion_error"
           suite, *message = arguments
           presenter.present_error(NonAssertionError.new(suite, message.join(" ")))
-        when "message_assert"
-          presenter.present_assertion(Assertion.from_arguments(arguments))
+        when "message_quit"
+          presenter.present_summary
+          break
         else
           throw "Unexpected task: '#{task}'"
         end
