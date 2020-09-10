@@ -7,57 +7,76 @@ STARTUP_MONOTONIC_TIME = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 class TranslationException < RuntimeError
 end
 
-# Wraps a string with terminal color codes.
-def with_color(text, color)
-  # TODO: Disable if the output is not a terminal.
-  # Source of color codes:
-  # https://misc.flogisoft.com/bash/tip_colors_and_formatting
-  code =
-    case color
-    when :red                      then 31
-    when :green                    then 32
-    when :yellow                   then 33
-    when :blue                     then 34
-    when :magenta                  then 35
-    when :cyan                     then 36
-    when :light_gray               then 37
-    when :dark_gray                then 90
-    when :light_red                then 91
-    when :light_green              then 92
-    when :light_yellow             then 93
-    when :light_blue               then 94
-    when :light_magenta            then 95
-    when :light_cyan               then 96
-    when :white                    then 97
-    when :default_background       then 49
-    when :black_background         then 40
-    when :red_background           then 41
-    when :green_background         then 42
-    when :yellow_background        then 43
-    when :blue_background          then 44
-    when :magenta_background       then 45
-    when :cyan_background          then 46
-    when :light_gray_background    then 47
-    when :dark_gray_background     then 100
-    when :light_red_background     then 101
-    when :light_green_background   then 102
-    when :light_yellow_background  then 103
-    when :light_blue_background    then 104
-    when :light_magenta_background then 105
-    when :light_cyan_background    then 106
-    when :white_background         then 107
-    else raise "Unrecognized color: #{color}"
-    end
-  "\e[#{code}m#{text}\e[0m"
+module Terminal
+  extend self
+
+  # Wraps a string with terminal color codes.
+  def in_color(text, color)
+    # TODO: Disable if the output is not a terminal.
+    # Source of color codes:
+    # https://misc.flogisoft.com/bash/tip_colors_and_formatting
+    code =
+      case color
+      when :red                      then 31
+      when :green                    then 32
+      when :yellow                   then 33
+      when :blue                     then 34
+      when :magenta                  then 35
+      when :cyan                     then 36
+      when :light_gray               then 37
+      when :dark_gray                then 90
+      when :light_red                then 91
+      when :light_green              then 92
+      when :light_yellow             then 93
+      when :light_blue               then 94
+      when :light_magenta            then 95
+      when :light_cyan               then 96
+      when :white                    then 97
+      when :default_background       then 49
+      when :black_background         then 40
+      when :red_background           then 41
+      when :green_background         then 42
+      when :yellow_background        then 43
+      when :blue_background          then 44
+      when :magenta_background       then 45
+      when :cyan_background          then 46
+      when :light_gray_background    then 47
+      when :dark_gray_background     then 100
+      when :light_red_background     then 101
+      when :light_green_background   then 102
+      when :light_yellow_background  then 103
+      when :light_blue_background    then 104
+      when :light_magenta_background then 105
+      when :light_cyan_background    then 106
+      when :white_background         then 107
+      else raise "Unrecognized color: #{color}"
+      end
+    "\e[#{code}m#{text}\e[0m"
+  end
+
+  # Highlight any trailing whitespace in given lines with terminal color codes.
+  # @return [String]
+  def any_trailing_whitespace_in_color(line)
+    # Highlight trailing whitespace.
+    line.gsub(/\s+$/) {|text| Terminal.in_color(text, :red_background)} +
+      if line.end_with?("\n")
+        ""
+      else
+        "\n"
+      end
+  end
 end
 
 def throw(*args)
   raise TranslationException.new(*args)
 end
 
-FileWithLines = Struct.new(:name) do
+# A convenience class representing a file with a {#filename} and lazily read {#lines}.
+FileWithLines = Struct.new(:filename) do
+  # An array of lines generally ending in newlines read from {#filename}.
+  # @return [Array<String>] Lines read from {#filename}.
   def lines
-    @lines ||= File.readlines(name)
+    @lines ||= File.readlines(filename)
   end
 end
 
@@ -68,6 +87,7 @@ TestCase = Struct.new(:file_with_lines, :context, :kakoune_command_name, :output
 
   # A regular expression that approximates how the original kakoune command call
   # that created this test case probably looks like.
+  # @return [Regexp]
   def kakoune_call_regex
     @kakoune_call_regex ||=
       begin
@@ -76,30 +96,22 @@ TestCase = Struct.new(:file_with_lines, :context, :kakoune_command_name, :output
       end
   end
 
+  # Returns a shell command line that can be ran to rerun this specific test case alone.
+  # @return [String]
   def shell_command_details
     line_index = file_with_lines.lines.index {|line| line =~ kakoune_call_regex}
     line_detail = line_index ? ":#{line_index + 1}" : ""
-    with_color("some dummy command #{file_with_lines.name}#{line_detail}", :red) +
-      with_color(" # #{title}", :light_blue)
+    Terminal.in_color("some dummy command #{file_with_lines.filename}#{line_detail}", :red) +
+      Terminal.in_color(" # #{title}", :light_blue)
   end
-end
-
-def filter_block_line(line)
-  # Highlight trailing whitespace.
-  line.gsub(/\s+$/) {|text| with_color(text, :red_background)} +
-    if line.end_with?("\n")
-      ""
-    else
-      "\n"
-    end
 end
 
 def format_block(title, text, check_end = false)
   string = "\n"
   string << "    #{title}:\n"
   text.each_line.each_with_index do |line, index|
-    string << with_color("    %3i|" % (index + 1), :light_blue)
-    string << filter_block_line(line)
+    string << Terminal.in_color("    %3i|" % (index + 1), :light_blue)
+    string << Terminal.any_trailing_whitespace_in_color(line)
   end
   if check_end && !text.end_with?("\n")
     string << "    %3s " % ""
@@ -150,16 +162,16 @@ module Assertion
 
   def progress_tick
     if pass?
-      with_color(".", :green)
+      Terminal.in_color(".", :green)
     else
-      with_color("F", :red)
+      Terminal.in_color("F", :red)
     end
   end
 
   # Assuming this assertion did not {#pass?}, returns a description of the relevant details.
   def failure_details(index)
     string = ""
-    string << "  #{with_color("#{index})", :red)} #{test_case.title}\n"
+    string << "  #{Terminal.in_color("#{index})", :red)} #{test_case.title}\n"
     string
   end
 end
@@ -241,7 +253,7 @@ class Presenter
   end
 
   def with_status_color(text)
-    with_color(text, pass? ? :green : :red)
+    Terminal.in_color(text, pass? ? :green : :red)
   end
 
   def failure_count
