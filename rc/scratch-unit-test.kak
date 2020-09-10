@@ -74,12 +74,8 @@ send a message to scratch_unit_test_translate' \
     evaluate-commands -save-regs a %(
         set-register a %arg(@)
         nop %sh(
-            if test -w "$SCRATCH_UNIT_TEST_DIR/fifo"; then
-                {
-                    printf "%s\n" "$kak_quoted_reg_a" | wc -l
-                    printf "%s\n" "$kak_quoted_reg_a"
-                } >"$SCRATCH_UNIT_TEST_DIR/fifo"
-            fi
+            eval "$SCRATCH_UNIT_TEST_SEND_MESSAGE"
+            send_message "$kak_quoted_reg_a"
         )
     )
 )

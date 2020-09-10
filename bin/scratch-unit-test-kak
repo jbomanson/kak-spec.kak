@@ -4,6 +4,11 @@ root_dir="$( ( cd "${0%/*}/.."; pwd ) )"
 
 SCRATCH_UNIT_TEST_PRELUDE_SH="$(cat "$root_dir/lib/prelude.sh")"
 export SCRATCH_UNIT_TEST_PRELUDE_SH
+eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
+
+SCRATCH_UNIT_TEST_SEND_MESSAGE="$(cat "$root_dir/lib/send_message.sh")"
+export SCRATCH_UNIT_TEST_SEND_MESSAGE
+eval "$SCRATCH_UNIT_TEST_SEND_MESSAGE"
 
 TRANSLATOR="$root_dir/lib/scratch_unit_test_translate"
 
@@ -39,7 +44,6 @@ fi >&2
 sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
 fifo_holder_pid=$!
 
-eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
 {
     kak_quote source "$root_dir/rc/scratch-unit-test.kak"
     kak_quote source "$root_dir/rc/scratch-commands.kak"
@@ -56,9 +60,8 @@ kak -ui dummy -n -e '
     quit
 '
 
-if test -p "$SCRATCH_UNIT_TEST_DIR/fifo"; then
-    printf "%s\n" "1" "message_quit" >"$SCRATCH_UNIT_TEST_DIR/fifo"
-fi
+send_message message_quit
+
 if test "$fifo_holder_pid" -gt 0; then
     kill "$fifo_holder_pid"
 fi
