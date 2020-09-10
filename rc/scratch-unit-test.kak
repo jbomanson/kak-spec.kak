@@ -67,14 +67,18 @@ Logs the <output> and <error> of <assertion.' \
 
 define-command scratch-unit-test-suite \
     -params 2 \
-    -docstring 'scratch-unit-test-suite <file>: TODO' \
+    -docstring 'scratch-unit-test-suite <current-file> <command>: Define a test suite.' \
 %(
-    evaluate-commands %sh(
-        test -f "$1" && printf "%s" "nop"
-    ) fail "scratch-unit-test-suite: should be given a kakoune source file as the first argument"
-    set-option global scratch_unit_test_suite_file "%arg(1)"
-    evaluate-commands "%arg(2)"
-    set-option global scratch_unit_test_suite_file ""
+    try %(
+        evaluate-commands %sh(
+            test -f "$1" && printf "%s" "nop"
+        ) fail "scratch-unit-test-suite: should be given a kakoune source file as the first argument"
+        set-option global scratch_unit_test_suite_file "%arg(1)"
+        evaluate-commands "%arg(2)"
+        set-option global scratch_unit_test_suite_file ""
+    ) catch %(
+        fail "%val(error)"
+    )
 )
 
 define-command scratch-unit-test-context \
