@@ -33,12 +33,7 @@ if ! test -x "$TRANSLATOR" >/dev/null; then
 fi >&2
 
 # Listen to the fifo.
-{
-    "$TRANSLATOR" \
-        "$SCRATCH_UNIT_TEST_DIR/fifo" \
-        >"$SCRATCH_UNIT_TEST_DIR/log" \
-        2>&1
-} >/dev/null 2>&1 </dev/null &
+"$TRANSLATOR" "$SCRATCH_UNIT_TEST_DIR/fifo" &
 
 # Keep the fifo open.
 sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
@@ -67,4 +62,3 @@ if test "$fifo_holder_pid" -gt 0; then
 fi
 
 cat "$SCRATCH_UNIT_TEST_DIR/debug.txt"
-cat "$scratch_dir/log"

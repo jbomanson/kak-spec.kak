@@ -2,31 +2,29 @@
 sample-test-suites/fail-in-test-suite.kak.err: empty
 sample-test-suites/fail-in-test-suite.kak.out:
   size: { lines: 17, words: 46, bytes: 412 }
-  first: "*** This is the debug buffer, where debug info will be written ***"
-  last: "\e[94m      1|\e[0mThis is a failure message"
-  hash: a5732e00144deb8f9fa74335f82438e9a7a08a07
+  first: "\e[31mE\e[0m"
+  last: ''
+  hash: 660e533c5c5207c466a58ddbe092d4a18656167e
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
   size: { lines: 37, words: 73, bytes: 819 }
-  first: "*** This is the debug buffer, where debug info will be written ***"
-  last: "\e[31msome dummy command €PWD/sample-test-suites/simple.kak:6\e[0m\e[94m
-    # raise joo\e[0m"
-  hash: 1aef98bba2d59a42e746357f9f45ca0e9bea5309
+  first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
+  last: ''
+  hash: 206aab31af7e11f331a4b2124edef7d9ead3afee
 sample-test-suites/test-suite-missing-file.kak.err: empty
 sample-test-suites/test-suite-missing-file.kak.out:
   size: { lines: 17, words: 65, bytes: 520 }
-  first: "*** This is the debug buffer, where debug info will be written ***"
-  last: "\e[94m      1|\e[0mscratch-unit-test-suite: expected a kakoune source file
-    as the first argument"
-  hash: cb6ca49a45fa64fb61d2f1b125bc900cdc1731fa
+  first: "\e[31mE\e[0m"
+  last: ''
+  hash: 050733112eaa877e32825b37e27554726f3985e3
 sample-test-suites/wrong-usage-context-outside-suite.kak.err: empty
 sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   size: { lines: 19, words: 52, bytes: 507 }
-  first: "*** This is the debug buffer, where debug info will be written ***"
-  last: "\e[94m      1|\e[0mscratch-unit-test-context: can only be called within scratch-unit-test-suite"
-  hash: da58faea4d4bf80fdf7463533d5d98ea81d2fdd3
+  first: "\e[31mE\e[0m"
+  last: ''
+  hash: f4f2959b4fb18d5e19a461237a1406f9960a723e
 teog:
-  input: 1460148572624836a0ceb3231f1b7f3e72ffe645
+  input: e9b98ae6f77779e1b6df8e868b5643f4f737d626
   status: 0
-  total: 219668a14bc98f6a42f32769638b53f79a1c1af9
+  total: 0cd2fc9ef35149b19b989fc04c01664aba8553c4
   version: 8
