@@ -5,6 +5,8 @@ root_dir="$( ( cd "${0%/*}/.."; pwd ) )"
 SCRATCH_UNIT_TEST_PRELUDE_SH="$(cat "$root_dir/lib/prelude.sh")"
 export SCRATCH_UNIT_TEST_PRELUDE_SH
 
+TRANSLATOR="$root_dir/lib/scratch_unit_test_translate"
+
 scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/scratch-unit-test-kak.XXXXXXXX")
 
 clean_up () {
@@ -20,15 +22,14 @@ export SCRATCH_UNIT_TEST_DIR
 
 mkfifo "$SCRATCH_UNIT_TEST_DIR/fifo"
 
-PATH="${0%/*}/../rc/scratch-unit-test:$PATH"
-if ! which "scratch_unit_test_translate" >/dev/null; then
-    echo "${0##*/}: missing executable \"scratch_unit_test_translate\"";
+if ! test -x "$TRANSLATOR" >/dev/null; then
+    echo "${0##*/}: missing executable \"$TRANSLATOR\"";
     exit 1;
 fi >&2
 
 # Listen to the fifo.
 {
-    scratch_unit_test_translate \
+    "$TRANSLATOR" \
         "$SCRATCH_UNIT_TEST_DIR/fifo" \
         >"$SCRATCH_UNIT_TEST_DIR/log" \
         2>&1
