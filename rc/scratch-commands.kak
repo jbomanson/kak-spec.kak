@@ -6,7 +6,7 @@ provide-module scratch-commands %~
 
 declare-option \
     -docstring 'The most recent output of scratch-commands' \
-    str-list scratch_commands_output
+    str scratch_commands_output
 
 # An increasing number used in naming temporary scratch buffers.
 declare-option -hidden int scratch_commands_id 0
@@ -36,7 +36,7 @@ TODO: Describe." \
             )
             # Evaluate <command>... and save any raised error.
             set-option global scratch_commands_error ""
-            set-option global scratch_commands_output
+            set-option global scratch_commands_output ""
             evaluate-commands -save-regs t %arg(2)
             # TODO: Ensure that we are in normal mode.
             # Check whether the command changed the current buffer.
