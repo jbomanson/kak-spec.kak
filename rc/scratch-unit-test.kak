@@ -5,7 +5,7 @@ provide-module scratch-unit-test %~
 require-module scratch-commands
 
 # TODO.
-declare-option -hidden str scratch_unit_test_suite_file
+declare-option -hidden str scratch_unit_test_source_file
 
 # TODO.
 declare-option -hidden str scratch_unit_test_context_message
@@ -45,30 +45,30 @@ Logs the output and error of an assertion.' \
 %(
     scratch-unit-test-send \
         "message_assert" \
-        "%opt(scratch_unit_test_suite_file)" \
+        "%opt(scratch_unit_test_source_file)" \
         "%opt(scratch_unit_test_context_message)" \
         scratch-unit-test-assert \
         "%opt(scratch_commands_output)" \
         %arg(@)
 )
 
-define-command scratch-unit-test-suite \
-    -params 2 \
-    -docstring 'scratch-unit-test-suite <current-file> <command>: Define a test suite.' \
+define-command scratch-unit-test-source \
+    -params 1.. \
+    -docstring 'scratch-unit-test-source <filename> <params>...: Define a test suite.' \
 %(
     try %(
         evaluate-commands %sh(
             test -f "$1" && printf "%s" "nop"
-        ) fail "scratch-unit-test-suite: expected a kakoune source file as the first argument"
-        set-option global scratch_unit_test_suite_file "%arg(1)"
-        evaluate-commands "%arg(2)"
+        ) fail "scratch-unit-test-source: expected a kakoune source file as the first argument"
+        set-option global scratch_unit_test_source_file "%arg(1)"
+        source %arg(@)
     ) catch %(
         # Send the error as a command to the translator.
         scratch-unit-test-send "message_non_assertion_error" %arg(1) %val(error)
         # Re-raise the caught error.
         fail "%val(error)"
     )
-    set-option global scratch_unit_test_suite_file ""
+    set-option global scratch_unit_test_source_file ""
 )
 
 define-command scratch-unit-test-context \
@@ -78,13 +78,13 @@ Evaluates <commands> so that any assertions in them have context information.' \
 %(
     try %(
         evaluate-commands %sh(
-            test "$kak_opt_scratch_unit_test_suite_file" && printf "%s" "nop"
-        ) fail "scratch-unit-test-context: can only be called within scratch-unit-test-suite"
+            test "$kak_opt_scratch_unit_test_source_file" && printf "%s" "nop"
+        ) fail "scratch-unit-test-context: can only be called within scratch-unit-test-source"
         set-option global scratch_unit_test_context_message "%arg(1)"
         evaluate-commands "%arg(2)"
     ) catch %(
         # Send the error as a command to the translator.
-        scratch-unit-test-send "message_context_error" %opt(scratch_unit_test_suite_file) %arg(1) %val(error)
+        scratch-unit-test-send "message_context_error" %opt(scratch_unit_test_source_file) %arg(1) %val(error)
         # Re-raise the caught error.
         fail "%val(error)"
     )

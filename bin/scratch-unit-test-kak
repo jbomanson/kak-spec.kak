@@ -52,7 +52,7 @@ fifo_holder_pid=$!
         $(
             for argument
             do
-                kak_quote try "$(kak_quote source "$argument")"
+                kak_quote try "$(kak_quote scratch-unit-test-source "$argument")"
             done
         )
     "

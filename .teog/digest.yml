@@ -1,50 +1,28 @@
 ---
-sample-test-suites/fail-in-test-suite.kak.err: empty
-sample-test-suites/fail-in-test-suite.kak.out:
-  size: { lines: 17, words: 46, bytes: 412 }
+sample-test-suites/fail-in-source.kak.err: empty
+sample-test-suites/fail-in-source.kak.out:
+  size: { lines: 17, words: 54, bytes: 433 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: 660e533c5c5207c466a58ddbe092d4a18656167e
-sample-test-suites/fail-in-test-suite.kak.status:
+  hash: addae9b362f90576de10ae1d3a85d60414d952dc
+sample-test-suites/fail-in-source.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
-  size: { lines: 37, words: 73, bytes: 819 }
+  size: { lines: 37, words: 73, bytes: 805 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: ''
-  hash: 206aab31af7e11f331a4b2124edef7d9ead3afee
+  hash: 4b20c6829f72568c7479d7f04f84e2dcbbd617b5
 sample-test-suites/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-sample-test-suites/test-suite-missing-file.kak.err: empty
-sample-test-suites/test-suite-missing-file.kak.out:
-  size: { lines: 17, words: 65, bytes: 520 }
-  first: "\e[31mE\e[0m"
-  last: ''
-  hash: 050733112eaa877e32825b37e27554726f3985e3
-sample-test-suites/test-suite-missing-file.kak.status:
-  size: { lines: 1, words: 1, bytes: 2 }
-  first: '0'
-  last: '0'
-  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-sample-test-suites/wrong-usage-context-outside-suite.kak.err: empty
-sample-test-suites/wrong-usage-context-outside-suite.kak.out:
-  size: { lines: 19, words: 52, bytes: 507 }
-  first: "\e[31mE\e[0m"
-  last: ''
-  hash: f4f2959b4fb18d5e19a461237a1406f9960a723e
-sample-test-suites/wrong-usage-context-outside-suite.kak.status:
-  size: { lines: 1, words: 1, bytes: 2 }
-  first: '0'
-  last: '0'
-  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: d354adc8683fd8565fd612d9f63b554ddfbd1341
+  input: 49d47f24cec58d8f4d4bb84dbcee55058dffe134
   status: 0
-  total: 616918d938c779b83c09a45078b30851517e5c82
+  total: fbca694f3993dd979da984508186a5d428be9780
   version: 8
