@@ -458,7 +458,7 @@ def main(fifo)
     unless task == "message_init" && session && client
       throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
     end
-    message_reader.until_message("message_quit").each do |message_components|
+    message_reader.until_message("message_quit").to_a.each do |message_components|
       stubbornly do
         task, *arguments = message_components
         case task.chomp
