@@ -413,6 +413,32 @@ class MessageReader
       yield message
     end
   end
+
+  # Returns an {Enumerable} consisting of all messages until {target_message}.
+  # Using the enumerable will advance this {MessageReader} until and over the target message.
+  def until_message(*target_message)
+    UntilMessage.new(self, target_message)
+  end
+
+  # This is an implementation detail of {MessageReader#until_message}.
+  class UntilMessage
+    include Enumerable
+
+    def initialize(reader, target_message)
+      @reader = reader
+      @target_message = target_message
+    end
+
+    def each
+      @reader.each do |message|
+        if message == @target_message
+          break
+        else
+          yield message
+        end
+      end
+    end
+  end
 end
 
 # Reads commands from a fifo until the "quit" command arrives.
@@ -432,7 +458,7 @@ def main(fifo)
     unless task == "message_init" && session && client
       throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
     end
-    message_reader.each do |message_components|
+    message_reader.until_message("message_quit").each do |message_components|
       stubbornly do
         task, *arguments = message_components
         case task.chomp
@@ -444,15 +470,13 @@ def main(fifo)
         when "message_non_assertion_error"
           suite, *message = arguments
           presenter.present_error(NonAssertionError.new(suite, nil, message.join(" ")))
-        when "message_quit"
-          presenter.present_summary
-          system("echo 'evaluate-commands -client #{client} %(scratch-unit-test-quit)' | kak -p #{session}")
-          break
         else
           throw "Unexpected task: #{([task] + arguments).shelljoin}"
         end
       end
     end
+    presenter.present_summary
+    system("echo 'evaluate-commands -client #{client} %(scratch-unit-test-quit)' | kak -p #{session}")
   end
 end
 
