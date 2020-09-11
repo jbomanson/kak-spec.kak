@@ -14,13 +14,6 @@ declare-option -hidden int scratch_commands_id 0
 # A temporary variable used to hold caught errors.
 declare-option -hidden str scratch_commands_error
 
-# A string that is added to the end of scratch buffers, and which is required
-# to stay there during the execution of commands.
-declare-option -hidden str scratch_commands_boundary "
-
-
-"
-
 declare-option -hidden str scratch_commands_sh_prelude %(
     kak_quote () {
         local delimiter=""
@@ -52,11 +45,10 @@ TODO: Describe." \
         set-register t "*scratch-commands-%opt(scratch_commands_id)*"
         edit! -scratch "%reg(t)"
         try %(
-            # Initialize the buffer with <input> surrounded by special strings.
+            # Initialize the buffer with <input>.
             evaluate-commands -save-regs '"' %(
-                set-register dquote "%opt(scratch_commands_boundary)%arg(1)%opt(scratch_commands_boundary)"
-                execute-keys 'R'
-                execute-keys '%<a-:>HHH<a-;>LLL'
+                set-register dquote %arg(1)
+                execute-keys '<a-P>'
             )
             # Evaluate <command>... and save any raised error.
             set-option global scratch_commands_error ""
@@ -68,23 +60,15 @@ TODO: Describe." \
                 kak_quote "$@"
             )
             # TODO: Ensure that we are in normal mode.
-            # Ensure that the command did not modify the special strings.
-            execute-keys 'gkLL'
+            # Check whether the command changed the current buffer.
             evaluate-commands %sh(
                 eval "$kak_opt_scratch_commands_sh_prelude"
-                if test "$kak_selection" != "$kak_opt_scratch_commands_boundary"; then
-                    kak_quote fail "magic header changed to $kak_selection"
+                if test "$kak_buffile" != "$kak_reg_t"; then
+                    kak_quote fail "temporary buffer changed to $kak_buffile"
                 fi
             )
-            execute-keys 'geHH'
-            evaluate-commands %sh(
-                eval "$kak_opt_scratch_commands_sh_prelude"
-                if test "$kak_selection" != "$kak_opt_scratch_commands_boundary"; then
-                    kak_quote fail "magic footer changed to $kak_selection"
-                fi
-            )
-            # Extract the output of the command ignoring the special strings.
-            execute-keys '%<a-:>HHH<a-;>LLL'
+            # Extract the output of the command.
+            execute-keys '%H'
             set-option global scratch_commands_output "%val(selection)"
         ) catch %(
             set-option global scratch_commands_error "%val(error)"
