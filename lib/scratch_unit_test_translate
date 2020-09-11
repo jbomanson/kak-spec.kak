@@ -355,14 +355,48 @@ def stubbornly
   end
 end
 
-# Reads a message consisting of an array of strings from an IO.
-# @returns [Array<String>, nil]
-def read_message(io)
-  if header_line = io.gets
-    size_in_lines = header_line.to_i
-    size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
-    number, *arguments = io.take(size_in_lines).join.shellsplit
-    arguments
+class MessageReader
+  Message = Struct.new(:size_in_lines, :number, :payload_arguments)
+
+  def initialize(io)
+    # An IO object that will be set to nil after the first time it returns nil.
+    @io = io
+    # A generally monotonically increasing message number.
+    # Unless something goes wrong or there are no more messages, the next {#read_message} call
+    # will return a message with this number.
+    @next_expected_number = 0
+    # A temporary collection of messages read from io but not yet by the user.
+    @unread_messages = []
+  end
+
+  # Reads the next message in line as an array of strings.
+  # Returns nil once there are no more messages.
+  # @returns [Array<String>, nil]
+  def read_message
+    loop do
+      if index = @unread_messages.find_index {|message| message.number == @next_expected_number}
+        # Use a previously read message.
+        @next_expected_number += 1
+        break @unread_messages.delete_at(index).payload_arguments
+      elsif header_line = @io && @io.gets || (@io = nil)
+        # Receive a new message.
+        size_in_lines = header_line.to_i
+        size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
+        number_s, *payload_arguments = @io.take(size_in_lines).join.shellsplit
+        @unread_messages << Message.new(size_in_lines, number_s.to_i, payload_arguments)
+      elsif @unread_messages.empty?
+        # There are no more messages.
+        break
+      else
+        # There are unread messages with unexpected message numbers.
+        next_available_number = @unread_messages.min_by(&:number)
+        STDERR.puts "scratch_unit_test_translate: warning: " +
+          "expected message number #{@next_expected_number}, " +
+          "settling for #{next_available_number}"
+        # Tolerate this situation by pretending to expect the next available message.
+        @next_expected_number = next_available_number
+      end
+    end
   end
 end
 
@@ -378,11 +412,12 @@ def main(fifo)
 
   presenter = Presenter.new
   File.open(fifo, "r") do |io|
-    task, session, client = read_message(io)
+    message_reader = MessageReader.new(io)
+    task, session, client = message_reader.read_message
     unless task == "message_init" && session && client
       throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
     end
-    while message_components = read_message(io)
+    while message_components = message_reader.read_message
       stubbornly do
         task, *arguments = message_components
         case task.chomp
