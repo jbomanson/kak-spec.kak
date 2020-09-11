@@ -1,6 +1,6 @@
 #! /bin/sh
 
-for sample in sample-test-suites/*.kak
+for sample in example/*.kak
 do
     bin/scratch-unit-test-kak "$sample" |
         script/stabilize >"$sample.out" 2>"$sample.err"

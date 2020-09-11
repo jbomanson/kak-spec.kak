@@ -1,50 +1,50 @@
 ---
-sample-test-suites/fail-in-context.kak.err: empty
-sample-test-suites/fail-in-context.kak.out:
-  size: { lines: 17, words: 54, bytes: 439 }
+example/fail-in-context.kak.err: empty
+example/fail-in-context.kak.out:
+  size: { lines: 17, words: 54, bytes: 417 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: 1f7d61f4c35de8f46e8fdd23899c03a4c0a5e0c7
-sample-test-suites/fail-in-context.kak.status:
+  hash: 74c9e527d5b6633e69f424d099d4b1068a87099f
+example/fail-in-context.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-sample-test-suites/fail-in-source.kak.err: empty
-sample-test-suites/fail-in-source.kak.out:
-  size: { lines: 17, words: 54, bytes: 433 }
+example/fail-in-source.kak.err: empty
+example/fail-in-source.kak.out:
+  size: { lines: 17, words: 54, bytes: 411 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: addae9b362f90576de10ae1d3a85d60414d952dc
-sample-test-suites/fail-in-source.kak.status:
+  hash: 887b046ebdd6fa2ba6ef871bf9fdd093b858acf5
+example/fail-in-source.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-sample-test-suites/simple.kak.err: empty
-sample-test-suites/simple.kak.out:
-  size: { lines: 46, words: 95, bytes: 1082 }
+example/simple.kak.err: empty
+example/simple.kak.out:
+  size: { lines: 46, words: 95, bytes: 1049 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: ''
-  hash: 1532372fa50fb132f76253ec3e21de36624120b1
-sample-test-suites/simple.kak.status:
+  hash: 1b282d56678629fc9a94dd87c7efd9d920fb8ae7
+example/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-sample-test-suites/switches.kak.err: empty
-sample-test-suites/switches.kak.out:
-  size: { lines: 50, words: 99, bytes: 1011 }
+example/switches.kak.err: empty
+example/switches.kak.out:
+  size: { lines: 50, words: 99, bytes: 978 }
   first: "\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[31mE\e[0m"
   last: ''
-  hash: 062d3eb4851b02bcc89fe503bac769140765b14d
-sample-test-suites/switches.kak.status:
+  hash: cc7beb21d517739e065b65fde37cc4da65a5a14b
+example/switches.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 31eb48165f6a7cc28b21add11a4d155c5d473da1
+  input: b53729c2e69cfed941c5a3070db757b50fab064f
   status: 0
-  total: 7037f078fcd69326c890c5d5d5bbd6a2a44add22
+  total: e05d305c30ef5652456524b4ef42a783f3d79d2d
   version: 8
