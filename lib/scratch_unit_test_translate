@@ -73,7 +73,7 @@ def throw(*args)
   raise TranslationException.new(*args)
 end
 
-TestCase = Struct.new(:scope, :output, :error, :title, :input) do
+TestCase = Struct.new(:scope, :title, :input) do
   # A regular expression that approximates how the original kakoune command call
   # that created this test case probably looks like.
   # @return [Regexp]
@@ -160,15 +160,10 @@ module Assertion
   def self.from_arguments(scope, array)
     comparisons, remaining_arguments = Comparison.partition_and_create_from_arguments(array)
     # Unpack the arguments.
-    output,
-      error,
-      title,
-      input,
-      *command =
-        remaining_arguments
+    title, input, unused_command = remaining_arguments
     # Convert the arguments into higher level objects.
     Assertion::WithComparisons.new(
-      TestCase.new(scope, output, error, title, input),
+      TestCase.new(scope, title, input),
       comparisons,
     )
   end
@@ -202,7 +197,7 @@ module Assertion
     # Implements {Assertion#pass?}.
     def pass?
       if @pass.nil?
-        @pass = test_case.error.empty? && comparisons.all?(&:pass?)
+        @pass = comparisons.all?(&:pass?)
       end
       @pass
     end

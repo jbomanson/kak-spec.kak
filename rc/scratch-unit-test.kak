@@ -16,7 +16,7 @@ declare-option -hidden int scratch_unit_test_message_count 0
 
 define-command scratch-unit-test-assert \
     -params .. \
-    -docstring "scratch-unit-test-assert [<switches>] <title> <input> <command>
+    -docstring "scratch-unit-test-assert [<switches>]
 Runs <command> in a temporary scratch buffer initialized with a string that
 contains <input> and where that <input> is selected, and then compares the
 result against <expected-output>.
@@ -45,6 +45,9 @@ The <matcher> argument controls the comparison:
             )"
             # Parse [<switches>].
             comparisons=""
+            option_eval=""
+            option_input=""
+            option_title=""
             while true
             do
                 case "$1" in
@@ -60,6 +63,10 @@ The <matcher> argument controls the comparison:
                     )"
                     shift 2
                     ;;
+                (-eval | -input | -title)
+                    eval "option_${1#-}=\$2"
+                    shift 2
+                    ;;
                 (-*)
                     kak_quote fail "scratch-unit-test-assert: Unknown option '$1'"
                     exit 1
@@ -69,17 +76,16 @@ The <matcher> argument controls the comparison:
                     ;;
                 esac
             done
+            true "${option_title:="$option_eval"}"
             # Call scratch-commands with the user given command and with a <final-command> that
             # sends a message to the translator.
-            kak_quote scratch-commands "$2" "$3" \
+            kak_quote scratch-commands "$option_input" "$option_eval" \
                 "scratch-unit-test-send \
                     message_assert \
                     $error_comparison \
                     $comparisons \
                     END_OF_EXPECTATIONS \
-                    %opt(scratch_commands_output) \
-                    %opt(scratch_commands_error) \
-                    $(kak_quote "$@")"
+                    $(kak_quote "$option_title" "$option_input" "$option_eval")"
         )
     ) catch %(
         scratch-unit-test-send message_non_assertion_error %val(error)
