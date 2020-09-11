@@ -250,8 +250,8 @@ NonAssertionError = Struct.new(:suite, :context, :message) do
   def non_assertion_error_details
     string = ""
     string << "  #{Terminal.in_color("?)", :red)} Error\n"
-    string << format_block("Suite", suite) if suite
-    string << format_block("Context", context) if context
+    string << format_block("Suite", suite) if suite != "UNDEFINED"
+    string << format_block("Context", context) if context != "UNDEFINED"
     string << format_block("Message", message)
     string
   end
@@ -464,12 +464,9 @@ def main(fifo)
         case task.chomp
         when "message_assert"
           presenter.present_assertion(Assertion.from_arguments(arguments))
-        when "message_context_error"
+        when "message_non_assertion_error"
           suite, context, *message = arguments
           presenter.present_error(NonAssertionError.new(suite, context, message.join(" ")))
-        when "message_non_assertion_error"
-          suite, *message = arguments
-          presenter.present_error(NonAssertionError.new(suite, nil, message.join(" ")))
         else
           throw "Unexpected task: #{([task] + arguments).shelljoin}"
         end

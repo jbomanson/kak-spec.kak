@@ -5,10 +5,10 @@ provide-module scratch-unit-test %~
 require-module scratch-commands
 
 # TODO.
-declare-option -hidden str scratch_unit_test_source_file
+declare-option -hidden str scratch_unit_test_source_file UNDEFINED
 
 # TODO.
-declare-option -hidden str scratch_unit_test_context_message
+declare-option -hidden str scratch_unit_test_context_message UNDEFINED
 
 # A monotonically increasing counter that is used to stamp messages sent internally to #
 # scratch_unit_test_translate.
@@ -61,11 +61,14 @@ define-command scratch-unit-test-source \
         source %arg(@)
     ) catch %(
         # Send the error as a command to the translator.
-        scratch-unit-test-send "message_non_assertion_error" %arg(1) %val(error)
+        scratch-unit-test-send "message_non_assertion_error" \
+            %opt(scratch_unit_test_source_file) \
+            %opt(scratch_unit_test_context_message) \
+            %val(error)
         # Re-raise the caught error.
         fail "%val(error)"
     )
-    set-option global scratch_unit_test_source_file ""
+    set-option global scratch_unit_test_source_file UNDEFINED
 )
 
 define-command scratch-unit-test-context \
@@ -81,11 +84,14 @@ Evaluates <commands> so that any assertions in them have context information.' \
         evaluate-commands "%arg(2)"
     ) catch %(
         # Send the error as a command to the translator.
-        scratch-unit-test-send "message_context_error" %opt(scratch_unit_test_source_file) %arg(1) %val(error)
+        scratch-unit-test-send "message_non_assertion_error" \
+            %opt(scratch_unit_test_source_file) \
+            %opt(scratch_unit_test_context_message) \
+            %val(error)
         # Re-raise the caught error.
         fail "%val(error)"
     )
-    set-option global scratch_unit_test_context_message ""
+    set-option global scratch_unit_test_context_message UNDEFINED
 )
 
 define-command scratch-unit-test-send \
