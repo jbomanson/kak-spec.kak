@@ -80,7 +80,7 @@ FileWithLines = Struct.new(:filename) do
   end
 end
 
-TestCase = Struct.new(:file_with_lines, :context, :kakoune_command_name, :output, :error, :title, :input) do
+TestCase = Struct.new(:scope, :file_with_lines, :context, :kakoune_command_name, :output, :error, :title, :input) do
   def brief
     context.empty? ? title : "#{context} #{title}"
   end
@@ -122,7 +122,7 @@ end
 
 module Assertion
   # <context_file> <output> <error> <assertion> <arg>...
-  def self.from_arguments(array)
+  def self.from_arguments(scope, array)
     # Unpack the arguments.
     file,
       context,
@@ -135,7 +135,7 @@ module Assertion
       expected_value,
       *command =
         array
-    # Convert the argumens into higher level objects.
+    # Convert the arguments into higher level objects.
     file_with_lines = FileWithLines.new(file)
     case matcher
     when "output" then Assertion::Output
@@ -143,6 +143,7 @@ module Assertion
     else throw "Unexpected assertion type: '#{matcher}'"
     end.new(
       TestCase.new(
+        scope,
         file_with_lines,
         context,
         kakoune_command_name,
@@ -242,7 +243,7 @@ end
 
 # An error caught in kakoune code outside of assertions.
 # These errors are reported separately from assertion failures.
-NonAssertionError = Struct.new(:suite, :context, :message) do
+NonAssertionError = Struct.new(:scope, :suite, :context, :message) do
   def progress_tick
     Terminal.in_color("E", :red)
   end
@@ -412,7 +413,7 @@ class MessageReader
     end
   end
 
-  # Returns an {Enumerable} consisting of all messages until {target_message}.
+  # Returns an {Enumerable} consisting of all messages until target_message.
   # Using the enumerable will advance this {MessageReader} until and over the target message.
   def until_message(*target_message)
     UntilMessage.new(self, target_message)
@@ -439,6 +440,12 @@ class MessageReader
   end
 end
 
+Scope = Struct.new(:description) do
+  def self.top_level
+    @top_level ||= Scope.new(:top_level)
+  end
+end
+
 # Reads commands from a fifo until the "quit" command arrives.
 # The commands can consist of one or more lines.
 # The first line must indicate the type of the command.
@@ -456,15 +463,30 @@ def main(fifo)
     unless task == "message_init" && session && client
       throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
     end
+    scope_stack = [Scope.top_level]
     message_reader.until_message("message_quit").to_a.each do |message_components|
       stubbornly do
         task, *arguments = message_components
         case task.chomp
         when "message_assert"
-          presenter.present_assertion(Assertion.from_arguments(arguments))
+          presenter.present_assertion(Assertion.from_arguments(
+            scope_stack.last, arguments
+          ))
         when "message_non_assertion_error"
           suite, context, *message = arguments
-          presenter.present_error(NonAssertionError.new(suite, context, message.join(" ")))
+          presenter.present_error(NonAssertionError.new(
+            scope_stack.last, suite, context, message.join(" ")
+          ))
+        when "message_scope_begin"
+          scope_stack << Scope.new(*arguments)
+        when "message_scope_end"
+          if scope_stack.last.to_a == arguments
+            scope_stack.pop
+          else
+            throw \
+              "Expected end of scope #{scope_stack.last}, " +
+              "got end of scope #{arguments}"
+          end
         else
           throw "Unexpected task: #{([task] + arguments).shelljoin}"
         end

@@ -74,6 +74,7 @@ define-command scratch-unit-test-scope \
     -docstring 'scratch-unit-test-scope <option> <description> <command> [<argument>]:
 Evaluates <commands> so that any assertions in them have scope information.' \
 %(
+    scratch-unit-test-send message_scope_begin %arg(2)
     try %(
         set-option global %arg(1) %arg(2)
         evaluate-commands %arg(3) %arg(4)
@@ -83,10 +84,12 @@ Evaluates <commands> so that any assertions in them have scope information.' \
             %opt(scratch_unit_test_source_file) \
             %opt(scratch_unit_test_context_message) \
             %val(error)
+        scratch-unit-test-send message_scope_end %arg(2)
         set-option global %arg(1) UNDEFINED
         # Re-raise the caught error.
         fail "%val(error)"
     )
+    scratch-unit-test-send message_scope_end %arg(2)
     set-option global %arg(1) UNDEFINED
 )
 
