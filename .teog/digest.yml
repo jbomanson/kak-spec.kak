@@ -1,4 +1,15 @@
 ---
+sample-test-suites/fail-in-context.kak.err: empty
+sample-test-suites/fail-in-context.kak.out:
+  size: { lines: 17, words: 54, bytes: 439 }
+  first: "\e[31mE\e[0m"
+  last: ''
+  hash: 1f7d61f4c35de8f46e8fdd23899c03a4c0a5e0c7
+sample-test-suites/fail-in-context.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 sample-test-suites/fail-in-source.kak.err: empty
 sample-test-suites/fail-in-source.kak.out:
   size: { lines: 17, words: 54, bytes: 433 }
@@ -22,7 +33,7 @@ sample-test-suites/simple.kak.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 49d47f24cec58d8f4d4bb84dbcee55058dffe134
+  input: b98b24f0fdf281a9fea5eb37dacce48ebfa1f57d
   status: 0
-  total: fbca694f3993dd979da984508186a5d428be9780
+  total: 16748ae1745eee5c5413ccc7c9f0df5282d75c1c
   version: 8
