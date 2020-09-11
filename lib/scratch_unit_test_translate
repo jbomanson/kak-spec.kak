@@ -313,12 +313,10 @@ class Presenter
     return if non_assertion_errors.empty?
     puts
     puts "Errors other than assertion failures:"
-    puts
-    puts(
-      non_assertion_errors.map do |error|
-        error.non_assertion_error_details
-      end
-    )
+    non_assertion_errors.each do |error|
+      puts
+      puts error.non_assertion_error_details
+    end
   end
 
   def present_summary_briefly
