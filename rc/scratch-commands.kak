@@ -15,8 +15,8 @@ declare-option -hidden int scratch_commands_id 0
 declare-option -hidden str scratch_commands_error
 
 define-command scratch-commands \
-    -params 2 \
-    -docstring "scratch-commands <input> <command>:
+    -params 3 \
+    -docstring "scratch-commands <input> <command> <final-command>:
 TODO: Describe." \
 %(
     # Ensure that at least some input is given.
@@ -52,6 +52,7 @@ TODO: Describe." \
         ) catch %(
             set-option global scratch_commands_error "%val(error)"
         )
+        evaluate-commands -save-regs t %arg(3)
         delete-buffer "%reg(t)"
         # Present any error caught when evaluating user commands.
         evaluate-commands %sh(
