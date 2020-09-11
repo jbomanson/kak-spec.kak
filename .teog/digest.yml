@@ -32,8 +32,19 @@ sample-test-suites/simple.kak.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+sample-test-suites/switches.kak.err: empty
+sample-test-suites/switches.kak.out:
+  size: { lines: 33, words: 62, bytes: 676 }
+  first: "\e[31mF\e[0m\e[32m.\e[0m\e[31mE\e[0m"
+  last: word
+  hash: a7d561e9a740a922436656299e97feee87aa7917
+sample-test-suites/switches.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 76424776bcfc0c805516749e9413810564a264fe
+  input: fd6ce5690292441c4cae38066f35fe3b8fc4bc88
   status: 0
-  total: c8dad3477a3bcfa48f6f69539f6ea61f284e8b2a
+  total: 0dafab77f1c08ab662630177e1d10c01fc9e25b9
   version: 8

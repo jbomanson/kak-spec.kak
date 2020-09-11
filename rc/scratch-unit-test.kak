@@ -15,8 +15,8 @@ declare-option -hidden str scratch_unit_test_context_message UNDEFINED
 declare-option -hidden int scratch_unit_test_message_count 0
 
 define-command scratch-unit-test-assert \
-    -params 5 \
-    -docstring "scratch-unit-test-assert <title> <input> <matcher> <expected-value> <command>
+    -params .. \
+    -docstring "scratch-unit-test-assert [<switches>] <title> <input> <matcher> <expected-value> <command>
 Runs <command> in a temporary scratch buffer initialized with a string that
 contains <input> and where that <input> is selected, and then compares the
 result against <expected-output>.
@@ -27,9 +27,35 @@ The <matcher> argument controls the comparison:
     try %(
         evaluate-commands %sh(
             eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
+            comparisons=""
+            while true
+            do
+                case "$1" in
+                (-expect-*)
+                    expansion="${1#-expect-}"
+                    expected_value="$2"
+                    shift 2
+                    comparisons="\
+                        $comparisons \
+                        $(kak_quote "$expansion") \
+                        $(kak_quote "$expected_value") \
+                        $expansion \
+                    "
+                    ;;
+                (-*)
+                    kak_quote fail "scratch-unit-test-assert: Unknown option '$1'"
+                    exit 1
+                    ;;
+                (*)
+                    break
+                    ;;
+                esac
+            done
             kak_quote scratch-commands "$2" "$5" \
                 "scratch-unit-test-send \
                     message_assert \
+                    $comparisons \
+                    END_OF_EXPECTATIONS \
                     %opt(scratch_commands_output) \
                     %opt(scratch_commands_error) \
                     $(kak_quote "$@")"
