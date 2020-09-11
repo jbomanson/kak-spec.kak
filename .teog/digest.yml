@@ -5,26 +5,46 @@ sample-test-suites/fail-in-test-suite.kak.out:
   first: "\e[31mE\e[0m"
   last: ''
   hash: 660e533c5c5207c466a58ddbe092d4a18656167e
+sample-test-suites/fail-in-test-suite.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
   size: { lines: 37, words: 73, bytes: 819 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: ''
   hash: 206aab31af7e11f331a4b2124edef7d9ead3afee
+sample-test-suites/simple.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 sample-test-suites/test-suite-missing-file.kak.err: empty
 sample-test-suites/test-suite-missing-file.kak.out:
   size: { lines: 17, words: 65, bytes: 520 }
   first: "\e[31mE\e[0m"
   last: ''
   hash: 050733112eaa877e32825b37e27554726f3985e3
+sample-test-suites/test-suite-missing-file.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 sample-test-suites/wrong-usage-context-outside-suite.kak.err: empty
 sample-test-suites/wrong-usage-context-outside-suite.kak.out:
   size: { lines: 19, words: 52, bytes: 507 }
   first: "\e[31mE\e[0m"
   last: ''
   hash: f4f2959b4fb18d5e19a461237a1406f9960a723e
+sample-test-suites/wrong-usage-context-outside-suite.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: b15fc21c663d5d1bb6a5587a3d9a6b8df35f8e82
+  input: 826249bba4e4df2356252f5d8ffd27e446f73d87
   status: 0
-  total: afcf4ce47f2f2ba68049de8e625e380761db50ee
+  total: fb2209fa2be5711804d745c2ea2449d234282b82
   version: 8

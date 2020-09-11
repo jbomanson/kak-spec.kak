@@ -9,4 +9,5 @@ stabilize ()
 for sample in sample-test-suites/*.kak
 do
     bin/scratch-unit-test-kak "$sample" | stabilize >"$sample.out" 2>"$sample.err"
+    echo $? >"$sample.status"
 done
