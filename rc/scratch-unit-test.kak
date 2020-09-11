@@ -16,7 +16,7 @@ declare-option -hidden int scratch_unit_test_message_count 0
 
 define-command scratch-unit-test-assert \
     -params .. \
-    -docstring "scratch-unit-test-assert [<switches>] <title> <input> <matcher> <expected-value> <command>
+    -docstring "scratch-unit-test-assert [<switches>] <title> <input> <command>
 Runs <command> in a temporary scratch buffer initialized with a string that
 contains <input> and where that <input> is selected, and then compares the
 result against <expected-output>.
@@ -71,7 +71,7 @@ The <matcher> argument controls the comparison:
             done
             # Call scratch-commands with the user given command and with a <final-command> that
             # sends a message to the translator.
-            kak_quote scratch-commands "$2" "$5" \
+            kak_quote scratch-commands "$2" "$3" \
                 "scratch-unit-test-send \
                     message_assert \
                     $error_comparison \

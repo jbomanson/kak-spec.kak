@@ -164,20 +164,13 @@ module Assertion
       error,
       title,
       input,
-      matcher,
-      expected_value,
       *command =
         remaining_arguments
     # Convert the arguments into higher level objects.
-    test_case = TestCase.new(scope, output, error, title, input)
-    case matcher
-    when "output" then Assertion::Output.new(test_case, expected_value)
-    when "error"  then Assertion::Error.new(test_case, expected_value)
-    when "with_comparisons" then Assertion::WithComparisons.new(test_case, comparisons)
-    else throw \
-      "Unexpected assertion type: '#{matcher}' in assertion #{array} " +
-      "consisting of comparisons #{comparisons} and the arguments #{remaining_arguments}"
-    end
+    Assertion::WithComparisons.new(
+      TestCase.new(scope, output, error, title, input),
+      comparisons,
+    )
   end
 
   # Determines whether this assertion was satisfied.
@@ -198,70 +191,6 @@ module Assertion
     string = ""
     string << "  #{Terminal.in_color("#{index})", :red)} #{test_case.title}\n"
     string
-  end
-end
-
-module Assertion
-  Output = Struct.new(:test_case, :expected_output) do
-    include Assertion
-
-    # Implements {Assertion#pass?}.
-    def pass?
-      if @pass.nil?
-        @pass = test_case.error.empty? &&
-          test_case.output == expected_output
-      end
-      @pass
-    end
-
-    def failure_details(index)
-      check_end =
-        [test_case.input, expected_output, test_case.output].select do |text|
-          !text.empty?
-        end.map do |text|
-          text.end_with?("\n")
-        end.uniq.size != 1
-      string = ""
-      string << super
-      string << format_block("Input", test_case.input, check_end)
-      if expected_output != test_case.output
-        string << format_block("Expected output", expected_output, check_end)
-        string << format_block("Actual output", test_case.output, check_end)
-      end
-      unless test_case.error.empty?
-        string << format_block("Unexpected error", test_case.error)
-      end
-      string
-    end
-  end
-end
-
-module Assertion
-  # An assertion that matches a kakoune error message against a regular expression.
-  Error = Struct.new(:test_case, :expected_error_regex) do
-    include Assertion
-
-    # Implements {Assertion#pass?}.
-    def pass?
-      if @pass.nil?
-        @pass =
-          (
-            !test_case.error.empty? &&
-              test_case.error =~ /#{expected_error_regex}/
-          ) ? true : false
-      end
-      @pass
-    end
-
-    def failure_details(index)
-      string = ""
-      string << super
-      string << format_block("Input", test_case.input)
-      string << format_block("Output", test_case.output)
-      string << format_block("Expected error regex", expected_error_regex)
-      string << format_block("Actual error", test_case.error)
-      string
-    end
   end
 end
 
