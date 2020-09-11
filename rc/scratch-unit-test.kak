@@ -80,10 +80,7 @@ Evaluates <commands> so that any assertions in them have scope information.' \
         evaluate-commands %arg(3) %arg(4)
     ) catch %(
         # Send the error as a command to the translator.
-        scratch-unit-test-send "message_non_assertion_error" \
-            %opt(scratch_unit_test_source_file) \
-            %opt(scratch_unit_test_context_message) \
-            %val(error)
+        scratch-unit-test-send message_non_assertion_error %val(error)
         scratch-unit-test-send message_scope_end %arg(2)
         set-option global %arg(1) UNDEFINED
         # Re-raise the caught error.

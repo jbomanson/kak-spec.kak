@@ -243,7 +243,7 @@ end
 
 # An error caught in kakoune code outside of assertions.
 # These errors are reported separately from assertion failures.
-NonAssertionError = Struct.new(:scope, :suite, :context, :message) do
+NonAssertionError = Struct.new(:scope, :message) do
   def progress_tick
     Terminal.in_color("E", :red)
   end
@@ -485,10 +485,7 @@ def main(fifo)
             scope_stack.last, arguments
           ))
         when "message_non_assertion_error"
-          suite, context, *message = arguments
-          presenter.present_error(NonAssertionError.new(
-            scope_stack.last, suite, context, message.join(" ")
-          ))
+          presenter.present_error(NonAssertionError.new(scope_stack.last, arguments.join(" ")))
         when "message_scope_begin"
           scope_stack << Scope.new(scope_stack.last, *arguments)
         when "message_scope_end"
