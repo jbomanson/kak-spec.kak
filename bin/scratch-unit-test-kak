@@ -33,6 +33,7 @@ fi >&2
 
 # Listen to the fifo.
 "$TRANSLATOR" "$SCRATCH_UNIT_TEST_DIR/fifo" &
+translator_pid=$!
 
 # Keep the fifo open.
 sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
@@ -61,10 +62,16 @@ fifo_holder_pid=$!
 kak -ui dummy -n -e 'source %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/source.kak")'
 kak_status=$?
 
+# The translator should have quit by now unless something went wrong.
+kill "$translator_pid" >/dev/null 2>&1
+wait "$translator_pid"
+
 if test "$fifo_holder_pid" -gt 0; then
     kill "$fifo_holder_pid"
 fi
 
-cat "$SCRATCH_UNIT_TEST_DIR/debug"
+if test -r "$SCRATCH_UNIT_TEST_DIR/debug"; then
+    cat "$SCRATCH_UNIT_TEST_DIR/debug"
+fi
 
 exit "$kak_status"

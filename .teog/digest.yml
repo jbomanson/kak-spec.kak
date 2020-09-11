@@ -44,7 +44,7 @@ sample-test-suites/wrong-usage-context-outside-suite.kak.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 30063a70fe89caee047166ccf84e5be81115ad9c
+  input: ee9202e5b69556519725e8510f027a13701aca6b
   status: 0
-  total: 489a2a12e952417a7088e8eabadbedea38834cc8
+  total: 7ce4f6c7d516d38712b259adcd7b3fe2cf4c8456
   version: 8
