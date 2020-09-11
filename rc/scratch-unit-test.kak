@@ -15,8 +15,8 @@ declare-option -hidden str scratch_unit_test_context_message UNDEFINED
 declare-option -hidden int scratch_unit_test_message_count 0
 
 define-command scratch-unit-test-assert \
-    -params .. \
-    -docstring "scratch-unit-test-assert <title> <input> <matcher> <expected-value> <command>...
+    -params 5 \
+    -docstring "scratch-unit-test-assert <title> <input> <matcher> <expected-value> <command>
 Runs <command> in a temporary scratch buffer initialized with a string that
 contains <input> and where that <input> is selected, and then compares the
 result against <expected-output>.

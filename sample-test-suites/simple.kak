@@ -2,7 +2,7 @@ require-module scratch-unit-test
 
 evaluate-commands -save-regs n %(
     scratch-unit-test-assert "nop" "abc" output "oops" nop
-    scratch-unit-test-assert "raise joo" "" error  "joo" raise joo
+    scratch-unit-test-assert "raise joo" "" error  "joo" %(raise joo)
 
     scratch-unit-test-assert "nop" "x" output "x" nop
     scratch-unit-test-assert "nop" " " output " " nop
