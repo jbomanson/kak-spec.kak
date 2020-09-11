@@ -121,7 +121,7 @@ Comparison = Struct.new(:kakoune_expansion, :expected_value, :actual_value) do
       end
       if remaining_arguments.size < 3
         throw \
-          "Expected an kakoune expansion in an assertion at the point between " +
+          "Expected a kakoune expansion in an assertion at the point between " +
           "#{array[0...comparisons.size * 3]} and #{remaining_arguments}"
       end
       comparisons << self.new(*remaining_arguments.shift(3))
@@ -133,7 +133,7 @@ Comparison = Struct.new(:kakoune_expansion, :expected_value, :actual_value) do
   # Formats details of this expectation to an {IO} -- {#pass} ed or not.
   def format_details(io)
     if expected_value == actual_value
-      io << format_block("Expected and actual #{kakoune_expansion}", actual_value, false)
+      io << format_block("Accepted #{kakoune_expansion}", actual_value, false)
     else
       check_end =
         [expected_value, actual_value].select do |text|
@@ -166,23 +166,15 @@ module Assertion
       *command =
         remaining_arguments
     # Convert the arguments into higher level objects.
+    test_case = TestCase.new(scope, output, error, title, input)
     case matcher
-    when "output" then Assertion::Output
-    when "error"  then Assertion::Error
-    when "with_comparisons" then expected_value = comparisons; Assertion::WithComparisons
+    when "output" then Assertion::Output.new(test_case, expected_value)
+    when "error"  then Assertion::Error.new(test_case, expected_value)
+    when "with_comparisons" then Assertion::WithComparisons.new(test_case, comparisons)
     else throw \
       "Unexpected assertion type: '#{matcher}' in assertion #{array} " +
       "consisting of comparisons #{comparisons} and the arguments #{remaining_arguments}"
-    end.new(
-      TestCase.new(
-        scope,
-        output,
-        error,
-        title,
-        input,
-      ),
-      expected_value,
-    )
+    end
   end
 
   # Determines whether this assertion was satisfied.
@@ -290,9 +282,6 @@ module Assertion
       string << format_block("Input", test_case.input, true)
       comparisons.each do |expectation|
         expectation.format_details(string)
-      end
-      unless test_case.error.empty?
-        string << format_block("Unexpected error", test_case.error)
       end
       string
     end

@@ -27,20 +27,34 @@ The <matcher> argument controls the comparison:
     try %(
         evaluate-commands %sh(
             eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
+            encode_comparison ()
+            {
+                printf "%s " \
+                    "$(kak_quote "${1#-expect-}")" \
+                    "$(kak_quote "$2")" \
+                    "$3"
+            }
+            error_comparison="$(encode_comparison \
+                '-expect-%val(error)' \
+                '' \
+                '%opt(scratch_commands_error)'
+            )"
+            # Parse [<switches>].
             comparisons=""
             while true
             do
                 case "$1" in
-                (-expect-*)
-                    expansion="${1#-expect-}"
-                    expected_value="$2"
+                ('-expect-%val(error)')
+                    error_comparison="$(encode_comparison \
+                        "$1" "$2" '%opt(scratch_commands_error)'
+                    )"
                     shift 2
-                    comparisons="\
-                        $comparisons \
-                        $(kak_quote "$expansion") \
-                        $(kak_quote "$expected_value") \
-                        $expansion \
-                    "
+                    ;;
+                (-expect-*)
+                    comparisons="$comparisons $(encode_comparison \
+                        "$1" "$2" "${1#-expect-}"
+                    )"
+                    shift 2
                     ;;
                 (-*)
                     kak_quote fail "scratch-unit-test-assert: Unknown option '$1'"
@@ -51,9 +65,12 @@ The <matcher> argument controls the comparison:
                     ;;
                 esac
             done
+            # Call scratch-commands with the user given command and with a <final-command> that
+            # sends a message to the translator.
             kak_quote scratch-commands "$2" "$5" \
                 "scratch-unit-test-send \
                     message_assert \
+                    $error_comparison \
                     $comparisons \
                     END_OF_EXPECTATIONS \
                     %opt(scratch_commands_output) \
