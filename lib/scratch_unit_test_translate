@@ -125,7 +125,7 @@ module Assertion
     case matcher
     when "output" then Assertion::Output
     when "error"  then Assertion::Error
-    else throw "Unexpected assertion type: '#{matcher}'"
+    else throw "Unexpected assertion type: '#{matcher}' in assertion #{array}"
     end.new(
       TestCase.new(
         scope,
