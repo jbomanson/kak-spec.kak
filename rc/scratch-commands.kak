@@ -14,22 +14,6 @@ declare-option -hidden int scratch_commands_id 0
 # A temporary variable used to hold caught errors.
 declare-option -hidden str scratch_commands_error
 
-declare-option -hidden str scratch_commands_sh_prelude %(
-    kak_quote () {
-        local delimiter=""
-        local string
-        for string
-        do
-            printf "%s" "$delimiter"
-            printf "'"
-            printf "%s" "$string" | sed "s/'/''/g"
-            printf "'"
-            delimiter=" "
-        done
-        printf "\n"
-    }
-)
-
 define-command scratch-commands \
     -params .. \
     -docstring "scratch-commands <input> <command>...:
@@ -54,7 +38,7 @@ TODO: Describe." \
             set-option global scratch_commands_error ""
             set-option global scratch_commands_output
             evaluate-commands -save-regs t %sh(
-                eval "$kak_opt_scratch_commands_sh_prelude"
+                eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
                 shift 1
                 printf "%s" "evaluate-commands "
                 kak_quote "$@"
@@ -62,7 +46,7 @@ TODO: Describe." \
             # TODO: Ensure that we are in normal mode.
             # Check whether the command changed the current buffer.
             evaluate-commands %sh(
-                eval "$kak_opt_scratch_commands_sh_prelude"
+                eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
                 if test "$kak_buffile" != "$kak_reg_t"; then
                     kak_quote fail "temporary buffer changed to $kak_buffile"
                 fi
