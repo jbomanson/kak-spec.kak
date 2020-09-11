@@ -4,6 +4,8 @@ require "shellwords"
 
 STARTUP_MONOTONIC_TIME = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
+TEST_CASE_KAKOUNE_COMMAND_NAME = "scratch-unit-test-assert"
+
 class TranslationException < StandardError
 end
 
@@ -71,7 +73,7 @@ def throw(*args)
   raise TranslationException.new(*args)
 end
 
-TestCase = Struct.new(:scope, :kakoune_command_name, :output, :error, :title, :input) do
+TestCase = Struct.new(:scope, :output, :error, :title, :input) do
   # A regular expression that approximates how the original kakoune command call
   # that created this test case probably looks like.
   # @return [Regexp]
@@ -79,7 +81,7 @@ TestCase = Struct.new(:scope, :kakoune_command_name, :output, :error, :title, :i
     @kakoune_call_regex ||=
       begin
         title_regex = Regexp.escape(title)
-        /#{kakoune_command_name}\s+(#{title_regex}\b|"#{title_regex}"|'#{title_regex}')/
+        /#{TEST_CASE_KAKOUNE_COMMAND_NAME}\s+(#{title_regex}\b|"#{title_regex}"|'#{title_regex}')/
       end
   end
 
@@ -111,8 +113,7 @@ module Assertion
   # <context_file> <output> <error> <assertion> <arg>...
   def self.from_arguments(scope, array)
     # Unpack the arguments.
-    kakoune_command_name,
-      output,
+    output,
       error,
       title,
       input,
@@ -128,7 +129,6 @@ module Assertion
     end.new(
       TestCase.new(
         scope,
-        kakoune_command_name,
         output,
         error,
         title,
