@@ -8,7 +8,6 @@ eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
 
 SCRATCH_UNIT_TEST_SEND_MESSAGE="$(cat "$root_dir/lib/send_message.sh")"
 export SCRATCH_UNIT_TEST_SEND_MESSAGE
-eval "$SCRATCH_UNIT_TEST_SEND_MESSAGE"
 
 TRANSLATOR="$root_dir/lib/scratch_unit_test_translate"
 
@@ -42,23 +41,22 @@ fifo_holder_pid=$!
 {
     kak_quote source "$root_dir/rc/scratch-unit-test.kak"
     kak_quote source "$root_dir/rc/scratch-commands.kak"
+    kak_quote buffer '*debug*'
     for argument
     do
         kak_quote try "$(kak_quote source "$argument")"
     done
+    kak_quote require-module scratch-unit-test
+    kak_quote scratch-unit-test-send message_quit
 } >"$SCRATCH_UNIT_TEST_DIR/source.kak"
 
-kak -ui dummy -n -e '
-    source %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/source.kak")
-    buffer *debug*
-    write %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/debug.txt")
-    quit
-'
-
-send_message message_quit
+kak -ui dummy -n -e 'source %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/source.kak")'
+kak_status=$?
 
 if test "$fifo_holder_pid" -gt 0; then
     kill "$fifo_holder_pid"
 fi
 
-cat "$SCRATCH_UNIT_TEST_DIR/debug.txt"
+cat "$SCRATCH_UNIT_TEST_DIR/debug"
+
+exit "$kak_status"

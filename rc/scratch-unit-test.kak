@@ -1,3 +1,5 @@
+declare-option str scratch_unit_test_client %val(client)
+
 provide-module scratch-unit-test %~
 
 require-module scratch-commands
@@ -100,6 +102,16 @@ send a message to scratch_unit_test_translate' \
     )
 )
 
-scratch-unit-test-send message_init "%val(session)"
+define-command scratch-unit-test-quit \
+    -hidden \
+    -docstring 'scratch-unit-test-quit: quit kakoune' \
+%(
+    try %(
+        write %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/debug")
+    )
+    quit!
+)
+
+scratch-unit-test-send message_init %val(session) %opt(scratch_unit_test_client)
 
 ~

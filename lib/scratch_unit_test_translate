@@ -377,11 +377,10 @@ def main(fifo)
 
   presenter = Presenter.new
   File.open(fifo, "r") do |io|
-    task, *arguments = read_message(io)
-    unless task == "message_init" && arguments.size == 1
-      throw "Expected message_init <session>, received: #{([task] + arguments).shelljoin}"
+    task, session, client = read_message(io)
+    unless task == "message_init" && session && client
+      throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
     end
-    session = arguments.first
     while message_components = read_message(io)
       stubbornly do
         task, *arguments = message_components
@@ -396,6 +395,7 @@ def main(fifo)
           presenter.present_error(NonAssertionError.new(suite, nil, message.join(" ")))
         when "message_quit"
           presenter.present_summary
+          system("echo 'evaluate-commands -client #{client} %(scratch-unit-test-quit)' | kak -p #{session}")
           break
         else
           throw "Unexpected task: #{([task] + arguments).shelljoin}"
