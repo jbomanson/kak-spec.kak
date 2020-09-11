@@ -240,6 +240,8 @@ module Assertion
   end
 end
 
+# An error caught in kakoune code outside of assertions.
+# These errors are reported separately from assertion failures.
 NonAssertionError = Struct.new(:suite, :context, :message) do
   def progress_tick
     Terminal.in_color("E", :red)
@@ -355,7 +357,10 @@ def stubbornly
   end
 end
 
+# A wrapper over an IO for reading messages sent with the kakoune command `scratch-unit-test-send`.
 class MessageReader
+  # An implementation detail of {MessageReader}.
+  # A temporarily stored message together with some metadata.
   Message = Struct.new(:size_in_lines, :number, :payload_arguments)
 
   def initialize(io)
@@ -369,7 +374,9 @@ class MessageReader
     @unread_messages = []
   end
 
-  # Reads the next message in line as an array of strings.
+  # Reads the next message as an array of strings.
+  # The order in which messages are read is exactly the same as in which they are sent via the
+  # kakoune command `scratch-unit-test-send`.
   # Returns nil once there are no more messages.
   # @returns [Array<String>, nil]
   def read_message
