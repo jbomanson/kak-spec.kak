@@ -71,16 +71,7 @@ def throw(*args)
   raise TranslationException.new(*args)
 end
 
-# A convenience class representing a file with a {#filename} and lazily read {#lines}.
-FileWithLines = Struct.new(:filename) do
-  # An array of lines generally ending in newlines read from {#filename}.
-  # @return [Array<String>] Lines read from {#filename}.
-  def lines
-    @lines ||= File.readlines(filename)
-  end
-end
-
-TestCase = Struct.new(:scope, :file_with_lines, :kakoune_command_name, :output, :error, :title, :input) do
+TestCase = Struct.new(:scope, :kakoune_command_name, :output, :error, :title, :input) do
   # A regular expression that approximates how the original kakoune command call
   # that created this test case probably looks like.
   # @return [Regexp]
@@ -95,9 +86,9 @@ TestCase = Struct.new(:scope, :file_with_lines, :kakoune_command_name, :output, 
   # Returns a shell command line that can be ran to rerun this specific test case alone.
   # @return [String]
   def shell_command_details
-    line_index = file_with_lines.lines.index {|line| line =~ kakoune_call_regex}
+    line_index = File.readlines(scope.suite_file).index {|line| line =~ kakoune_call_regex}
     line_detail = line_index ? ":#{line_index + 1}" : ""
-    Terminal.in_color("some dummy command #{file_with_lines.filename}#{line_detail}", :red) +
+    Terminal.in_color("some dummy command #{scope.suite_file}#{line_detail}", :red) +
       Terminal.in_color(" # #{title}", :light_blue)
   end
 end
@@ -120,8 +111,7 @@ module Assertion
   # <context_file> <output> <error> <assertion> <arg>...
   def self.from_arguments(scope, array)
     # Unpack the arguments.
-    file,
-      kakoune_command_name,
+    kakoune_command_name,
       output,
       error,
       title,
@@ -131,7 +121,6 @@ module Assertion
       *command =
         array
     # Convert the arguments into higher level objects.
-    file_with_lines = FileWithLines.new(file)
     case matcher
     when "output" then Assertion::Output
     when "error"  then Assertion::Error
@@ -139,7 +128,6 @@ module Assertion
     end.new(
       TestCase.new(
         scope,
-        file_with_lines,
         kakoune_command_name,
         output,
         error,
@@ -449,6 +437,10 @@ Scope = Struct.new(:parent, :description) do
     return unless defined?
     parent.each {|parent_scope| yield parent_scope}
     yield self
+  end
+
+  def suite_file
+    first.description
   end
 end
 
