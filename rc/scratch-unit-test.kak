@@ -31,22 +31,10 @@ The <matcher> argument controls the comparison:
             shift 4
             kak_quote "$@"
         )
-        scratch-unit-test-log ""            %arg(@)
+        scratch-unit-test-send message_assert %opt(scratch_commands_output) ""            %arg(@)
     ) catch %(
-        scratch-unit-test-log "%val(error)" %arg(@)
+        scratch-unit-test-send message_assert %opt(scratch_commands_output) "%val(error)" %arg(@)
     )
-)
-
-define-command scratch-unit-test-log \
-    -hidden \
-    -params .. \
-    -docstring 'scratch-unit-test-log <error> <arg>...:
-Logs the output and error of an assertion.' \
-%(
-    scratch-unit-test-send \
-        message_assert \
-        "%opt(scratch_commands_output)" \
-        %arg(@)
 )
 
 define-command scratch-unit-test-source \
