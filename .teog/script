@@ -1,13 +1,8 @@
 #! /bin/sh
 
-stabilize ()
-{
-    sed "s,$PWD,€PWD," | sed -r 's,[0-9]+\.[0-9]+,x,g' |
-        sed -r 's,/tmp/scratch-unit-test-kak\.[^/]*,€SCRATCH_UNIT_TEST_DIR,g'
-}
-
 for sample in sample-test-suites/*.kak
 do
-    bin/scratch-unit-test-kak "$sample" | stabilize >"$sample.out" 2>"$sample.err"
+    bin/scratch-unit-test-kak "$sample" |
+        script/stabilize >"$sample.out" 2>"$sample.err"
     echo $? >"$sample.status"
 done
