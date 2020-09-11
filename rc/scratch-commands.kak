@@ -19,10 +19,6 @@ define-command scratch-commands \
     -docstring "scratch-commands <input> <command> <final-command>:
 TODO: Describe." \
 %(
-    # Ensure that at least some input is given.
-    evaluate-commands %sh(
-        test "$1" && printf "%s" "nop"
-    ) fail "scratch-commands: expected a non-empty <input>"
     evaluate-commands -save-regs 't' %(
         # Open a temporary scratch buffer with a unique name.
         set-option -add global scratch_commands_id 1

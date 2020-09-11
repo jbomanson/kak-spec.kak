@@ -23,17 +23,17 @@ sample-test-suites/fail-in-source.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 sample-test-suites/simple.kak.err: empty
 sample-test-suites/simple.kak.out:
-  size: { lines: 33, words: 63, bytes: 719 }
-  first: "\e[31mF\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
+  size: { lines: 46, words: 91, bytes: 1015 }
+  first: "\e[31mF\e[0m\e[31mF\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: ''
-  hash: '0791d1cc4aaf28129d008ba70317b51ec0becbde'
+  hash: 38e54de4e503ecf4e8dec773177fb0e269e726d3
 sample-test-suites/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: eacdc9e2f94904ac1a66e39134c11867bfa86c81
+  input: e61e285c36b3a046f96f82233900b4c9d17d2a79
   status: 0
-  total: 9d4bc4672eb951ea9f65be5739d73ba196c82469
+  total: a6d3a2f70b59a718aab432b32676c9121345211a
   version: 8
