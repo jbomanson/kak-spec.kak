@@ -110,7 +110,7 @@ def format_block(title, text, check_end = false)
 end
 
 # An object representing a comparisiong between an actual and expected value of a kakoune kakoune_expansion.
-Comparison = Struct.new(:kakoune_expansion, :expected_value, :actual_value) do
+Comparison = Struct.new(:type, :kakoune_expansion, :expected_value, :actual_value) do
   # Parses expectation message components sent with scratch-unit-test-assert.
   def self.partition_and_create_from_arguments(array)
     comparisons = []
@@ -119,12 +119,13 @@ Comparison = Struct.new(:kakoune_expansion, :expected_value, :actual_value) do
       if remaining_arguments.empty?
         throw "Missing 'END_OF_EXPECTATIONS' from assertion message: #{array}"
       end
-      if remaining_arguments.size < 3
+      num_members = self.members.size
+      if remaining_arguments.size < num_members
         throw \
           "Expected a kakoune expansion in an assertion at the point between " +
-          "#{array[0...comparisons.size * 3]} and #{remaining_arguments}"
+          "#{array[0...comparisons.size * num_members]} and #{remaining_arguments}"
       end
-      comparisons << self.new(*remaining_arguments.shift(3))
+      comparisons << self.new(*remaining_arguments.shift(num_members))
     end
     remaining_arguments.shift
     [comparisons, remaining_arguments]
@@ -133,7 +134,9 @@ Comparison = Struct.new(:kakoune_expansion, :expected_value, :actual_value) do
   # Formats details of this expectation to an {IO} -- {#pass} ed or not.
   def format_details(io)
     if expected_value == actual_value
-      io << format_block("Accepted #{kakoune_expansion}", actual_value, false)
+      if type == "comparison_explicit"
+        io << format_block("Accepted #{kakoune_expansion}", actual_value, false)
+      end
     else
       check_end =
         [expected_value, actual_value].select do |text|

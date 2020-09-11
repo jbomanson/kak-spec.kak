@@ -27,14 +27,18 @@ The <matcher> argument controls the comparison:
     try %(
         evaluate-commands %sh(
             eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
+            # Usage:
+            #   encode_comparison explicit|implicit <switch> <expected_value> <expression>
             encode_comparison ()
             {
                 printf "%s " \
-                    "$(kak_quote "${1#-expect-}")" \
-                    "$(kak_quote "$2")" \
-                    "$3"
+                    "$1" \
+                    "$(kak_quote "${2#-expect-}")" \
+                    "$(kak_quote "$3")" \
+                    "$4"
             }
             error_comparison="$(encode_comparison \
+                'comparison_implicit' \
                 '-expect-%val(error)' \
                 '' \
                 '%opt(scratch_commands_error)'
@@ -46,13 +50,13 @@ The <matcher> argument controls the comparison:
                 case "$1" in
                 ('-expect-%val(error)')
                     error_comparison="$(encode_comparison \
-                        "$1" "$2" '%opt(scratch_commands_error)'
+                        comparison_explicit "$1" "$2" '%opt(scratch_commands_error)'
                     )"
                     shift 2
                     ;;
                 (-expect-*)
                     comparisons="$comparisons $(encode_comparison \
-                        "$1" "$2" "${1#-expect-}"
+                        comparison_explicit "$1" "$2" "${1#-expect-}"
                     )"
                     shift 2
                     ;;
