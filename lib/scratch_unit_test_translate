@@ -80,11 +80,7 @@ FileWithLines = Struct.new(:filename) do
   end
 end
 
-TestCase = Struct.new(:scope, :file_with_lines, :context, :kakoune_command_name, :output, :error, :title, :input) do
-  def brief
-    context.empty? ? title : "#{context} #{title}"
-  end
-
+TestCase = Struct.new(:scope, :file_with_lines, :kakoune_command_name, :output, :error, :title, :input) do
   # A regular expression that approximates how the original kakoune command call
   # that created this test case probably looks like.
   # @return [Regexp]
@@ -125,7 +121,6 @@ module Assertion
   def self.from_arguments(scope, array)
     # Unpack the arguments.
     file,
-      context,
       kakoune_command_name,
       output,
       error,
@@ -145,7 +140,6 @@ module Assertion
       TestCase.new(
         scope,
         file_with_lines,
-        context,
         kakoune_command_name,
         output,
         error,
@@ -481,9 +475,7 @@ def main(fifo)
         task, *arguments = message_components
         case task.chomp
         when "message_assert"
-          presenter.present_assertion(Assertion.from_arguments(
-            scope_stack.last, arguments
-          ))
+          presenter.present_assertion(Assertion.from_arguments(scope_stack.last, arguments))
         when "message_non_assertion_error"
           presenter.present_error(NonAssertionError.new(scope_stack.last, arguments.join(" ")))
         when "message_scope_begin"

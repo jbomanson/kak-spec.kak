@@ -46,7 +46,6 @@ Logs the output and error of an assertion.' \
     scratch-unit-test-send \
         "message_assert" \
         "%opt(scratch_unit_test_source_file)" \
-        "%opt(scratch_unit_test_context_message)" \
         scratch-unit-test-assert \
         "%opt(scratch_commands_output)" \
         %arg(@)
