@@ -361,7 +361,8 @@ def read_message(io)
   if header_line = io.gets
     size_in_lines = header_line.to_i
     size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
-    io.take(size_in_lines).join.shellsplit
+    number, *arguments = io.take(size_in_lines).join.shellsplit
+    arguments
   end
 end
 
