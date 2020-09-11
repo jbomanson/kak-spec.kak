@@ -25,12 +25,7 @@ The <matcher> argument controls the comparison:
 - 'error'  matches any raised error or '' against regex <expected-value>" \
 %(
     try %(
-        evaluate-commands scratch-commands %sh(
-            eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
-            printf "%s" "$(kak_quote "$2") "
-            shift 4
-            kak_quote "$@"
-        )
+        scratch-commands %arg(2) %arg(5)
         scratch-unit-test-send message_assert %opt(scratch_commands_output) ""            %arg(@)
     ) catch %(
         scratch-unit-test-send message_assert %opt(scratch_commands_output) "%val(error)" %arg(@)

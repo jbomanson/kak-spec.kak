@@ -15,8 +15,8 @@ declare-option -hidden int scratch_commands_id 0
 declare-option -hidden str scratch_commands_error
 
 define-command scratch-commands \
-    -params .. \
-    -docstring "scratch-commands <input> <command>...:
+    -params 2 \
+    -docstring "scratch-commands <input> <command>:
 TODO: Describe." \
 %(
     # Ensure that at least some input is given.
@@ -37,12 +37,7 @@ TODO: Describe." \
             # Evaluate <command>... and save any raised error.
             set-option global scratch_commands_error ""
             set-option global scratch_commands_output
-            evaluate-commands -save-regs t %sh(
-                eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
-                shift 1
-                printf "%s" "evaluate-commands "
-                kak_quote "$@"
-            )
+            evaluate-commands -save-regs t %arg(2)
             # TODO: Ensure that we are in normal mode.
             # Check whether the command changed the current buffer.
             evaluate-commands %sh(
