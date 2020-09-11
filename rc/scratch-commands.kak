@@ -72,7 +72,6 @@ TODO: Describe." \
             set-option global scratch_commands_output "%val(selection)"
         ) catch %(
             set-option global scratch_commands_error "%val(error)"
-            fail "scratch-commands: %opt(scratch_commands_error)"
         )
         delete-buffer "%reg(t)"
         # Present any error caught when evaluating user commands.
