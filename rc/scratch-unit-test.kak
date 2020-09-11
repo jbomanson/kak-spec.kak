@@ -76,22 +76,28 @@ define-command scratch-unit-test-context \
     -docstring 'scratch-unit-test-context <context-message> <commands>:
 Evaluates <commands> so that any assertions in them have context information.' \
 %(
+    scratch-unit-test-scope scratch_unit_test_context_message %arg(@)
+)
+
+define-command scratch-unit-test-scope \
+    -hidden \
+    -params 3 \
+    -docstring 'scratch-unit-test-scope <option> <description> <commands>:
+Evaluates <commands> so that any assertions in them have scope information.' \
+%(
     try %(
-        evaluate-commands %sh(
-            test "$kak_opt_scratch_unit_test_source_file" && printf "%s" "nop"
-        ) fail "scratch-unit-test-context: BUG: something went wrong inside scratch-unit-test.kak"
-        set-option global scratch_unit_test_context_message "%arg(1)"
-        evaluate-commands "%arg(2)"
+        set-option global %arg(1) %arg(2)
+        evaluate-commands %arg(3)
     ) catch %(
         # Send the error as a command to the translator.
         scratch-unit-test-send "message_non_assertion_error" \
             %opt(scratch_unit_test_source_file) \
-            %opt(scratch_unit_test_context_message) \
+            %opt(scratch_unit_test_scope_message) \
             %val(error)
         # Re-raise the caught error.
         fail "%val(error)"
     )
-    set-option global scratch_unit_test_context_message UNDEFINED
+    set-option global %arg(1) UNDEFINED
 )
 
 define-command scratch-unit-test-send \
