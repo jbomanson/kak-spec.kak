@@ -53,22 +53,11 @@ Logs the output and error of an assertion.' \
 )
 
 define-command scratch-unit-test-source \
-    -params 1.. \
-    -docstring 'scratch-unit-test-source <filename> <params>...: Define a test suite.' \
+    -params 1 \
+    -docstring 'scratch-unit-test-source <filename>:
+Define a test suite source file.' \
 %(
-    try %(
-        set-option global scratch_unit_test_source_file "%arg(1)"
-        source %arg(@)
-    ) catch %(
-        # Send the error as a command to the translator.
-        scratch-unit-test-send "message_non_assertion_error" \
-            %opt(scratch_unit_test_source_file) \
-            %opt(scratch_unit_test_context_message) \
-            %val(error)
-        # Re-raise the caught error.
-        fail "%val(error)"
-    )
-    set-option global scratch_unit_test_source_file UNDEFINED
+    scratch-unit-test-scope scratch_unit_test_source_file %arg(1) source %arg(1)
 )
 
 define-command scratch-unit-test-context \
@@ -81,19 +70,20 @@ Evaluates <commands> so that any assertions in them have context information.' \
 
 define-command scratch-unit-test-scope \
     -hidden \
-    -params 3 \
-    -docstring 'scratch-unit-test-scope <option> <description> <commands>:
+    -params 3..4 \
+    -docstring 'scratch-unit-test-scope <option> <description> <command> [<argument>]:
 Evaluates <commands> so that any assertions in them have scope information.' \
 %(
     try %(
         set-option global %arg(1) %arg(2)
-        evaluate-commands %arg(3)
+        evaluate-commands %arg(3) %arg(4)
     ) catch %(
         # Send the error as a command to the translator.
         scratch-unit-test-send "message_non_assertion_error" \
             %opt(scratch_unit_test_source_file) \
-            %opt(scratch_unit_test_scope_message) \
+            %opt(scratch_unit_test_context_message) \
             %val(error)
+        set-option global %arg(1) UNDEFINED
         # Re-raise the caught error.
         fail "%val(error)"
     )
