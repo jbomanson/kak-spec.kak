@@ -39,14 +39,22 @@ sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
 fifo_holder_pid=$!
 
 {
-    kak_quote source "$root_dir/rc/scratch-unit-test.kak"
-    kak_quote source "$root_dir/rc/scratch-commands.kak"
-    kak_quote buffer '*debug*'
-    for argument
-    do
-        kak_quote try "$(kak_quote source "$argument")"
-    done
-    kak_quote require-module scratch-unit-test
+    kak_quote try "
+        source $(kak_quote "$root_dir/rc/scratch-unit-test.kak")
+        source $(kak_quote "$root_dir/rc/scratch-commands.kak")
+        buffer '*debug*'
+        require-module scratch-unit-test
+    " catch "
+        quit! 1
+    "
+    kak_quote try "
+        $(
+            for argument
+            do
+                kak_quote try "$(kak_quote source "$argument")"
+            done
+        )
+    "
     kak_quote scratch-unit-test-send message_quit
 } >"$SCRATCH_UNIT_TEST_DIR/source.kak"
 
