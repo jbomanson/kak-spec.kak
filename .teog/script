@@ -1,8 +1,39 @@
 #! /bin/sh
 
+# Prepare to use an almost minimal PATH as set by `env -i` with the addition of the local bin/.
+# Make local soft links to all required programs that are not on the minimal PATH created by
+# env -i.
+# This process makes strace output nicer.
+
+required_programs="kak"
+
+for program in $required_programs
+do
+    if ! location="$(command -v "$program" 2>/dev/null)"; then
+        echo "${0##*/}: missing program \"$program\"";
+        exit 1;
+    fi >&2
+    eval "$program=\$location"
+done
+
+PATH="$PWD/bin:$(env -i sh -c 'echo "$PATH"')"
+
+for program in $required_programs
+do
+    command -v "program" >/dev/null 2>&1 || eval ln -s "\"\$$program\"" bin/
+done
+
+# Run scratch-unit-test on all samples.
+
 for sample in example/*.kak
 do
     bin/scratch-unit-test-kak "$sample" |
         script/stabilize >"$sample.out" 2>"$sample.err"
     echo $? >"$sample.status"
+done
+
+# Remove soft links to programs so that teog does not report them.
+for program in $required_programs
+do
+    rm -f "bin/$program"
 done
