@@ -32,6 +32,16 @@ do
     echo $? >"$sample.status"
 done
 
+# Process all examples through strace.
+strace -f --output=".strace.txt" \
+    bin/scratch-unit-test-kak example/*.kak >/dev/null 2>&1
+
+# Make a histogram of calls to programs by their basename.
+# Show those that are called more than once.
+cat ".strace.txt" | grep -Eo 'execve\("[^"]*"' | sed -r 's,.*/|",,g' |
+    sort | uniq -c | sort -n |
+    grep -E '^\s*([2-9]|1[0-9])' >program-call-counts.txt
+
 # Remove soft links to programs so that teog does not report them.
 for program in $required_programs
 do
