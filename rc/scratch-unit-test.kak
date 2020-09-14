@@ -80,7 +80,8 @@ The <matcher> argument controls the comparison:
                     $error_comparison \
                     $comparisons \
                     END_OF_EXPECTATIONS \
-                    $(kak_quote "$option_title" "$option_input" "$option_eval")"
+                    $(kak_quote "$option_title" "$option_input" "$option_eval")
+                " \
         )
     ) catch %(
         scratch-unit-test-send message_non_assertion_error %val(error)
