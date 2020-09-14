@@ -67,11 +67,11 @@ example/switches.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 program-call-counts.txt:
   size: { lines: 6, words: 12, bytes: 71 }
-  first: "      2 kak"
+  first: "      2 cat"
   last: "    255 sed"
-  hash: 374ccfd3537c975fdfb010e03468b596a890057e
+  hash: 47ad3ba99ca595b6e28368c9c8e1f8e2d47f54c2
 teog:
-  input: 21fd93f4d3a7ad47b12186e8d35e4df7d31f6a15
+  input: 79f61d3281fff13fc12bb4011bb5b10548a7053a
   status: 0
-  total: 036fc4abe183cc7b5434506419881767a1286040
+  total: 70dbf1756e5d8cab781c553538a5bcdc094dd356
   version: 8

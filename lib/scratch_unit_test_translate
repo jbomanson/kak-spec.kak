@@ -391,22 +391,25 @@ class MessageReader
 
   # Returns an {Enumerable} consisting of all messages until target_message.
   # Using the enumerable will advance this {MessageReader} until and over the target message.
-  def until_message(*target_message)
-    UntilMessage.new(self, target_message)
+  def until_message(target_message_task)
+    UntilMessage.new(self, target_message_task)
   end
 
   # This is an implementation detail of {MessageReader#until_message}.
   class UntilMessage
     include Enumerable
 
-    def initialize(reader, target_message)
+    attr_reader :target_message
+
+    def initialize(reader, target_message_task)
       @reader = reader
-      @target_message = target_message
+      @target_message_task = target_message_task
     end
 
     def each
       @reader.each do |message|
-        if message == @target_message
+        if message.first == @target_message_task
+          @target_message = message
           break
         else
           yield message
@@ -452,7 +455,8 @@ def main(fifo)
       throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
     end
     scope_stack = [Scope.top_level]
-    message_reader.until_message("message_quit").to_a.each do |message_components|
+    until_reader = message_reader.until_message("message_quit")
+    until_reader.to_a.each do |message_components|
       stubbornly do
         task, *arguments = message_components
         case task.chomp
@@ -478,6 +482,8 @@ def main(fifo)
     end
     presenter.present_summary
     system("echo 'evaluate-commands -client #{client} %(scratch-unit-test-quit-end)' | kak -p #{session}")
+    # Print the contents of the debug buffer sent as part of the last message.
+    puts until_reader.target_message.last
   end
 end
 

@@ -150,16 +150,15 @@ define-command scratch-unit-test-quit-begin \
     -hidden \
     -docstring 'scratch-unit-test-quit-begin: begin quitting scratch-unit-test and kakoune' \
 %(
-    scratch-unit-test-send message_quit
+    buffer *debug*
+    execute-keys '%'
+    scratch-unit-test-send message_quit %val(selection)
 )
 
 define-command scratch-unit-test-quit-end \
     -hidden \
     -docstring 'scratch-unit-test-quit-end: finish quitting scratch-unit-test and kakoune' \
 %(
-    try %(
-        write %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/debug")
-    )
     quit!
 )
 

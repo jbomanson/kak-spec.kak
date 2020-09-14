@@ -70,8 +70,4 @@ if test "$fifo_holder_pid" -gt 0; then
     kill "$fifo_holder_pid"
 fi
 
-if test -r "$SCRATCH_UNIT_TEST_DIR/debug"; then
-    cat "$SCRATCH_UNIT_TEST_DIR/debug"
-fi
-
 exit "$kak_status"
