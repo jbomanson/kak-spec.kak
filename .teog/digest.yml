@@ -32,6 +32,17 @@ example/fail-in-source.kak.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/fail-in-test.kak.err: empty
+example/fail-in-test.kak.out:
+  size: { lines: 41, words: 111, bytes: 932 }
+  first: "\e[32m.\e[0m\e[31mE\e[0m\e[31mF\e[0m\e[31mE\e[0m"
+  last: ''
+  hash: 83678947b339b788125d5d25e95975e0917d0096
+example/fail-in-test.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/multiline.kak.err: empty
 example/multiline.kak.out:
   size: { lines: 29, words: 83, bytes: 779 }
@@ -68,10 +79,10 @@ example/switches.kak.status:
 program-call-counts.txt:
   size: { lines: 6, words: 12, bytes: 71 }
   first: "      2 cat"
-  last: "    255 sed"
-  hash: 47ad3ba99ca595b6e28368c9c8e1f8e2d47f54c2
+  last: "    281 sed"
+  hash: 4b6e97b31ab44b5b97f4104fb54582338d203321
 teog:
-  input: 79f61d3281fff13fc12bb4011bb5b10548a7053a
+  input: 611f0d16f76719b1aea779691c48d763e73975a0
   status: 0
-  total: 70dbf1756e5d8cab781c553538a5bcdc094dd356
+  total: 5a2fbce53f6cc23ba4c66af57213f50a03c209a9
   version: 8
