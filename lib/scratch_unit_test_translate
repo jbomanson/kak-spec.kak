@@ -4,6 +4,13 @@ require "shellwords"
 
 STARTUP_MONOTONIC_TIME = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
+LINE_NUMBER_COLOR    = :light_blue
+NEWLINE_MARKER_COLOR = :light_blue
+
+def newline_marker
+  $newline_marker ||= Terminal.in_color("¬", NEWLINE_MARKER_COLOR)
+end
+
 TEST_CASE_KAKOUNE_COMMAND_NAME = "scratch-unit-test-assert"
 
 class TranslationException < StandardError
@@ -92,14 +99,14 @@ end
 
 # Mark all newlines with a visible character.
 def mark_newlines_explicitly(string)
-  string.gsub(/\n/, "¬\n")
+  string.gsub(/\n/, "#{newline_marker}\n")
 end
 
 def format_block(title, text)
   string = "\n"
   string << "    #{title}:\n"
   text.each_line.each_with_index do |line, index|
-    string << Terminal.in_color("    %3i|" % (index + 1), :light_blue)
+    string << Terminal.in_color("    %3i|" % (index + 1), LINE_NUMBER_COLOR)
     string << mark_newlines_explicitly(Terminal.any_trailing_whitespace_in_color(line))
     string << "\n" unless line.end_with?("\n")
   end
