@@ -60,12 +60,7 @@ module Terminal
   # @return [String]
   def any_trailing_whitespace_in_color(line)
     # Highlight trailing whitespace.
-    line.gsub(/[[:blank:]]+$/) {|text| Terminal.in_color(text, :red_background)} +
-      if line.end_with?("\n")
-        ""
-      else
-        "\n"
-      end
+    line.gsub(/[[:blank:]]+$/) {|text| Terminal.in_color(text, :red_background)}
   end
 end
 
@@ -95,16 +90,18 @@ TestCase = Struct.new(:scope, :title, :input) do
   end
 end
 
-def format_block(title, text, check_end = false)
+# Mark all newlines with a visible character.
+def mark_newlines_explicitly(string)
+  string.gsub(/\n/, "¬\n")
+end
+
+def format_block(title, text)
   string = "\n"
   string << "    #{title}:\n"
   text.each_line.each_with_index do |line, index|
     string << Terminal.in_color("    %3i|" % (index + 1), :light_blue)
-    string << Terminal.any_trailing_whitespace_in_color(line)
-  end
-  if check_end && !text.end_with?("\n")
-    string << "    %3s " % ""
-    string << "(no trailing newline)\n"
+    string << mark_newlines_explicitly(Terminal.any_trailing_whitespace_in_color(line))
+    string << "\n" unless line.end_with?("\n")
   end
   string
 end
@@ -135,17 +132,11 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_value, :actual_valu
   def format_details(io)
     if expected_value == actual_value
       if type == "comparison_explicit"
-        io << format_block("Accepted #{kakoune_expansion}", actual_value, false)
+        io << format_block("Accepted #{kakoune_expansion}", actual_value)
       end
     else
-      check_end =
-        [expected_value, actual_value].select do |text|
-          !text.empty?
-        end.map do |text|
-          text.end_with?("\n")
-        end.uniq.size != 1
-      io << format_block("Expected #{kakoune_expansion}", expected_value, check_end)
-      io << format_block("Actual #{kakoune_expansion}", actual_value, check_end)
+      io << format_block("Expected #{kakoune_expansion}", expected_value)
+      io << format_block("Actual #{kakoune_expansion}", actual_value)
     end
   end
 
@@ -206,7 +197,7 @@ module Assertion
     def failure_details(index)
       string = ""
       string << super
-      string << format_block("Input", test_case.input, true)
+      string << format_block("Input", test_case.input)
       comparisons.each do |expectation|
         expectation.format_details(string)
       end

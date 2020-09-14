@@ -1,10 +1,10 @@
 ---
 example/difference-in-trailing-whitespace.kak.err: empty
 example/difference-in-trailing-whitespace.kak.out:
-  size: { lines: 24, words: 63, bytes: 569 }
+  size: { lines: 23, words: 60, bytes: 539 }
   first: "\e[31mF\e[0m"
   last: ''
-  hash: 5690fa527652028cbe5dba99cd8ccd41599e1edf
+  hash: 1dfc5b060afb41871ffaf1f93eb3c665529826da
 example/difference-in-trailing-whitespace.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -34,10 +34,10 @@ example/fail-in-source.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/multiline.kak.err: empty
 example/multiline.kak.out:
-  size: { lines: 30, words: 86, bytes: 743 }
+  size: { lines: 29, words: 83, bytes: 725 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: ''
-  hash: b7deed050fdaadde938ed3c1a48da06ef6b520e4
+  hash: 1594e5d069374d201e0c21b3906c8cc623379321
 example/multiline.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -45,10 +45,10 @@ example/multiline.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/simple.kak.err: empty
 example/simple.kak.out:
-  size: { lines: 46, words: 95, bytes: 1049 }
+  size: { lines: 44, words: 89, bytes: 989 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: ''
-  hash: 1b282d56678629fc9a94dd87c7efd9d920fb8ae7
+  hash: d2848ff68ec8b0d9c519b906f27e71a782a1b00b
 example/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -56,10 +56,10 @@ example/simple.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/switches.kak.err: empty
 example/switches.kak.out:
-  size: { lines: 50, words: 99, bytes: 978 }
+  size: { lines: 48, words: 93, bytes: 918 }
   first: "\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[31mE\e[0m"
   last: ''
-  hash: cc7beb21d517739e065b65fde37cc4da65a5a14b
+  hash: 6bf9e69a0ef0de604e02f689c0c9ad32070d5ff7
 example/switches.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -71,7 +71,7 @@ program-call-counts.txt:
   last: "    256 sed"
   hash: ed9993df3230a92a9a6f93576d548e67a11b0a2f
 teog:
-  input: 991c68f6c43a974babc8f0ff0d7cb5b13b3c53da
+  input: b065cb32d48882beeed7407fdaeee278501c7d9f
   status: 0
-  total: 9de382ae9b1759aaaddeab748b7a105cd3ae0118
+  total: 581cb9709093d9d2c88dc7084a2757dc9ece2e05
   version: 8
