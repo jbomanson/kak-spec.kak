@@ -34,10 +34,10 @@ example/fail-in-source.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/multiline.kak.err: empty
 example/multiline.kak.out:
-  size: { lines: 30, words: 86, bytes: 797 }
+  size: { lines: 30, words: 86, bytes: 743 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: ''
-  hash: ddf8329b50dc758e63f6625f436abf19ef2ca0cb
+  hash: b7deed050fdaadde938ed3c1a48da06ef6b520e4
 example/multiline.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -71,7 +71,7 @@ program-call-counts.txt:
   last: "    256 sed"
   hash: ed9993df3230a92a9a6f93576d548e67a11b0a2f
 teog:
-  input: 3fa0d1e72424da8e4c54623351e544f9c50e4596
+  input: 991c68f6c43a974babc8f0ff0d7cb5b13b3c53da
   status: 0
-  total: 6ec81184bd69c3074e6edaf49164f8410bb09da8
+  total: 9de382ae9b1759aaaddeab748b7a105cd3ae0118
   version: 8

@@ -60,7 +60,7 @@ module Terminal
   # @return [String]
   def any_trailing_whitespace_in_color(line)
     # Highlight trailing whitespace.
-    line.gsub(/\s+$/) {|text| Terminal.in_color(text, :red_background)} +
+    line.gsub(/[[:blank:]]+$/) {|text| Terminal.in_color(text, :red_background)} +
       if line.end_with?("\n")
         ""
       else
