@@ -21,6 +21,17 @@ example/fail-in-source.kak.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/multiline.kak.err: empty
+example/multiline.kak.out:
+  size: { lines: 30, words: 86, bytes: 797 }
+  first: "\e[32m.\e[0m\e[31mF\e[0m"
+  last: ''
+  hash: ddf8329b50dc758e63f6625f436abf19ef2ca0cb
+example/multiline.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/simple.kak.err: empty
 example/simple.kak.out:
   size: { lines: 46, words: 95, bytes: 1049 }
@@ -46,10 +57,10 @@ example/switches.kak.status:
 program-call-counts.txt:
   size: { lines: 6, words: 12, bytes: 71 }
   first: "      2 kak"
-  last: "    215 sed"
-  hash: 8ae6e34cb466a084d53f36afbfc95b92f235de76
+  last: "    241 sed"
+  hash: cc798b6060002b6cba76eb00a6ff359e7504a8d1
 teog:
-  input: dec363034c32ab29b43c55ac2f4e1567715751c4
+  input: db8fb1d0577813a2cda107da3e4965ee6496088b
   status: 0
-  total: 23d9c355b77c315e63123f90112edaba5bf234ff
+  total: ae83f7e166e6b9d81c613ef563e9becbb7b69d4e
   version: 8
