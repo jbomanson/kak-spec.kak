@@ -477,7 +477,7 @@ def main(fifo)
       end
     end
     presenter.present_summary
-    system("echo 'evaluate-commands -client #{client} %(scratch-unit-test-quit)' | kak -p #{session}")
+    system("echo 'evaluate-commands -client #{client} %(scratch-unit-test-quit-end)' | kak -p #{session}")
   end
 end
 

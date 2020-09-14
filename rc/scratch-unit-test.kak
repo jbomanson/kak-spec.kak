@@ -146,9 +146,16 @@ send a message to scratch_unit_test_translate' \
     )
 )
 
-define-command scratch-unit-test-quit \
+define-command scratch-unit-test-quit-begin \
     -hidden \
-    -docstring 'scratch-unit-test-quit: quit kakoune' \
+    -docstring 'scratch-unit-test-quit-begin: begin quitting scratch-unit-test and kakoune' \
+%(
+    scratch-unit-test-send message_quit
+)
+
+define-command scratch-unit-test-quit-end \
+    -hidden \
+    -docstring 'scratch-unit-test-quit-end: finish quitting scratch-unit-test and kakoune' \
 %(
     try %(
         write %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/debug")

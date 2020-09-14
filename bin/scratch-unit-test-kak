@@ -56,7 +56,7 @@ fifo_holder_pid=$!
             done
         )
     "
-    kak_quote scratch-unit-test-send message_quit
+    kak_quote scratch-unit-test-quit-begin
 } >"$SCRATCH_UNIT_TEST_DIR/source.kak"
 
 kak -ui dummy -n -e 'source %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/source.kak")'
