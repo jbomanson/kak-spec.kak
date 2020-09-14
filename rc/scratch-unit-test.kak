@@ -4,11 +4,6 @@ provide-module scratch-unit-test %~
 
 require-module scratch-commands
 
-# TODO.
-declare-option -hidden str scratch_unit_test_source_file UNDEFINED
-
-# TODO.
-declare-option -hidden str scratch_unit_test_context_message UNDEFINED
 
 # A monotonically increasing counter that is used to stamp messages sent internally to #
 # scratch_unit_test_translate.
@@ -97,7 +92,7 @@ define-command scratch-unit-test-source \
     -docstring 'scratch-unit-test-source <filename>:
 Define a test suite source file.' \
 %(
-    scratch-unit-test-scope scratch_unit_test_source_file %arg(1) source %arg(1)
+    scratch-unit-test-scope %arg(1) source %arg(1)
 )
 
 define-command scratch-unit-test-context \
@@ -105,29 +100,26 @@ define-command scratch-unit-test-context \
     -docstring 'scratch-unit-test-context <context-message> <commands>:
 Evaluates <commands> so that any assertions in them have context information.' \
 %(
-    scratch-unit-test-scope scratch_unit_test_context_message %arg(@)
+    scratch-unit-test-scope %arg(@)
 )
 
 define-command scratch-unit-test-scope \
     -hidden \
-    -params 3..4 \
-    -docstring 'scratch-unit-test-scope <option> <description> <command> [<argument>]:
+    -params 2..3 \
+    -docstring 'scratch-unit-test-scope <description> <command> [<argument>]:
 Evaluates <commands> so that any assertions in them have scope information.' \
 %(
-    scratch-unit-test-send message_scope_begin %arg(2)
+    scratch-unit-test-send message_scope_begin %arg(1)
     try %(
-        set-option global %arg(1) %arg(2)
-        evaluate-commands %arg(3) %arg(4)
+        evaluate-commands %arg(2) %arg(3)
     ) catch %(
         # Send the error as a command to the translator.
         scratch-unit-test-send message_non_assertion_error %val(error)
-        scratch-unit-test-send message_scope_end %arg(2)
-        set-option global %arg(1) UNDEFINED
+        scratch-unit-test-send message_scope_end %arg(1)
         # Re-raise the caught error.
         fail "%val(error)"
     )
-    scratch-unit-test-send message_scope_end %arg(2)
-    set-option global %arg(1) UNDEFINED
+    scratch-unit-test-send message_scope_end %arg(1)
 )
 
 define-command scratch-unit-test-send \
