@@ -19,72 +19,68 @@ The <matcher> argument controls the comparison:
 - 'output' compares the final contents of the buffer to <expected-value>
 - 'error'  matches any raised error or '' against regex <expected-value>" \
 %(
-    try %(
-        evaluate-commands %sh(
-            eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
-            # Usage:
-            #   encode_comparison explicit|implicit <switch> <expected_value> <expression>
-            encode_comparison ()
-            {
-                printf "%s " \
-                    "$1" \
-                    "$(kak_quote "${2#-expect-}")" \
-                    "$(kak_quote "$3")" \
-                    "$4"
-            }
-            error_comparison="$(encode_comparison \
-                'comparison_implicit' \
-                '-expect-%val(error)' \
-                '' \
-                '%opt(scratch_commands_error)'
-            )"
-            # Parse [<switches>].
-            comparisons=""
-            option_eval=""
-            option_input=""
-            option_title=""
-            while true
-            do
-                case "$1" in
-                ('-expect-%val(error)')
-                    error_comparison="$(encode_comparison \
-                        comparison_explicit "$1" "$2" '%opt(scratch_commands_error)'
-                    )"
-                    shift 2
-                    ;;
-                (-expect-*)
-                    comparisons="$comparisons $(encode_comparison \
-                        comparison_explicit "$1" "$2" "${1#-expect-}"
-                    )"
-                    shift 2
-                    ;;
-                (-eval | -input | -title)
-                    eval "option_${1#-}=\$2"
-                    shift 2
-                    ;;
-                (-*)
-                    kak_quote fail "scratch-unit-test-assert: Unknown option '$1'"
-                    exit 1
-                    ;;
-                (*)
-                    break
-                    ;;
-                esac
-            done
-            true "${option_title:="$option_eval"}"
-            # Call scratch-commands with the user given command and with a <final-command> that
-            # sends a message to the translator.
-            kak_quote scratch-commands "$option_input" "$option_eval" \
-                "scratch-unit-test-send \
-                    message_assert \
-                    $error_comparison \
-                    $comparisons \
-                    END_OF_EXPECTATIONS \
-                    $(kak_quote "$option_title" "$option_input" "$option_eval")
-                " \
-        )
-    ) catch %(
-        scratch-unit-test-send message_non_assertion_error %val(error)
+    scratch-unit-test-scope "Implicit scratch-unit-test-assert scope" %sh(
+        eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
+        # Usage:
+        #   encode_comparison explicit|implicit <switch> <expected_value> <expression>
+        encode_comparison ()
+        {
+            printf "%s " \
+                "$1" \
+                "$(kak_quote "${2#-expect-}")" \
+                "$(kak_quote "$3")" \
+                "$4"
+        }
+        error_comparison="$(encode_comparison \
+            'comparison_implicit' \
+            '-expect-%val(error)' \
+            '' \
+            '%opt(scratch_commands_error)'
+        )"
+        # Parse [<switches>].
+        comparisons=""
+        option_eval=""
+        option_input=""
+        option_title=""
+        while true
+        do
+            case "$1" in
+            ('-expect-%val(error)')
+                error_comparison="$(encode_comparison \
+                    comparison_explicit "$1" "$2" '%opt(scratch_commands_error)'
+                )"
+                shift 2
+                ;;
+            (-expect-*)
+                comparisons="$comparisons $(encode_comparison \
+                    comparison_explicit "$1" "$2" "${1#-expect-}"
+                )"
+                shift 2
+                ;;
+            (-eval | -input | -title)
+                eval "option_${1#-}=\$2"
+                shift 2
+                ;;
+            (-*)
+                kak_quote fail "scratch-unit-test-assert: Unknown option '$1'"
+                exit 1
+                ;;
+            (*)
+                break
+                ;;
+            esac
+        done
+        true "${option_title:="$option_eval"}"
+        # Call scratch-commands with the user given command and with a <final-command> that
+        # sends a message to the translator.
+        kak_quote scratch-commands "$option_input" "$option_eval" \
+            "scratch-unit-test-send \
+                message_assert \
+                $error_comparison \
+                $comparisons \
+                END_OF_EXPECTATIONS \
+                $(kak_quote "$option_title" "$option_input" "$option_eval")
+            " \
     )
 )
 

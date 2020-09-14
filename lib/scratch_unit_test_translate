@@ -427,7 +427,7 @@ Scope = Struct.new(:parent, :description) do
   end
 
   def each
-    return unless defined?
+    return unless parent
     parent.each {|parent_scope| yield parent_scope}
     yield self
   end
