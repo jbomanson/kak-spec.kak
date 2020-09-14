@@ -46,15 +46,11 @@ TODO: Describe." \
             execute-keys '%H'
             set-option global scratch_commands_output "%val(selection)"
         ) catch %(
+            # Swallow any raised error, but save it for use in <final-command>.
             set-option global scratch_commands_error "%val(error)"
         )
         evaluate-commands -save-regs t %arg(3)
         delete-buffer "%reg(t)"
-        # Present any error caught when evaluating user commands.
-        evaluate-commands %sh(
-            test "$kak_opt_scratch_commands_error" || printf "%s" "nop"
-        ) fail "scratch-commands: %opt(scratch_commands_error)"
-        set-option global scratch_commands_error ""
     )
 )
 
