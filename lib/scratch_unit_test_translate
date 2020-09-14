@@ -4,6 +4,11 @@ require "shellwords"
 
 STARTUP_MONOTONIC_TIME = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
+DEBUG_EXPECTED_CONTENT = <<EOF
+*** This is the debug buffer, where debug info will be written ***
+
+EOF
+
 LINE_NUMBER_COLOR    = :light_blue
 NEWLINE_MARKER_COLOR = :light_blue
 
@@ -208,6 +213,9 @@ module Assertion
       comparisons.each do |expectation|
         expectation.format_details(string)
       end
+      unless test_case.scope.debug.empty?
+        string << format_block("Contents of *debug*", test_case.scope.debug)
+      end
       string
     end
   end
@@ -230,6 +238,9 @@ NonAssertionError = Struct.new(:scope, :message) do
       )
     end
     string << format_block("Message", message)
+    unless scope.debug.empty?
+      string << format_block("Contents of *debug*", scope.debug)
+    end
     string
   end
 end
@@ -353,7 +364,7 @@ class MessageReader
   # The order in which messages are read is exactly the same as in which they are sent via the
   # kakoune command `scratch-unit-test-send`.
   # Returns nil once there are no more messages.
-  # @returns [Array<String>, nil]
+  # @return [Array<String>, nil]
   def read_message
     loop do
       if index = @unread_messages.find_index {|message| message.number == @next_expected_number}
@@ -419,11 +430,14 @@ class MessageReader
   end
 end
 
-Scope = Struct.new(:parent, :description) do
+Scope = Struct.new(:parent, :description, :debug_line_begin) do
   include Enumerable
 
+  attr_accessor :debug
+  attr_accessor :debug_line_end
+
   def self.top_level
-    @top_level ||= Scope.new(nil, "Top Level")
+    @top_level ||= Scope.new(nil, "Top Level", 0)
   end
 
   def each
@@ -435,6 +449,12 @@ Scope = Struct.new(:parent, :description) do
   def suite_file
     first.description
   end
+end
+
+# Parses a debug line number sent as part of scope messages into an integer.
+def parse_debug_line_number(number_as_string)
+  # Deduct 1 because kakoune always maintains an extra empty line at the end of the debug buffer.
+  number_as_string.to_i - 1
 end
 
 # Reads commands from a fifo until the "quit" command arrives.
@@ -455,6 +475,7 @@ def main(fifo)
       throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
     end
     scope_stack = [Scope.top_level]
+    scope_universe = []
     until_reader = message_reader.until_message("message_quit")
     until_reader.to_a.each do |message_components|
       stubbornly do
@@ -465,11 +486,13 @@ def main(fifo)
         when "message_non_assertion_error"
           presenter.present_error(NonAssertionError.new(scope_stack.last, arguments.join(" ")))
         when "message_scope_begin"
-          scope_stack << Scope.new(scope_stack.last, *arguments)
+          description, debug_line_begin = arguments
+          scope_stack << Scope.new(scope_stack.last, description, parse_debug_line_number(debug_line_begin))
+          scope_universe << scope_stack.last
         when "message_scope_end"
-          description, = arguments
+          description, debug_line_end = arguments
           if scope_stack.last.description == description
-            scope_stack.pop
+            scope_stack.pop.debug_line_end = parse_debug_line_number(debug_line_end)
           else
             throw \
               "Expected end of scope #{scope_stack.last}, " +
@@ -480,10 +503,25 @@ def main(fifo)
         end
       end
     end
+    # Attribute debug information to the appropriate scopes.
+    debug_buffer_lines = until_reader.target_message.last.each_line.to_a
+    scope_universe.reverse_each do |scope|
+      lines = debug_buffer_lines[scope.debug_line_begin...scope.debug_line_end]
+      scope.debug = lines.join
+      lines.each(&:clear)
+    end
+    # Present a summary of assertions.
     presenter.present_summary
+    # Print any unaccounted debug values.
+    unless (stray_debug_message = debug_buffer_lines.join) == DEBUG_EXPECTED_CONTENT
+      puts
+      puts "P.S.:"
+      puts format_block(
+        "Contents of *debug* that did not fall into any file, context, or test",
+        stray_debug_message,
+      )
+    end
     system("echo 'evaluate-commands -client #{client} %(scratch-unit-test-quit-end)' | kak -p #{session}")
-    # Print the contents of the debug buffer sent as part of the last message.
-    puts until_reader.target_message.last
   end
 end
 

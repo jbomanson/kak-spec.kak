@@ -1,10 +1,11 @@
 ---
 example/difference-in-trailing-whitespace.kak.err: empty
 example/difference-in-trailing-whitespace.kak.out:
-  size: { lines: 23, words: 60, bytes: 539 }
+  size: { lines: 21, words: 47, bytes: 471 }
   first: "\e[31mF\e[0m"
-  last: ''
-  hash: 1dfc5b060afb41871ffaf1f93eb3c665529826da
+  last: "\e[31msome dummy command example/difference-in-trailing-whitespace.kak\e[0m\e[94m
+    # Smoke test: Difference in trailing whitespace\e[0m"
+  hash: 2b930ee86f878268ca7f7797ecf6ff5fa22bc80d
 example/difference-in-trailing-whitespace.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -12,10 +13,11 @@ example/difference-in-trailing-whitespace.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-context.kak.err: empty
 example/fail-in-context.kak.out:
-  size: { lines: 17, words: 54, bytes: 417 }
+  size: { lines: 17, words: 45, bytes: 403 }
   first: "\e[31mE\e[0m"
-  last: ''
-  hash: 74c9e527d5b6633e69f424d099d4b1068a87099f
+  last: "\e[94m      1|\e[0mexample/fail-in-context.kak:This is a failure inside a
+    test context block\e[94m¬\e[0m"
+  hash: d8c0630c7620d97d97e4e34e8c431da89a0a9026
 example/fail-in-context.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -23,10 +25,11 @@ example/fail-in-context.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-source.kak.err: empty
 example/fail-in-source.kak.out:
-  size: { lines: 17, words: 54, bytes: 411 }
+  size: { lines: 17, words: 45, bytes: 397 }
   first: "\e[31mE\e[0m"
-  last: ''
-  hash: 887b046ebdd6fa2ba6ef871bf9fdd093b858acf5
+  last: "\e[94m      1|\e[0mexample/fail-in-source.kak:This is a failure inside a
+    test source file\e[94m¬\e[0m"
+  hash: 84c2d4e853789e606a60c5d601cd353e3cded02e
 example/fail-in-source.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -34,10 +37,11 @@ example/fail-in-source.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-test.kak.err: empty
 example/fail-in-test.kak.out:
-  size: { lines: 23, words: 75, bytes: 553 }
+  size: { lines: 21, words: 62, bytes: 485 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
-  last: ''
-  hash: 860364e54a46dc447ba92ca6b7a1ef260bf88dec
+  last: "\e[31msome dummy command example/fail-in-test.kak\e[0m\e[94m # Smoke test:
+    Test a failure inside a test\e[0m"
+  hash: a7c81b6d94718745e02bc6c1349ed48eb6a98fea
 example/fail-in-test.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -45,10 +49,11 @@ example/fail-in-test.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/multiline.kak.err: empty
 example/multiline.kak.out:
-  size: { lines: 29, words: 83, bytes: 779 }
+  size: { lines: 27, words: 70, bytes: 711 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
-  last: ''
-  hash: 2ab83afe08b0d8e536aba05afff0c81adfb025ad
+  last: "\e[31msome dummy command example/multiline.kak\e[0m\e[94m # Smoke test: Change
+    multiple output lines\e[0m"
+  hash: d4a9d9e515a97fb16e22e15764e47fd73dce88c8
 example/multiline.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -56,10 +61,10 @@ example/multiline.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/simple.kak.err: empty
 example/simple.kak.out:
-  size: { lines: 34, words: 70, bytes: 774 }
+  size: { lines: 32, words: 57, bytes: 706 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
-  last: ''
-  hash: 9027dba564a4f962183b2d3e560c62a87f3de5f4
+  last: "\e[31msome dummy command example/simple.kak\e[0m\e[94m # raise joo\e[0m"
+  hash: 6a661da3dc61c2e6d14a20621995c6009dd71227
 example/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -67,10 +72,10 @@ example/simple.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/switches.kak.err: empty
 example/switches.kak.out:
-  size: { lines: 38, words: 76, bytes: 732 }
+  size: { lines: 36, words: 63, bytes: 664 }
   first: "\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m"
-  last: ''
-  hash: 68f958a1aa625967f7e1f794faa6e7493494dbab
+  last: "\e[31msome dummy command example/switches.kak\e[0m\e[94m # Test an error\e[0m"
+  hash: b188b0e76feb3cc8836291a2c40c90a7ac915900
 example/switches.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -82,7 +87,7 @@ program-call-counts.txt:
   last: "    281 sed"
   hash: 684329af7d6821673f6fa0478a10349041071422
 teog:
-  input: 0fbde75ca33d3c931df5d3d8c39b58915e6cff2e
+  input: baf0ee9d0dab20995026552386627fabb55702b2
   status: 0
-  total: c02793757fa9d4531b796b765e3efd53c67d63ab
+  total: ceae890f01319c5e211dc795663aa5fa91790818
   version: 8

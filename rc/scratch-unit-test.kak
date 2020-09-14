@@ -4,6 +4,8 @@ provide-module scratch-unit-test %~
 
 require-module scratch-commands
 
+# A temporary variable used to monitor the growth of the debug buffer from test to test.
+declare-option -hidden int scratch_unit_test_debug_line_count 0
 
 # A monotonically increasing counter that is used to stamp messages sent internally to #
 # scratch_unit_test_translate.
@@ -106,17 +108,29 @@ define-command scratch-unit-test-scope \
     -docstring 'scratch-unit-test-scope <description> <command> [<argument>]:
 Evaluates <commands> so that any assertions in them have scope information.' \
 %(
-    scratch-unit-test-send message_scope_begin %arg(1)
+    # Save the current length of *debug*.
+    evaluate-commands -buffer *debug* %(
+        set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
+    )
+    scratch-unit-test-send message_scope_begin %arg(1) %opt(scratch_unit_test_debug_line_count)
     try %(
         evaluate-commands %arg(2) %arg(3)
     ) catch %(
         # Send the error as a command to the translator.
         scratch-unit-test-send message_non_assertion_error %val(error)
-        scratch-unit-test-send message_scope_end %arg(1)
+        # Save the current length of *debug*.
+        evaluate-commands -buffer *debug* %(
+            set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
+        )
+        scratch-unit-test-send message_scope_end %arg(1) %opt(scratch_unit_test_debug_line_count)
         # Re-raise the caught error.
         fail "%val(error)"
     )
-    scratch-unit-test-send message_scope_end %arg(1)
+    # Save the current length of *debug*.
+    evaluate-commands -buffer *debug* %(
+        set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
+    )
+    scratch-unit-test-send message_scope_end %arg(1) %opt(scratch_unit_test_debug_line_count)
 )
 
 define-command scratch-unit-test-send \
