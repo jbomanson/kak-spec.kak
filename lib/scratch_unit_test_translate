@@ -131,7 +131,7 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_value, :actual_valu
     [comparisons, remaining_arguments]
   end
 
-  # Formats details of this expectation to an {IO} -- {#pass} ed or not.
+  # Formats details of this expectation to an {IO} -- {#pass?} ed or not.
   def format_details(io)
     if expected_value == actual_value
       if type == "comparison_explicit"
