@@ -1,4 +1,15 @@
 ---
+example/difference-in-trailing-whitespace.kak.err: empty
+example/difference-in-trailing-whitespace.kak.out:
+  size: { lines: 24, words: 63, bytes: 569 }
+  first: "\e[31mF\e[0m"
+  last: ''
+  hash: 5690fa527652028cbe5dba99cd8ccd41599e1edf
+example/difference-in-trailing-whitespace.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-context.kak.err: empty
 example/fail-in-context.kak.out:
   size: { lines: 17, words: 54, bytes: 417 }
@@ -57,10 +68,10 @@ example/switches.kak.status:
 program-call-counts.txt:
   size: { lines: 6, words: 12, bytes: 71 }
   first: "      2 kak"
-  last: "    241 sed"
-  hash: cc798b6060002b6cba76eb00a6ff359e7504a8d1
+  last: "    256 sed"
+  hash: ed9993df3230a92a9a6f93576d548e67a11b0a2f
 teog:
-  input: db8fb1d0577813a2cda107da3e4965ee6496088b
+  input: 3fa0d1e72424da8e4c54623351e544f9c50e4596
   status: 0
-  total: ae83f7e166e6b9d81c613ef563e9becbb7b69d4e
+  total: 6ec81184bd69c3074e6edaf49164f8410bb09da8
   version: 8
