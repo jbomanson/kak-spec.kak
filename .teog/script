@@ -34,8 +34,8 @@ done
 
 # Run kak-spec with a title filter.
 
-bin/kak-spec --title=an.error example/switches.kak \
-    >option-title.out 2>option-title.err
+bin/kak-spec --title=an.error example/switches.kak |
+    script/stabilize >option-title.out 2>option-title.err
 echo $? >option-title.status
 
 # Process all examples through strace.

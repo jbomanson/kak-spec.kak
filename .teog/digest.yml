@@ -95,10 +95,10 @@ example/switches.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 option-title.err: empty
 option-title.out:
-  size: { lines: 24, words: 42, bytes: 424 }
+  size: { lines: 24, words: 42, bytes: 420 }
   first: "\e[31mF\e[0m"
   last: "\e[31mbin/kak-spec -title \\^Test\\\\\\ an\\\\\\ error\\$ example/switches.kak\e[0m"
-  hash: 608a143ec6e3024cb17d7c02b403646eebf4d181
+  hash: 4a5eff9391a03f4986f7362764e5a16c81a9368c
 option-title.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -110,7 +110,7 @@ program-call-counts.txt:
   last: "    296 sed"
   hash: c4c552c3a32bdc614f1a386a5156418152e239b6
 teog:
-  input: 6756911899e59ab804be7ef428b4bda13e29d4f1
+  input: 5159fea5d055fb983cf70050dc3fa4a4f09ba40b
   status: 0
-  total: c11a2032c85685840f7c42f377981739a2cf394a
+  total: cae3da1459af038cdb77f1819a6017b82681a903
   version: 8
