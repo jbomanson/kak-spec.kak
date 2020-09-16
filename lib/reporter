@@ -383,7 +383,7 @@ class MessageReader
       else
         # There are unread messages with unexpected message numbers.
         next_available_number = @unread_messages.min_by(&:number)
-        STDERR.puts "scratch_unit_test_translate: warning: " +
+        STDERR.puts "kak-spec: reporter: warning: " +
           "expected message number #{@next_expected_number}, " +
           "settling for #{next_available_number}"
         # Tolerate this situation by pretending to expect the next available message.
@@ -462,7 +462,7 @@ end
 # The first line must indicate the type of the command.
 def main(fifo)
   unless File.exist?(fifo)
-    puts "Usage: scratch_unit_test_translate <fifo>"
+    puts "Usage: reporter <fifo>"
     puts "Error: file does not exist: \"#{fifo}\""
     exit
   end

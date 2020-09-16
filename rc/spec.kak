@@ -8,7 +8,7 @@ require-module scratch-commands
 declare-option -hidden int scratch_unit_test_debug_line_count 0
 
 # A monotonically increasing counter that is used to stamp messages sent internally to #
-# scratch_unit_test_translate.
+# reporter.
 declare-option -hidden int scratch_unit_test_message_count 0
 
 define-command spec-assert \
@@ -137,7 +137,7 @@ define-command spec-send \
     -hidden \
     -params 1.. \
     -docstring 'spec-send <message-name> [<argument>]+:
-send a message to scratch_unit_test_translate' \
+send a message to reporter' \
 %(
     evaluate-commands -save-regs a %(
         set-register a %opt(scratch_unit_test_message_count) %arg(@)

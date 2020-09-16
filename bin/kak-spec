@@ -9,7 +9,7 @@ eval "$KAK_SPEC_PRELUDE_SH"
 KAK_SPEC_SEND_MESSAGE="$(cat "$root_dir/lib/send_message.sh")"
 export KAK_SPEC_SEND_MESSAGE
 
-TRANSLATOR="$root_dir/lib/scratch_unit_test_translate"
+REPORTER="$root_dir/lib/reporter"
 
 scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
 
@@ -26,13 +26,13 @@ export KAK_SPEC_DIR
 
 mkfifo "$KAK_SPEC_DIR/fifo"
 
-if ! test -x "$TRANSLATOR" >/dev/null; then
-    echo "${0##*/}: missing executable \"$TRANSLATOR\"";
+if ! test -x "$REPORTER" >/dev/null; then
+    echo "${0##*/}: missing executable \"$REPORTER\"";
     exit 1;
 fi >&2
 
 # Listen to the fifo.
-"$TRANSLATOR" "$KAK_SPEC_DIR/fifo" &
+"$REPORTER" "$KAK_SPEC_DIR/fifo" &
 translator_pid=$!
 
 # Keep the fifo open.
