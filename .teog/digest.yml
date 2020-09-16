@@ -1,10 +1,10 @@
 ---
 example/difference-in-trailing-whitespace.kak.err: empty
 example/difference-in-trailing-whitespace.kak.out:
-  size: { lines: 20, words: 48, bytes: 502 }
+  size: { lines: 20, words: 48, bytes: 493 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: 25743a9c8a08017d9b47c2fe8ff06ffe912d554f
+  hash: 5aa687384839436f6fecb66b9ab5453209bf429f
 example/difference-in-trailing-whitespace.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -12,10 +12,10 @@ example/difference-in-trailing-whitespace.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/echo-debug.kak.err: empty
 example/echo-debug.kak.out:
-  size: { lines: 23, words: 61, bytes: 564 }
+  size: { lines: 23, words: 61, bytes: 555 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: eccedf874c93e671bb9bc9f7f02ad4f61d288fc9
+  hash: c5b3c244708e5405ce76c7a9ed1213798937aec7
 example/echo-debug.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -47,10 +47,10 @@ example/fail-in-source.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-test.kak.err: empty
 example/fail-in-test.kak.out:
-  size: { lines: 20, words: 63, bytes: 522 }
+  size: { lines: 20, words: 63, bytes: 513 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
-  hash: f4c4e6c119936112669e7307ecdde88c4fbb72de
+  hash: 23e35aa68dc31188f2a009143658d8c50f0f4450
 example/fail-in-test.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -58,10 +58,10 @@ example/fail-in-test.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/multiline.kak.err: empty
 example/multiline.kak.out:
-  size: { lines: 26, words: 71, bytes: 742 }
+  size: { lines: 26, words: 71, bytes: 733 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
-  hash: 7972c162ab033211da73cf2b0c20df9f984bf1a8
+  hash: 3231d88d62ecaef8222794420ed70b5e2581c6ff
 example/multiline.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -69,10 +69,10 @@ example/multiline.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/simple.kak.err: empty
 example/simple.kak.out:
-  size: { lines: 33, words: 61, bytes: 760 }
+  size: { lines: 33, words: 61, bytes: 742 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: "\e[31m14 examples, 2 failures, 0 errors\e[0m"
-  hash: '072340428544c7c8576e30c56d4c2c65ee07df90'
+  hash: 3c30aac3c755da61d8007160bc2590c9708b948b
 example/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -80,10 +80,10 @@ example/simple.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/switches.kak.err: empty
 example/switches.kak.out:
-  size: { lines: 37, words: 67, bytes: 721 }
+  size: { lines: 37, words: 67, bytes: 703 }
   first: "\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m3 examples, 2 failures, 0 errors\e[0m"
-  hash: 681e9803df99e37c8dd46b151a291b9e0388e622
+  hash: 0b6d731171b77a16b5bb979353ae0528f67eebc5
 example/switches.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -91,10 +91,10 @@ example/switches.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 option-title.err: empty
 option-title.out:
-  size: { lines: 23, words: 45, bytes: 442 }
+  size: { lines: 23, words: 45, bytes: 433 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: 33194a3e01a486018c72191f296c16600a66415e
+  hash: '011348247e26e2cea995d83f90fee9f0533a9203'
 option-title.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -106,7 +106,7 @@ program-call-counts.txt:
   last: "    296 sed"
   hash: c4c552c3a32bdc614f1a386a5156418152e239b6
 teog:
-  input: b11aca3e6aa0c51096687074f2ecf1dbb52397e2
+  input: 3252541f6875cd9997042176953ef8bddb117ab3
   status: 0
-  total: 8d01f11728a821946209264f896cb041dc014b16
+  total: 5cf5e2c0a2b309ac29671a88a0c4ad5edead7135
   version: 8

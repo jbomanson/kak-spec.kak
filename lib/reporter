@@ -11,7 +11,6 @@ EOF
 
 LINE_NUMBER_COLOR    = :light_blue
 NEWLINE_MARKER_COLOR = :light_blue
-FAILING_TITLE_COLOR  = :red
 
 # Returns a path to the kak-spec program.
 def kak_spec_program
@@ -92,14 +91,11 @@ TestCase = Struct.new(:scope, :title, :input) do
   # @return [String]
   def shell_command_details
     [
-      kak_spec_program.shellescape,
-      "-title".shellescape,
-      Terminal.in_color(
-        "^#{Regexp.escape(title)}$".shellescape,
-        FAILING_TITLE_COLOR,
-      ),
-      scope.suite_file.shellescape,
-    ].join(" ")
+      kak_spec_program,
+      "-title",
+      "^#{Regexp.escape(title)}$",
+      scope.suite_file,
+    ].shelljoin
   end
 end
 
@@ -188,7 +184,7 @@ module Assertion
   # Assuming this assertion did not {#pass?}, returns a description of the relevant details.
   def failure_details
     string = ""
-    string << "  #{Terminal.in_color(test_case.title, FAILING_TITLE_COLOR)}\n"
+    string << "  #{Terminal.in_color(test_case.title, :red)}\n"
     string
   end
 end
@@ -232,7 +228,7 @@ NonAssertionError = Struct.new(:scope, :message) do
 
   def non_assertion_error_details
     string = ""
-    string << "  #{Terminal.in_color("Error", FAILING_TITLE_COLOR)}\n"
+    string << "  #{Terminal.in_color("Error", :red)}\n"
     scope.each_with_index do |context_scope, index|
       string << format_block(
         index == 0 ? "Suite" : "Context",
