@@ -90,15 +90,12 @@ TestCase = Struct.new(:scope, :title, :input) do
   # test case alone.
   # @return [String]
   def shell_command_details
-    Terminal.in_color(
-      [
-        kak_spec_program,
-        "-title",
-        "^#{Regexp.escape(title)}$",
-        scope.suite_file,
-      ].shelljoin,
-      :red,
-    )
+    [
+      kak_spec_program,
+      "-title",
+      "^#{Regexp.escape(title)}$",
+      scope.suite_file,
+    ].shelljoin
   end
 end
 
@@ -216,6 +213,7 @@ module Assertion
       unless test_case.scope.debug.empty?
         string << format_block("Contents of *debug*", test_case.scope.debug)
       end
+      string << format_block("How to run this test", test_case.shell_command_details)
       string
     end
   end
@@ -284,19 +282,6 @@ class Presenter
   end
 
   # Summarises failed examples in a way that shows files and line numbers.
-  def present_failed_example_summary
-    return if failure_count == 0
-    puts
-    puts "Failed examples:"
-    puts
-    puts(
-      assertions.reject(&:pass?).map do |assertion|
-        assertion.test_case.shell_command_details
-      end
-    )
-  end
-
-  # Summarises failed examples in a way that shows files and line numbers.
   def present_non_assertion_error_summary
     return if non_assertion_errors.empty?
     puts
@@ -324,7 +309,6 @@ class Presenter
     present_failed_example_details
     puts unless pass?
     present_summary_briefly
-    present_failed_example_summary
     present_non_assertion_error_summary
   end
 end

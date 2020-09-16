@@ -1,11 +1,10 @@
 ---
 example/difference-in-trailing-whitespace.kak.err: empty
 example/difference-in-trailing-whitespace.kak.out:
-  size: { lines: 21, words: 45, bytes: 480 }
+  size: { lines: 20, words: 49, bytes: 496 }
   first: "\e[31mF\e[0m"
-  last: "\e[31mbin/kak-spec -title \\^Smoke\\\\\\ test:\\\\\\ Difference\\\\\\ in\\\\\\
-    trailing\\\\\\ whitespace\\$ example/difference-in-trailing-whitespace.kak\e[0m"
-  hash: bfd38daa5b5cedd135a44e0284a8a1a8e9881d45
+  last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
+  hash: '05287f399212f96dc767af0c507fa9d3f5fe0550'
 example/difference-in-trailing-whitespace.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -13,11 +12,10 @@ example/difference-in-trailing-whitespace.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/echo-debug.kak.err: empty
 example/echo-debug.kak.out:
-  size: { lines: 24, words: 58, bytes: 542 }
+  size: { lines: 23, words: 62, bytes: 558 }
   first: "\e[31mF\e[0m"
-  last: "\e[31mbin/kak-spec -title \\^Smoke\\\\\\ test:\\\\\\ Print\\\\\\ something\\\\\\
-    to\\\\\\ the\\\\\\ debug\\\\\\ buffer\\$ example/echo-debug.kak\e[0m"
-  hash: a77c9fea280c1c161f33ac711f2399094a6979b2
+  last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
+  hash: 620a15f302b08a189527465fb1322ad696a3ee88
 example/echo-debug.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -49,11 +47,10 @@ example/fail-in-source.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-test.kak.err: empty
 example/fail-in-test.kak.out:
-  size: { lines: 21, words: 60, bytes: 500 }
+  size: { lines: 20, words: 64, bytes: 516 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
-  last: "\e[31mbin/kak-spec -title \\^Smoke\\\\\\ test:\\\\\\ Test\\\\\\ a\\\\\\ failure\\\\\\
-    inside\\\\\\ a\\\\\\ test\\$ example/fail-in-test.kak\e[0m"
-  hash: aebe44d7d6e276693486f7ceead050e63c95bff2
+  last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
+  hash: dbd9b9fa34fcbab6640b7bc1b328a60c63e2d93f
 example/fail-in-test.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -61,11 +58,10 @@ example/fail-in-test.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/multiline.kak.err: empty
 example/multiline.kak.out:
-  size: { lines: 27, words: 68, bytes: 720 }
+  size: { lines: 26, words: 72, bytes: 736 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
-  last: "\e[31mbin/kak-spec -title \\^Smoke\\\\\\ test:\\\\\\ Change\\\\\\ multiple\\\\\\
-    output\\\\\\ lines\\$ example/multiline.kak\e[0m"
-  hash: 48aeefd1bfdaeb61392f8b1f78f1761b67f3d6e6
+  last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
+  hash: f90646ee4f128d1705a2c480ee48390d0d56b288
 example/multiline.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -73,10 +69,10 @@ example/multiline.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/simple.kak.err: empty
 example/simple.kak.out:
-  size: { lines: 32, words: 53, bytes: 697 }
+  size: { lines: 33, words: 63, bytes: 748 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
-  last: "\e[31mbin/kak-spec -title \\^raise\\\\\\ joo\\$ example/simple.kak\e[0m"
-  hash: 9d852bc5ce06ee966cd3843433bf79be737589a9
+  last: "\e[31m14 examples, 2 failures, 0 errors\e[0m"
+  hash: 056c9a8c8b58b4ed7487bff099123bbecec690e6
 example/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -84,10 +80,10 @@ example/simple.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/switches.kak.err: empty
 example/switches.kak.out:
-  size: { lines: 36, words: 59, bytes: 658 }
+  size: { lines: 37, words: 69, bytes: 709 }
   first: "\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m"
-  last: "\e[31mbin/kak-spec -title \\^Test\\\\\\ an\\\\\\ error\\$ example/switches.kak\e[0m"
-  hash: a7aaf268a6c54b6f17f9da0788e0866ce7880f80
+  last: "\e[31m3 examples, 2 failures, 0 errors\e[0m"
+  hash: a21ba53e6582408fdf22724fd646e4b32f2c7bf2
 example/switches.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -95,10 +91,10 @@ example/switches.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 option-title.err: empty
 option-title.out:
-  size: { lines: 24, words: 42, bytes: 420 }
+  size: { lines: 23, words: 46, bytes: 436 }
   first: "\e[31mF\e[0m"
-  last: "\e[31mbin/kak-spec -title \\^Test\\\\\\ an\\\\\\ error\\$ example/switches.kak\e[0m"
-  hash: 4a5eff9391a03f4986f7362764e5a16c81a9368c
+  last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
+  hash: 2270f2d44585ce7dfc1607b54789bacc2f1529e1
 option-title.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -110,7 +106,7 @@ program-call-counts.txt:
   last: "    296 sed"
   hash: c4c552c3a32bdc614f1a386a5156418152e239b6
 teog:
-  input: 5159fea5d055fb983cf70050dc3fa4a4f09ba40b
+  input: e148fb03f356d73c1bb4cfeb7e5e41267653f4c9
   status: 0
-  total: cae3da1459af038cdb77f1819a6017b82681a903
+  total: ecf6f92b863ce249de63c5fe2d43063a0522a38f
   version: 8
