@@ -1,11 +1,7 @@
-provide-module scratch-commands %~
-
-# TODO: Unit test
-# TODO: Remove redundant -save-regs "" arguments to evaluate-commands
-# TODO: Fix this to work with dquote
+provide-module spec-scratch-eval %~
 
 declare-option \
-    -docstring 'The most recent output of scratch-commands' \
+    -docstring 'The most recent output of spec-scratch-eval' \
     str scratch_commands_output
 
 # An increasing number used in naming temporary scratch buffers.
@@ -14,15 +10,15 @@ declare-option -hidden int scratch_commands_id 0
 # A temporary variable used to hold caught errors.
 declare-option -hidden str scratch_commands_error
 
-define-command scratch-commands \
+define-command spec-scratch-eval \
     -params 3 \
-    -docstring "scratch-commands <input> <command> <final-command>:
+    -docstring "spec-scratch-eval <input> <command> <final-command>:
 TODO: Describe." \
 %(
     evaluate-commands -save-regs 't' %(
         # Open a temporary scratch buffer with a unique name.
         set-option -add global scratch_commands_id 1
-        set-register t "*scratch-commands-%opt(scratch_commands_id)*"
+        set-register t "*spec-scratch-eval-%opt(scratch_commands_id)*"
         edit! -scratch "%reg(t)"
         try %(
             # Initialize the buffer with <input>.

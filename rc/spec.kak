@@ -2,7 +2,7 @@ declare-option str scratch_unit_test_client %val(client)
 
 provide-module spec %~
 
-require-module scratch-commands
+require-module spec-scratch-eval
 
 # A temporary variable used to monitor the growth of the debug buffer from test to test.
 declare-option -hidden int scratch_unit_test_debug_line_count 0
@@ -73,9 +73,9 @@ The <matcher> argument controls the comparison:
             esac
         done
         true "${option_title:="$option_eval"}"
-        # Call scratch-commands with the user given command and with a <final-command> that
+        # Call spec-scratch-eval with the user given command and with a <final-command> that
         # sends a message to the translator.
-        kak_quote scratch-commands "$option_input" "$option_eval" \
+        kak_quote spec-scratch-eval "$option_input" "$option_eval" \
             "spec-send \
                 message_assert \
                 $error_comparison \

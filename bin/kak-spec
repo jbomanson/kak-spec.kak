@@ -42,7 +42,7 @@ fifo_holder_pid=$!
 {
     kak_quote try "
         source $(kak_quote "$root_dir/rc/spec.kak")
-        source $(kak_quote "$root_dir/rc/scratch-commands.kak")
+        source $(kak_quote "$root_dir/rc/spec-scratch-eval.kak")
         buffer '*debug*'
         require-module spec
     " catch "
