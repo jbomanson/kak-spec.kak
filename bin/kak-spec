@@ -2,6 +2,9 @@
 
 root_dir="$( ( cd "${0%/*}/.."; pwd ) )"
 
+KAK_SPEC_PROGRAM="$0"
+export KAK_SPEC_PROGRAM
+
 KAK_SPEC_PRELUDE_SH="$(cat "$root_dir/lib/prelude.sh")"
 export KAK_SPEC_PRELUDE_SH
 eval "$KAK_SPEC_PRELUDE_SH"
@@ -24,9 +27,9 @@ trap clean_up EXIT
 KAK_SPEC_DIR="$scratch_dir"
 export KAK_SPEC_DIR
 
-
+#
 #       Parse Command Line Arguments
-
+#
 
 usage ()
 {
@@ -77,11 +80,9 @@ do
     esac
 done
 
-
+#
 #       Act
-
-
-mkfifo "$KAK_SPEC_DIR/fifo"
+#
 
 if ! test -x "$REPORTER" >/dev/null; then
     echo "${0##*/}: missing executable \"$REPORTER\"";
@@ -89,6 +90,7 @@ if ! test -x "$REPORTER" >/dev/null; then
 fi >&2
 
 # Listen to the fifo.
+mkfifo "$KAK_SPEC_DIR/fifo"
 "$REPORTER" "$KAK_SPEC_DIR/fifo" &
 translator_pid=$!
 

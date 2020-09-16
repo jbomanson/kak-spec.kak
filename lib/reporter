@@ -12,6 +12,11 @@ EOF
 LINE_NUMBER_COLOR    = :light_blue
 NEWLINE_MARKER_COLOR = :light_blue
 
+# Returns a path to the kak-spec program.
+def kak_spec_program
+  $kak_spec_program ||= ENV["KAK_SPEC_PROGRAM"]
+end
+
 def newline_marker
   $newline_marker ||= Terminal.in_color("¬", NEWLINE_MARKER_COLOR)
 end
@@ -81,24 +86,19 @@ def throw(*args)
 end
 
 TestCase = Struct.new(:scope, :title, :input) do
-  # A regular expression that approximates how the original kakoune command call
-  # that created this test case probably looks like.
-  # @return [Regexp]
-  def kakoune_call_regex
-    @kakoune_call_regex ||=
-      begin
-        title_regex = Regexp.escape(title)
-        /#{TEST_CASE_KAKOUNE_COMMAND_NAME}\s+(#{title_regex}\b|"#{title_regex}"|'#{title_regex}')/
-      end
-  end
-
-  # Returns a shell command line that can be ran to rerun this specific test case alone.
+  # Returns a shell command in the form of a string that reruns this specific
+  # test case alone.
   # @return [String]
   def shell_command_details
-    line_index = File.readlines(scope.suite_file).index {|line| line =~ kakoune_call_regex}
-    line_detail = line_index ? ":#{line_index + 1}" : ""
-    Terminal.in_color("some dummy command #{scope.suite_file}#{line_detail}", :red) +
-      Terminal.in_color(" # #{title}", :light_blue)
+    Terminal.in_color(
+      [
+        kak_spec_program,
+        "-title",
+        "^#{Regexp.escape(title)}$",
+        scope.suite_file,
+      ].shelljoin,
+      :red,
+    )
   end
 end
 
