@@ -23,7 +23,7 @@ do
     command -v "program" >/dev/null 2>&1 || eval ln -s "\"\$$program\"" bin/
 done
 
-# Run scratch-unit-test on all samples.
+# Run kak-spec on all samples.
 
 for sample in example/*.kak
 do
