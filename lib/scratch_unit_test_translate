@@ -16,7 +16,7 @@ def newline_marker
   $newline_marker ||= Terminal.in_color("¬", NEWLINE_MARKER_COLOR)
 end
 
-TEST_CASE_KAKOUNE_COMMAND_NAME = "scratch-unit-test-assert"
+TEST_CASE_KAKOUNE_COMMAND_NAME = "spec-assert"
 
 class TranslationException < StandardError
 end
@@ -120,7 +120,7 @@ end
 
 # An object representing a comparisiong between an actual and expected value of a kakoune kakoune_expansion.
 Comparison = Struct.new(:type, :kakoune_expansion, :expected_value, :actual_value) do
-  # Parses expectation message components sent with scratch-unit-test-assert.
+  # Parses expectation message components sent with spec-assert.
   def self.partition_and_create_from_arguments(array)
     comparisons = []
     remaining_arguments = array.clone
@@ -343,7 +343,7 @@ def stubbornly
   end
 end
 
-# A wrapper over an IO for reading messages sent with the kakoune command `scratch-unit-test-send`.
+# A wrapper over an IO for reading messages sent with the kakoune command `spec-send`.
 class MessageReader
   # An implementation detail of {MessageReader}.
   # A temporarily stored message together with some metadata.
@@ -362,7 +362,7 @@ class MessageReader
 
   # Reads the next message as an array of strings.
   # The order in which messages are read is exactly the same as in which they are sent via the
-  # kakoune command `scratch-unit-test-send`.
+  # kakoune command `spec-send`.
   # Returns nil once there are no more messages.
   # @return [Array<String>, nil]
   def read_message
@@ -521,7 +521,7 @@ def main(fifo)
         stray_debug_message,
       )
     end
-    system("echo 'evaluate-commands -client #{client} %(scratch-unit-test-quit-end)' | kak -p #{session}")
+    system("echo 'evaluate-commands -client #{client} %(spec-quit-end)' | kak -p #{session}")
   end
 end
 

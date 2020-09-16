@@ -1,6 +1,6 @@
-require-module scratch-unit-test
+require-module spec
 
-scratch-unit-test-assert \
+spec-assert \
     -title "Smoke test: Difference in trailing whitespace" \
     -input "Some input" \
     -eval %(

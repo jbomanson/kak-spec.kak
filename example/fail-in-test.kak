@@ -1,6 +1,6 @@
-require-module scratch-unit-test
+require-module spec
 
-scratch-unit-test-assert \
+spec-assert \
     -title "Test a failure inside a test" \
     -input "Just some input" \
     -eval %(
@@ -8,7 +8,7 @@ scratch-unit-test-assert \
     ) \
     -expect-%val(error) "This is a failure inside a test"
 
-scratch-unit-test-assert \
+spec-assert \
     -title "Smoke test: Test a failure inside a test" \
     -input "Just some input" \
     -eval %(

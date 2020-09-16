@@ -1,6 +1,6 @@
-require-module scratch-unit-test
+require-module spec
 
-scratch-unit-test-assert \
+spec-assert \
     -title "Change multiple output lines" \
     -input "First input line
 Second input line
@@ -12,7 +12,7 @@ Third input line" \
 Second output line
 Third output line"
 
-scratch-unit-test-assert \
+spec-assert \
     -title "Smoke test: Change multiple output lines" \
     -input "First input line
 Second input line

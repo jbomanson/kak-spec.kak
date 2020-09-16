@@ -37,7 +37,7 @@ TODO: Describe." \
             # TODO: Ensure that we are in normal mode.
             # Check whether the command changed the current buffer.
             evaluate-commands %sh(
-                eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
+                eval "$KAK_SPEC_PRELUDE_SH"
                 if test "$kak_buffile" != "$kak_reg_t"; then
                     kak_quote fail "temporary buffer changed to $kak_buffile"
                 fi

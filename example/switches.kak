@@ -1,6 +1,6 @@
-require-module scratch-unit-test
+require-module spec
 
-scratch-unit-test-assert \
+spec-assert \
     -expect-%val(selection_length) 1 \
     -title "c" \
     -input "xyz" \
@@ -8,7 +8,7 @@ scratch-unit-test-assert \
         execute-keys cword<esc>
     )
 
-scratch-unit-test-assert \
+spec-assert \
     -expect-%val(selection_length) 4 \
     -title "Test selection length after c" \
     -input "xyz" \
@@ -16,7 +16,7 @@ scratch-unit-test-assert \
         execute-keys cword<esc>
     )
 
-scratch-unit-test-assert \
+spec-assert \
     -expect-%val(selection_length) 4 \
     -expect-%val(error) "This is an error" \
     -title "Test an error" \

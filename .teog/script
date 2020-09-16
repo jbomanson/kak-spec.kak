@@ -27,14 +27,14 @@ done
 
 for sample in example/*.kak
 do
-    bin/scratch-unit-test-kak "$sample" |
+    bin/kak-spec "$sample" |
         script/stabilize >"$sample.out" 2>"$sample.err"
     echo $? >"$sample.status"
 done
 
 # Process all examples through strace.
 strace -f --output=".strace.txt" \
-    bin/scratch-unit-test-kak example/*.kak >/dev/null 2>&1
+    bin/kak-spec example/*.kak >/dev/null 2>&1
 
 # Make a histogram of calls to programs by their basename.
 # Show those that are called more than once.

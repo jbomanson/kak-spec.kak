@@ -2,16 +2,16 @@
 
 root_dir="$( ( cd "${0%/*}/.."; pwd ) )"
 
-SCRATCH_UNIT_TEST_PRELUDE_SH="$(cat "$root_dir/lib/prelude.sh")"
-export SCRATCH_UNIT_TEST_PRELUDE_SH
-eval "$SCRATCH_UNIT_TEST_PRELUDE_SH"
+KAK_SPEC_PRELUDE_SH="$(cat "$root_dir/lib/prelude.sh")"
+export KAK_SPEC_PRELUDE_SH
+eval "$KAK_SPEC_PRELUDE_SH"
 
-SCRATCH_UNIT_TEST_SEND_MESSAGE="$(cat "$root_dir/lib/send_message.sh")"
-export SCRATCH_UNIT_TEST_SEND_MESSAGE
+KAK_SPEC_SEND_MESSAGE="$(cat "$root_dir/lib/send_message.sh")"
+export KAK_SPEC_SEND_MESSAGE
 
 TRANSLATOR="$root_dir/lib/scratch_unit_test_translate"
 
-scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/scratch-unit-test-kak.XXXXXXXX")
+scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
 
 clean_up () {
     code=$?
@@ -21,10 +21,10 @@ clean_up () {
 
 trap clean_up EXIT
 
-SCRATCH_UNIT_TEST_DIR="$scratch_dir"
-export SCRATCH_UNIT_TEST_DIR
+KAK_SPEC_DIR="$scratch_dir"
+export KAK_SPEC_DIR
 
-mkfifo "$SCRATCH_UNIT_TEST_DIR/fifo"
+mkfifo "$KAK_SPEC_DIR/fifo"
 
 if ! test -x "$TRANSLATOR" >/dev/null; then
     echo "${0##*/}: missing executable \"$TRANSLATOR\"";
@@ -32,19 +32,19 @@ if ! test -x "$TRANSLATOR" >/dev/null; then
 fi >&2
 
 # Listen to the fifo.
-"$TRANSLATOR" "$SCRATCH_UNIT_TEST_DIR/fifo" &
+"$TRANSLATOR" "$KAK_SPEC_DIR/fifo" &
 translator_pid=$!
 
 # Keep the fifo open.
-sleep 100000d >"$SCRATCH_UNIT_TEST_DIR/fifo" 2>&1 </dev/null &
+sleep 100000d >"$KAK_SPEC_DIR/fifo" 2>&1 </dev/null &
 fifo_holder_pid=$!
 
 {
     kak_quote try "
-        source $(kak_quote "$root_dir/rc/scratch-unit-test.kak")
+        source $(kak_quote "$root_dir/rc/spec.kak")
         source $(kak_quote "$root_dir/rc/scratch-commands.kak")
         buffer '*debug*'
-        require-module scratch-unit-test
+        require-module spec
     " catch "
         quit! 1
     "
@@ -52,14 +52,14 @@ fifo_holder_pid=$!
         $(
             for argument
             do
-                kak_quote try "$(kak_quote scratch-unit-test-source "$argument")"
+                kak_quote try "$(kak_quote spec-source "$argument")"
             done
         )
     "
-    kak_quote scratch-unit-test-quit-begin
-} >"$SCRATCH_UNIT_TEST_DIR/source.kak"
+    kak_quote spec-quit-begin
+} >"$KAK_SPEC_DIR/source.kak"
 
-kak -ui dummy -n -e 'source %sh(printf "%s" "$SCRATCH_UNIT_TEST_DIR/source.kak")'
+kak -ui dummy -n -e 'source %sh(printf "%s" "$KAK_SPEC_DIR/source.kak")'
 kak_status=$?
 
 # The translator should have quit by now unless something went wrong.
