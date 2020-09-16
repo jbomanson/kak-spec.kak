@@ -1,10 +1,10 @@
 ---
 example/difference-in-trailing-whitespace.kak.err: empty
 example/difference-in-trailing-whitespace.kak.out:
-  size: { lines: 20, words: 49, bytes: 496 }
+  size: { lines: 20, words: 48, bytes: 493 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: '05287f399212f96dc767af0c507fa9d3f5fe0550'
+  hash: 5aa687384839436f6fecb66b9ab5453209bf429f
 example/difference-in-trailing-whitespace.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -12,10 +12,10 @@ example/difference-in-trailing-whitespace.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/echo-debug.kak.err: empty
 example/echo-debug.kak.out:
-  size: { lines: 23, words: 62, bytes: 558 }
+  size: { lines: 23, words: 61, bytes: 555 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: 620a15f302b08a189527465fb1322ad696a3ee88
+  hash: c5b3c244708e5405ce76c7a9ed1213798937aec7
 example/echo-debug.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -23,11 +23,11 @@ example/echo-debug.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-context.kak.err: empty
 example/fail-in-context.kak.out:
-  size: { lines: 17, words: 45, bytes: 403 }
+  size: { lines: 17, words: 44, bytes: 400 }
   first: "\e[31mE\e[0m"
   last: "\e[94m      1|\e[0mexample/fail-in-context.kak:This is a failure inside a
     test context block\e[94m¬\e[0m"
-  hash: d8c0630c7620d97d97e4e34e8c431da89a0a9026
+  hash: 5f97ee503b959f35d1be3e62ac90032e8165b5fc
 example/fail-in-context.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -35,11 +35,11 @@ example/fail-in-context.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-source.kak.err: empty
 example/fail-in-source.kak.out:
-  size: { lines: 17, words: 45, bytes: 397 }
+  size: { lines: 17, words: 44, bytes: 394 }
   first: "\e[31mE\e[0m"
   last: "\e[94m      1|\e[0mexample/fail-in-source.kak:This is a failure inside a
     test source file\e[94m¬\e[0m"
-  hash: 84c2d4e853789e606a60c5d601cd353e3cded02e
+  hash: f4e6f1705a352582fb33ee9985b4223e5e8d2806
 example/fail-in-source.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -47,10 +47,10 @@ example/fail-in-source.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-test.kak.err: empty
 example/fail-in-test.kak.out:
-  size: { lines: 20, words: 64, bytes: 516 }
+  size: { lines: 20, words: 63, bytes: 513 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
-  hash: dbd9b9fa34fcbab6640b7bc1b328a60c63e2d93f
+  hash: 23e35aa68dc31188f2a009143658d8c50f0f4450
 example/fail-in-test.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -58,10 +58,10 @@ example/fail-in-test.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/multiline.kak.err: empty
 example/multiline.kak.out:
-  size: { lines: 26, words: 72, bytes: 736 }
+  size: { lines: 26, words: 71, bytes: 733 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
-  hash: f90646ee4f128d1705a2c480ee48390d0d56b288
+  hash: 3231d88d62ecaef8222794420ed70b5e2581c6ff
 example/multiline.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -69,10 +69,10 @@ example/multiline.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/simple.kak.err: empty
 example/simple.kak.out:
-  size: { lines: 33, words: 63, bytes: 748 }
+  size: { lines: 33, words: 61, bytes: 742 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: "\e[31m14 examples, 2 failures, 0 errors\e[0m"
-  hash: 056c9a8c8b58b4ed7487bff099123bbecec690e6
+  hash: 3c30aac3c755da61d8007160bc2590c9708b948b
 example/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -80,10 +80,10 @@ example/simple.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/switches.kak.err: empty
 example/switches.kak.out:
-  size: { lines: 37, words: 69, bytes: 709 }
+  size: { lines: 37, words: 67, bytes: 703 }
   first: "\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m3 examples, 2 failures, 0 errors\e[0m"
-  hash: a21ba53e6582408fdf22724fd646e4b32f2c7bf2
+  hash: 0b6d731171b77a16b5bb979353ae0528f67eebc5
 example/switches.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -91,10 +91,10 @@ example/switches.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 option-title.err: empty
 option-title.out:
-  size: { lines: 23, words: 46, bytes: 436 }
+  size: { lines: 23, words: 45, bytes: 433 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: 2270f2d44585ce7dfc1607b54789bacc2f1529e1
+  hash: '011348247e26e2cea995d83f90fee9f0533a9203'
 option-title.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -106,7 +106,7 @@ program-call-counts.txt:
   last: "    296 sed"
   hash: c4c552c3a32bdc614f1a386a5156418152e239b6
 teog:
-  input: e148fb03f356d73c1bb4cfeb7e5e41267653f4c9
+  input: 3252541f6875cd9997042176953ef8bddb117ab3
   status: 0
-  total: ecf6f92b863ce249de63c5fe2d43063a0522a38f
+  total: 5cf5e2c0a2b309ac29671a88a0c4ad5edead7135
   version: 8

@@ -182,9 +182,9 @@ module Assertion
   end
 
   # Assuming this assertion did not {#pass?}, returns a description of the relevant details.
-  def failure_details(index)
+  def failure_details
     string = ""
-    string << "  #{Terminal.in_color("#{index})", :red)} #{test_case.title}\n"
+    string << "  #{Terminal.in_color(test_case.title, :red)}\n"
     string
   end
 end
@@ -203,7 +203,7 @@ module Assertion
     end
 
     # Prints details of this assertion.
-    def failure_details(index)
+    def failure_details
       string = ""
       string << super
       string << format_block("Input", test_case.input)
@@ -228,7 +228,7 @@ NonAssertionError = Struct.new(:scope, :message) do
 
   def non_assertion_error_details
     string = ""
-    string << "  #{Terminal.in_color("?)", :red)} Error\n"
+    string << "  #{Terminal.in_color("Error", :red)}\n"
     scope.each_with_index do |context_scope, index|
       string << format_block(
         index == 0 ? "Suite" : "Context",
@@ -277,7 +277,7 @@ class Presenter
     assertions.each_with_index do |assertion, index|
       next if assertion.pass?
       puts
-      puts assertion.failure_details(index + 1)
+      puts assertion.failure_details
     end
   end
 
