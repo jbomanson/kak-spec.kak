@@ -93,13 +93,24 @@ example/switches.kak.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+option-title.err: empty
+option-title.out:
+  size: { lines: 24, words: 44, bytes: 424 }
+  first: "\e[31mF\e[0m"
+  last: "\e[31msome dummy command example/switches.kak\e[0m\e[94m # Test an error\e[0m"
+  hash: 06bd3829d2b38535005a7f11ab473c8ba266760d
+option-title.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 program-call-counts.txt:
-  size: { lines: 6, words: 12, bytes: 71 }
+  size: { lines: 7, words: 14, bytes: 84 }
   first: "      2 cat"
   last: "    296 sed"
-  hash: 50c08668aad9aa3b54dd016546e620a9bec58440
+  hash: c4c552c3a32bdc614f1a386a5156418152e239b6
 teog:
-  input: fe616c665280ecb8e148245e6a92ead69f43233b
+  input: e92957e5829065acddde720908b460bd60da2fb4
   status: 0
-  total: bf611c50b211ca7de30df2d7a0fbac9836a486b6
+  total: e943e73b52c75fec3bbacddb1da63e510717b670
   version: 8

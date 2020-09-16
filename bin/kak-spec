@@ -24,6 +24,63 @@ trap clean_up EXIT
 KAK_SPEC_DIR="$scratch_dir"
 export KAK_SPEC_DIR
 
+
+#       Parse Command Line Arguments
+
+
+usage ()
+{
+    echo "Usage:"
+    echo "  kak-spec [<option>...] <test-source-file.kak>..."
+    echo
+    echo "where <option> is one of"
+    echo "  -eval=<regex>    -- Run only assertions whose -eval  argument matches <regex>"
+    echo "  -title=<regex>   -- Run only assertions whose -title argument matches <regex>"
+    echo "  -input=<regex>   -- Run only assertions whose -input argument matches <regex>"
+}
+
+
+while true
+do
+    argument="$1"
+    case "$argument" in
+    --?*)
+        # Normalize double dashes into single dashes and try again.
+        shift
+        set -- "${argument#-}" "$@"
+        ;;
+    -*=*)
+        # Normalize assignment style arguments into pairs of arguments.
+        shift
+        set -- "${argument%%=*}" "${argument#*=}" "$@"
+        ;;
+    -eval | -input | -title)
+        # Take these options as environment variable switches.
+        eval "export KAK_SPEC_option_${argument#-}=\"\$2\""
+        shift 2
+        ;;
+    -h | -help | help)
+        usage
+        exit
+        ;;
+    -*)
+        {
+            echo "$0: Unknown argument '$argument'"
+            echo
+            usage
+        } >&2
+        exit 1
+        ;;
+    *)
+        break
+        ;;
+    esac
+done
+
+
+#       Act
+
+
 mkfifo "$KAK_SPEC_DIR/fifo"
 
 if ! test -x "$REPORTER" >/dev/null; then
