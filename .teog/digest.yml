@@ -11,6 +11,18 @@ example/difference-in-trailing-whitespace.kak.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/echo-debug.kak.err: empty
+example/echo-debug.kak.out:
+  size: { lines: 24, words: 60, bytes: 527 }
+  first: "\e[31mF\e[0m"
+  last: "\e[31msome dummy command example/echo-debug.kak\e[0m\e[94m # Smoke test:
+    Print something to the debug buffer\e[0m"
+  hash: a2ec66b4c063c0f2d03fc41ac6a37ced2cc299eb
+example/echo-debug.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-context.kak.err: empty
 example/fail-in-context.kak.out:
   size: { lines: 17, words: 45, bytes: 403 }
@@ -84,10 +96,10 @@ example/switches.kak.status:
 program-call-counts.txt:
   size: { lines: 6, words: 12, bytes: 71 }
   first: "      2 cat"
-  last: "    281 sed"
-  hash: 684329af7d6821673f6fa0478a10349041071422
+  last: "    296 sed"
+  hash: 50c08668aad9aa3b54dd016546e620a9bec58440
 teog:
-  input: 7cea9792d86a9b96f4e3f5a1dedbe04b70876536
+  input: 112fa3d26833d4ae62d75fbd23f289e75b8a4e10
   status: 0
-  total: 865417b31b81915dfa610ca97bc0167c045e7395
+  total: 4d9ec39c4654076181c6c342e514c046faeeff1f
   version: 8
