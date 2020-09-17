@@ -24,7 +24,9 @@ The <matcher> argument controls the comparison:
     spec-scope "Implicit spec-assert scope" %sh(
         eval "$KAK_SPEC_PRELUDE_SH"
         # Usage:
-        #   encode_comparison explicit|implicit <switch> <expected_value> <expression>
+        #   encode_comparison \
+        #       comparison_explicit|comparison_implicit \
+        #       <switch> <expected_value> <expression>
         encode_comparison ()
         {
             printf "%s " \
@@ -49,6 +51,31 @@ The <matcher> argument controls the comparison:
         while true
         do
             case "$1" in
+            (-expect-*-[\[\{\(\<]) # Balance quotes for kak: )
+                opening_symbol="${1##*-}"
+                closing_symbol="$(echo "$opening_symbol" | tr '[{(<' ']})>')"
+                expansion="${1%-*}"
+                expansion="${expansion#-expect-}"
+                comparisons="$comparisons comparison_explicit $(kak_quote "$expansion")"
+                while true
+                do
+                    if test "$#" -eq 0; then
+                        kak_quote fail Missing closing delimiter "'$closing_symbol'"
+                        exit
+                    fi
+                    shift
+                    case "$1" in
+                    ("$closing_symbol")
+                        break
+                        ;;
+                    (*)
+                        comparisons="$comparisons $(kak_quote "$1")"
+                        ;;
+                    esac
+                done
+                shift
+                comparisons="$comparisons $KAK_SPEC_DELIMITER $expansion $KAK_SPEC_DELIMITER"
+                ;;
             ('-expect-%val(error)')
                 error_comparison="$(encode_comparison \
                     comparison_explicit "$1" "$2" '%opt(scratch_commands_error)'

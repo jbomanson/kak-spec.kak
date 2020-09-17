@@ -12,13 +12,53 @@ spec-assert \
     -expect-%val(selections) 'one-two-three'
 
 spec-assert \
+    -title 'Test "selections" of many substrings using kak-spec [] syntax' \
+    -input 'one-two-three' \
+    -exec 's\w+<ret>' \
+    -expect-%val(selections)-[ \
+        'one' 'two' 'three' \
+    ]
+
+spec-assert \
+    -title 'Test "selections" of many substrings using kak-spec () syntax' \
+    -input 'one-two-three' \
+    -exec 's\w+<ret>' \
+    -expect-%val(selections)-( \
+        'one' 'two' 'three' \
+    )
+
+spec-assert \
+    -title 'Test "selections" of many substrings using kak-spec {} syntax' \
+    -input 'one-two-three' \
+    -exec 's\w+<ret>' \
+    -expect-%val(selections)-{ \
+        'one' 'two' 'three' \
+    }
+
+spec-assert \
+    -title 'Test "selections" of many substrings using kak-spec <> syntax' \
+    -input 'one-two-three' \
+    -exec 's\w+<ret>' \
+    -expect-%val(selections)-< \
+        'one' 'two' 'three' \
+    >
+
+spec-assert \
     -title 'Smoke test: Test "selections" of everything' \
     -input 'one-two-three' \
     -exec '%H' \
     -expect-%val(selections) 'fire'
 
 spec-assert \
-    -title 'Smoke test: Test "selections" of many substrings' \
+    -title 'Smoke test: Test "selections" of many substrings against a single string' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
     -expect-%val(selections) 'fire'
+
+spec-assert \
+    -title 'Smoke test: Test "selections" of many substrings' \
+    -input 'one-two-three' \
+    -exec 's\w+<ret>' \
+    -expect-%val(selections)-[ \
+        'one' 'two' 'three' 'four' \
+    ]
