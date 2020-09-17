@@ -80,7 +80,6 @@ The <matcher> argument controls the comparison:
                 grep -Eq \"\$KAK_SPEC_option_$option\" ||
                     exit"
         done
-        # echo "$option_title" | grep -Eq "$KAK_SPEC_option_title" || exit
         # Call spec-scratch-eval with the user given command and with a <final-command> that
         # sends a message to the translator.
         kak_quote spec-scratch-eval "$option_input" "$option_eval" \
