@@ -63,6 +63,10 @@ The <matcher> argument controls the comparison:
                 eval "option_${1#-}=\$2"
                 shift 2
                 ;;
+            (-exec)
+                option_eval="execute-keys $(kak_quote "$2")"
+                shift 2
+                ;;
             (-*)
                 kak_quote fail "spec-assert: Unknown option '$1'"
                 exit 1
@@ -72,6 +76,8 @@ The <matcher> argument controls the comparison:
                 ;;
             esac
         done
+        # Apply option defaults that depend on other options.
+        true "${option_title:="$option_exec"}"
         true "${option_title:="$option_eval"}"
         # Skip this assert if requested to.
         for option in eval input title
