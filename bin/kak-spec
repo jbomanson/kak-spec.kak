@@ -2,6 +2,11 @@
 
 root_dir="$( ( cd "${0%/*}/.."; pwd ) )"
 
+# A magic string that is used in internal communications of kak-spec.
+# It is assumed that inone of the arguments passed to the kakoune spec command.
+KAK_SPEC_DELIMITER="bf152d0f8a1e657258d3059c47ff9625057d5ab0515eef9d6eec61592372af98"
+export KAK_SPEC_DELIMITER
+
 KAK_SPEC_PROGRAM="$0"
 export KAK_SPEC_PROGRAM
 

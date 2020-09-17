@@ -31,7 +31,8 @@ The <matcher> argument controls the comparison:
                 "$1" \
                 "$(kak_quote "${2#-expect-}")" \
                 "$(kak_quote "$3")" \
-                "$4"
+                "$4" \
+                "$KAK_SPEC_DELIMITER"
         }
         error_comparison="$(encode_comparison \
             'comparison_implicit' \
