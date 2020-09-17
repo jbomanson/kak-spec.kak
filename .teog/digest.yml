@@ -23,10 +23,10 @@ example/echo-debug.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/empty.kak.err: empty
 example/empty.kak.out:
-  size: { lines: 43, words: 124, bytes: 1211 }
+  size: { lines: 49, words: 136, bytes: 1319 }
   first: "\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m5 examples, 2 failures, 0 errors\e[0m"
-  hash: c073d7c58d2fa9edb7bf1caf72e2b630028defbb
+  hash: 9f26a580cde019620551043ad5047e4c93b3004a
 example/empty.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -148,7 +148,7 @@ program-call-counts.txt:
   last: "    577 sed"
   hash: 2e7748e828f452a0e1bf1542fff97443597bf67f
 teog:
-  input: a538faceb25e8c3b6387bd09fe6bbe79d5393076
+  input: 1c870b032ae6fc8e2b3732b0be510cc26dbb45d6
   status: 0
-  total: 374e74da9a6e6ec7040919ccee1b36b0a210afee
+  total: 5379551d7612888a76f693b3e23b8d4748c8266a
   version: 8

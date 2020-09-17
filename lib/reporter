@@ -109,11 +109,16 @@ def mark_newlines_explicitly(string)
   string.gsub(/\n/, "#{newline_marker}\n")
 end
 
-def format_block_content(io, text, indent = "    ")
-  text.each_line.each_with_index do |line, line_index|
-    io << Terminal.in_color("#{indent}%3i|" % (line_index + 1), LINE_NUMBER_COLOR)
-    io << mark_newlines_explicitly(Terminal.any_trailing_whitespace_in_color(line))
-    io << "\n" unless line.end_with?("\n")
+def format_block_content(io, text, indent = "    ", is_empty_special = false)
+  if is_empty_special && text.empty?
+    io << Terminal.in_color(indent, LINE_NUMBER_COLOR)
+    io << "\n"
+  else
+    text.each_line.each_with_index do |line, line_index|
+      io << Terminal.in_color("#{indent}%3i|" % (line_index + 1), LINE_NUMBER_COLOR)
+      io << mark_newlines_explicitly(Terminal.any_trailing_whitespace_in_color(line))
+      io << "\n" unless line.end_with?("\n")
+    end
   end
 end
 
@@ -127,7 +132,7 @@ def format_array(io, title, text_array)
   io << "\n"
   io << "    #{title} with #{text_array.size} #{text_array.size == 1 ? "element" : "elements"}:\n"
   text_array.each_with_index do |text, array_index|
-    format_block_content(io, text, "    %3s:" % (array_index + 1))
+    format_block_content(io, text, "    %3s:" % (array_index + 1), true)
   end
 end
 
