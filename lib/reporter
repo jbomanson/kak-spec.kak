@@ -109,27 +109,26 @@ def mark_newlines_explicitly(string)
   string.gsub(/\n/, "#{newline_marker}\n")
 end
 
-def format_block_content(text, indent = "    ")
-  string = ""
+def format_block_content(io, text, indent = "    ")
   text.each_line.each_with_index do |line, line_index|
-    string << Terminal.in_color("#{indent}%3i|" % (line_index + 1), LINE_NUMBER_COLOR)
-    string << mark_newlines_explicitly(Terminal.any_trailing_whitespace_in_color(line))
-    string << "\n" unless line.end_with?("\n")
+    io << Terminal.in_color("#{indent}%3i|" % (line_index + 1), LINE_NUMBER_COLOR)
+    io << mark_newlines_explicitly(Terminal.any_trailing_whitespace_in_color(line))
+    io << "\n" unless line.end_with?("\n")
   end
-  string
 end
 
-def format_block(title, text, indent = "    ")
-  "\n" << "#{indent}#{title}:\n" << format_block_content(text, indent)
+def format_block(io, title, text, indent = "    ")
+  io << "\n"
+  io << "#{indent}#{title}:\n"
+  format_block_content(io, text, indent)
 end
 
-def format_array(title, text_array)
-  string = "\n"
-  string << "    #{title} with #{text_array.size} #{text_array.size == 1 ? "element" : "elements"}:\n"
+def format_array(io, title, text_array)
+  io << "\n"
+  io << "    #{title} with #{text_array.size} #{text_array.size == 1 ? "element" : "elements"}:\n"
   text_array.each_with_index do |text, array_index|
-    string << format_block_content(text, "    %3s:" % (array_index + 1))
+    format_block_content(io, text, "    %3s:" % (array_index + 1))
   end
-  string
 end
 
 # An object representing a comparisiong between an actual and expected value of a kakoune kakoune_expansion.
@@ -170,11 +169,11 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_value, :actual_arra
   def format_details(io)
     if pass?
       if type == "comparison_explicit"
-        io << format_block("Accepted #{kakoune_expansion}", expected_value)
+        format_block(io, "Accepted #{kakoune_expansion}", expected_value)
       end
     else
-      io << format_block("Expected #{kakoune_expansion}", expected_value)
-      io << format_array("Actual #{kakoune_expansion}", actual_array)
+      format_block(io, "Expected #{kakoune_expansion}", expected_value)
+      format_array(io, "Actual #{kakoune_expansion}", actual_array)
     end
   end
 
@@ -211,10 +210,8 @@ module Assertion
   end
 
   # Assuming this assertion did not {#pass?}, returns a description of the relevant details.
-  def failure_details
-    string = ""
-    string << "  #{Terminal.in_color(test_case.title, :red)}\n"
-    string
+  def failure_details(io)
+    io << "  #{Terminal.in_color(test_case.title, :red)}\n"
   end
 end
 
@@ -232,19 +229,17 @@ module Assertion
     end
 
     # Prints details of this assertion.
-    def failure_details
-      string = ""
-      string << super
-      string << format_block("Input", test_case.input)
-      string << format_block("Evaluated commands", test_case.evaluated_commands)
+    def failure_details(io)
+      super
+      format_block(io, "Input", test_case.input)
+      format_block(io, "Evaluated commands", test_case.evaluated_commands)
       comparisons.each do |expectation|
-        expectation.format_details(string)
+        expectation.format_details(io)
       end
       unless test_case.scope.debug.empty?
-        string << format_block("Contents of *debug*", test_case.scope.debug)
+        format_block(io, "Contents of *debug*", test_case.scope.debug)
       end
-      string << format_block("How to run this test", test_case.shell_command_details)
-      string
+      format_block(io, "How to run this test", test_case.shell_command_details)
     end
   end
 end
@@ -256,20 +251,19 @@ NonAssertionError = Struct.new(:scope, :message) do
     Terminal.in_color("E", :red)
   end
 
-  def non_assertion_error_details
-    string = ""
-    string << "  #{Terminal.in_color("Error", :red)}\n"
+  def non_assertion_error_details(io)
+    io << "  #{Terminal.in_color("Error", :red)}\n"
     scope.each_with_index do |context_scope, index|
-      string << format_block(
+      format_block(
+        io,
         index == 0 ? "Suite" : "Context",
         context_scope.description,
       )
     end
-    string << format_block("Message", message)
+    format_block(io, "Message", message)
     unless scope.debug.empty?
-      string << format_block("Contents of *debug*", scope.debug)
+      format_block(io, "Contents of *debug*", scope.debug)
     end
-    string
   end
 end
 
@@ -282,14 +276,14 @@ class Presenter
     @non_assertion_errors = []
   end
 
-  def present_assertion(assertion)
+  def present_assertion(io, assertion)
     @assertions << assertion
-    print assertion.progress_tick
+    io.print assertion.progress_tick
   end
 
-  def present_error(error)
+  def present_error(io, error)
     @non_assertion_errors << error
-    print error.progress_tick
+    io.print error.progress_tick
   end
 
   def failure_count
@@ -300,33 +294,33 @@ class Presenter
     non_assertion_errors.empty? && failure_count == 0
   end
 
-  def present_failed_example_details
+  def present_failed_example_details(io)
     return if failure_count == 0
-    puts
-    puts "Failures:"
+    io.puts
+    io.puts "Failures:"
     assertions.each_with_index do |assertion, index|
       next if assertion.pass?
-      puts
-      puts assertion.failure_details
+      io.puts
+      assertion.failure_details(io)
     end
   end
 
   # Summarises failed examples in a way that shows files and line numbers.
-  def present_non_assertion_error_summary
+  def present_non_assertion_error_summary(io)
     return if non_assertion_errors.empty?
-    puts
-    puts "Errors other than assertion failures:"
+    io.puts
+    io.puts "Errors other than assertion failures:"
     non_assertion_errors.each do |error|
-      puts
-      puts error.non_assertion_error_details
+      io.puts
+      error.non_assertion_error_details(io)
     end
   end
 
-  def present_summary_briefly
+  def present_summary_briefly(io)
     elapsed_time =
       Process.clock_gettime(Process::CLOCK_MONOTONIC) - STARTUP_MONOTONIC_TIME
-    puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
-    puts Terminal.in_color(
+    io.puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
+    io.puts Terminal.in_color(
       "#{assertions.size} examples, " +
       "#{failure_count} failures, " +
       "#{non_assertion_errors.size} errors",
@@ -334,12 +328,12 @@ class Presenter
     )
   end
 
-  def present_summary
-    puts
-    present_failed_example_details
+  def present_summary(io)
+    io.puts
+    present_failed_example_details(io)
     puts unless pass?
-    present_summary_briefly
-    present_non_assertion_error_summary
+    present_summary_briefly(io)
+    present_non_assertion_error_summary(io)
   end
 end
 
@@ -496,9 +490,9 @@ def main(fifo)
         task, *arguments = message_components
         case task.chomp
         when "message_assert"
-          presenter.present_assertion(Assertion.from_arguments(scope_stack.last, arguments))
+          presenter.present_assertion(STDOUT, Assertion.from_arguments(scope_stack.last, arguments))
         when "message_non_assertion_error"
-          presenter.present_error(NonAssertionError.new(scope_stack.last, arguments.join(" ")))
+          presenter.present_error(STDOUT, NonAssertionError.new(scope_stack.last, arguments.join(" ")))
         when "message_scope_begin"
           description, debug_line_begin = arguments
           scope_stack << Scope.new(scope_stack.last, description, parse_debug_line_number(debug_line_begin))
@@ -525,12 +519,13 @@ def main(fifo)
       lines.each(&:clear)
     end
     # Present a summary of assertions.
-    presenter.present_summary
+    presenter.present_summary(STDOUT)
     # Print any unaccounted debug values.
     unless (stray_debug_message = debug_buffer_lines.join) == DEBUG_EXPECTED_CONTENT
-      puts
-      puts "P.S.:"
-      puts format_block(
+      STDOUT.puts
+      STDOUT.puts "P.S.:"
+      format_block(
+        STDOUT,
         "Contents of *debug* that did not fall into any file, context, or test",
         stray_debug_message,
       )
