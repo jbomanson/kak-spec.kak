@@ -132,16 +132,7 @@ def format_array(io, title, text_array)
 end
 
 # An object representing a comparisiong between an actual and expected value of a kakoune kakoune_expansion.
-Comparison = Struct.new(:type, :kakoune_expansion, :expected_array, :actual_array) do
-  def self.extract_array(array)
-    unless delimiter_index = array.index(kak_spec_delimiter)
-      throw \
-        "Expected an array of arguments ending in a magic delimiter, but got " +
-        array.shelljoin
-    end
-    array.shift(delimiter_index).tap { array.shift }
-  end
-
+Comparison = Struct.new(:type, :kakoune_expansion, :expected_value, :actual_array) do
   # Parses expectation message components sent with spec-assert.
   def self.partition_and_create_from_arguments(array)
     comparisons = []
@@ -150,18 +141,25 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_array, :actual_arra
       if remaining_arguments.empty?
         throw "Missing 'END_OF_EXPECTATIONS' from assertion message: #{array}"
       end
-      scalar_arguments = remaining_arguments.shift(self.members.size - 2)
-      if scalar_arguments.any?(&:nil?)
+      unless delimiter_index = remaining_arguments.index(kak_spec_delimiter)
         throw \
-          "Undefined arguments for comparison in #{scalar_arguments} #{remaining_arguments}"
+          "Expected a kakoune comparison in an assertion at " +
+          remaining_arguments.shelljoin
+      end
+      num_members = self.members.size
+      if delimiter_index < num_members
+        throw \
+          "Expected at least #{num_members} comparison arguments, " +
+          "got #{delimiter_index} at #{remaining_arguments.shelljoin}"
       end
       comparisons << self.new(
-        # Assign all but the last two fields to individual arguments.
-        *scalar_arguments,
-        # Assign the last two fields to sequences of arguments.
-        extract_array(remaining_arguments),
-        extract_array(remaining_arguments),
+        # Assign all but the last field to individual arguments.
+        *remaining_arguments.shift(num_members - 1),
+        # Assign the last field to the remaining arguments.
+        remaining_arguments.shift(delimiter_index - (num_members - 1)),
       )
+      # Delete the found delimiter.
+      remaining_arguments.shift
     end
     remaining_arguments.shift
     [comparisons, remaining_arguments]
@@ -171,17 +169,17 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_array, :actual_arra
   def format_details(io)
     if pass?
       if type == "comparison_explicit"
-        format_array(io, "Accepted #{kakoune_expansion}", expected_array)
+        format_block(io, "Accepted #{kakoune_expansion}", expected_value)
       end
     else
-      format_array(io, "Expected #{kakoune_expansion}", expected_array)
+      format_block(io, "Expected #{kakoune_expansion}", expected_value)
       format_array(io, "Actual #{kakoune_expansion}", actual_array)
     end
   end
 
   # Determines whether this expectation passed.
   def pass?
-    expected_array == actual_array
+    actual_array.size == 1 && expected_value == actual_array.first
   end
 end
 
