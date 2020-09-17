@@ -11,11 +11,10 @@ define-command spec-scratch-eval \
     -docstring "spec-scratch-eval <input> <command> <final-command>:
 TODO: Describe." \
 %(
-    evaluate-commands -save-regs 't' %(
+    evaluate-commands -save-regs '' %(
         # Open a temporary scratch buffer with a unique name.
         set-option -add global scratch_commands_id 1
-        set-register t "*spec-scratch-eval-%opt(scratch_commands_id)*"
-        edit! -scratch "%reg(t)"
+        edit! -scratch "*spec-scratch-eval-%opt(scratch_commands_id)*"
         try %(
             # Initialize the buffer with <input>.
             evaluate-commands -save-regs '"' %(
@@ -24,21 +23,14 @@ TODO: Describe." \
             )
             # Evaluate <command>... and save any raised error.
             set-option global scratch_commands_error ""
-            evaluate-commands -save-regs t %arg(2)
+            evaluate-commands -save-regs '' %arg(2)
             # TODO: Ensure that we are in normal mode.
-            # Check whether the command changed the current buffer.
-            evaluate-commands %sh(
-                eval "$KAK_SPEC_PRELUDE_SH"
-                if test "$kak_buffile" != "$kak_reg_t"; then
-                    kak_quote fail "temporary buffer changed to $kak_buffile"
-                fi
-            )
         ) catch %(
             # Swallow any raised error, but save it for use in <final-command>.
             set-option global scratch_commands_error "%val(error)"
         )
-        evaluate-commands -save-regs t %arg(3)
-        delete-buffer "%reg(t)"
+        evaluate-commands -save-regs '' %arg(3)
+        delete-buffer "*spec-scratch-eval-%opt(scratch_commands_id)*"
     )
 )
 

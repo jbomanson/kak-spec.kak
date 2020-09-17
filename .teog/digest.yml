@@ -146,9 +146,9 @@ program-call-counts.txt:
   size: { lines: 8, words: 16, bytes: 95 }
   first: "      2 cat"
   last: "    577 sed"
-  hash: 2e7748e828f452a0e1bf1542fff97443597bf67f
+  hash: ad9e8179831afa5102ed815a5b8d231b0eecb57a
 teog:
-  input: df7154b698a856416050ae1710219a1a7f3fd7ad
+  input: 4fee102356b42479232268941ab6c5be9e98c935
   status: 0
-  total: 79c4e12c0415035f3b9976126b6b904c8731cc0d
+  total: 792a75ea3ec834ea75f2f4dc31fe1aec458a56eb
   version: 8
