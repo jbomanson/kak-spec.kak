@@ -85,7 +85,7 @@ def throw(*args)
   raise TranslationException.new(*args)
 end
 
-TestCase = Struct.new(:scope, :title, :input) do
+TestCase = Struct.new(:scope, :title, :input, :evaluated_commands) do
   # Returns a shell command in the form of a string that reruns this specific
   # test case alone.
   # @return [String]
@@ -160,10 +160,10 @@ module Assertion
   def self.from_arguments(scope, array)
     comparisons, remaining_arguments = Comparison.partition_and_create_from_arguments(array)
     # Unpack the arguments.
-    title, input, unused_command = remaining_arguments
+    title, input, evaluated_commands = remaining_arguments
     # Convert the arguments into higher level objects.
     Assertion::WithComparisons.new(
-      TestCase.new(scope, title, input),
+      TestCase.new(scope, title, input, evaluated_commands),
       comparisons,
     )
   end
@@ -207,6 +207,7 @@ module Assertion
       string = ""
       string << super
       string << format_block("Input", test_case.input)
+      string << format_block("Evaluated commands", test_case.evaluated_commands)
       comparisons.each do |expectation|
         expectation.format_details(string)
       end
