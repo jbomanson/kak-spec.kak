@@ -238,7 +238,9 @@ module Assertion
     # Prints details of this assertion.
     def failure_details(io)
       super
-      format_block(io, "Input", test_case.input)
+      unless test_case.input.empty?
+        format_block(io, "Input", test_case.input)
+      end
       format_block(io, "Evaluated commands", test_case.evaluated_commands)
       comparisons.each do |expectation|
         expectation.format_details(io)
