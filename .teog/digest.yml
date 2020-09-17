@@ -89,6 +89,17 @@ example/selection.kak.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/selections.kak.err: empty
+example/selections.kak.out:
+  size: { lines: 25, words: 82, bytes: 854 }
+  first: "\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m"
+  last: "\e[31m3 examples, 1 failures, 0 errors\e[0m"
+  hash: d723db86559a19ee1610779a8bb4db09afc0ebf1
+example/selections.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/simple.kak.err: empty
 example/simple.kak.out:
   size: { lines: 39, words: 70, bytes: 839 }
@@ -125,10 +136,10 @@ option-title.status:
 program-call-counts.txt:
   size: { lines: 7, words: 14, bytes: 84 }
   first: "      2 cat"
-  last: "    387 sed"
-  hash: 1e665feac47e3f41e048d6968650867ce3d40c88
+  last: "    438 sed"
+  hash: 05755cb81e244389dea706033cf7a2fced1609ab
 teog:
-  input: d8d031f31e0bdf5d83a86f2f14571f443fb8cc8a
+  input: d09faf165c6046e0426b01b6e5e9c023db43290e
   status: 0
-  total: ba393a5b85a34a51e4124e81dee471416f93fb9f
+  total: 1229beeff62459252f2473b1357cea0790743cbc
   version: 8
