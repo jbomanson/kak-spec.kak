@@ -6,7 +6,7 @@ spec-assert \
 Second input line
 Third input line" \
     -eval %(
-        execute-keys 'sinput<ret>coutput<esc>%'
+        execute-keys 'sinput<ret>coutput<esc>%H'
     ) \
     -expect-%val(selection) "First output line
 Second output line
@@ -18,7 +18,7 @@ spec-assert \
 Second input line
 Third input line" \
     -eval %(
-        execute-keys 'sinput<ret>coutput<esc>%'
+        execute-keys 'sinput<ret>coutput<esc>%H'
     ) \
     -expect-%val(selection) "First line
 Second line

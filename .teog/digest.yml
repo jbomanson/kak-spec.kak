@@ -1,10 +1,10 @@
 ---
 example/difference-in-trailing-whitespace.kak.err: empty
 example/difference-in-trailing-whitespace.kak.out:
-  size: { lines: 25, words: 60, bytes: 655 }
+  size: { lines: 25, words: 60, bytes: 656 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: d782e69f020a8eaf591b8e74fa42fbf8178e6e24
+  hash: 8a2a3edb0a61b00995f505404213ca1e51e514a8
 example/difference-in-trailing-whitespace.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -23,10 +23,10 @@ example/echo-debug.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/exec.kak.err: empty
 example/exec.kak.out:
-  size: { lines: 23, words: 51, bytes: 524 }
+  size: { lines: 23, words: 47, bytes: 494 }
   first: "\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: "\e[31m3 examples, 1 failures, 0 errors\e[0m"
-  hash: 32638ac91174949766c423db557a0cc7af190342
+  hash: 580b0126a8ded636fc72a0b909f8e4354765fad0
 example/exec.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -69,10 +69,10 @@ example/fail-in-test.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/multiline.kak.err: empty
 example/multiline.kak.out:
-  size: { lines: 31, words: 82, bytes: 894 }
+  size: { lines: 31, words: 82, bytes: 895 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
-  hash: 4b20373d1da943c99a30402f9929c7b1fd9ed199
+  hash: 01d709e325b1bd14b14eb4d7c1c923660d43a566
 example/multiline.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -128,7 +128,7 @@ program-call-counts.txt:
   last: "    387 sed"
   hash: 1e665feac47e3f41e048d6968650867ce3d40c88
 teog:
-  input: cc966a5f02fecd3e1cedb0883224be225d034c4f
+  input: 56641d13f3a973735ba1a2a1e2616e34ff3578e3
   status: 0
-  total: d740d9f7e7e8e1e1752e075391ec0330eea8b702
+  total: 3ea922fa26e15b1f22ccc1d59db74b1d603a3de9
   version: 8
