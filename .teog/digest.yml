@@ -45,11 +45,10 @@ example/exec.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-context.kak.err: empty
 example/fail-in-context.kak.out:
-  size: { lines: 17, words: 44, bytes: 400 }
+  size: { lines: 18, words: 44, bytes: 401 }
   first: "\e[31mE\e[0m"
-  last: "\e[94m      1|\e[0mexample/fail-in-context.kak:This is a failure inside a
-    test context block\e[94m¬\e[0m"
-  hash: 5f97ee503b959f35d1be3e62ac90032e8165b5fc
+  last: ''
+  hash: d50c80e212e0e021dcaa02cf31a3a3488e60694c
 example/fail-in-context.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -57,11 +56,10 @@ example/fail-in-context.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-source.kak.err: empty
 example/fail-in-source.kak.out:
-  size: { lines: 17, words: 44, bytes: 394 }
+  size: { lines: 18, words: 44, bytes: 395 }
   first: "\e[31mE\e[0m"
-  last: "\e[94m      1|\e[0mexample/fail-in-source.kak:This is a failure inside a
-    test source file\e[94m¬\e[0m"
-  hash: f4e6f1705a352582fb33ee9985b4223e5e8d2806
+  last: ''
+  hash: d7fd6509f3cecf5096176a5b332b96fd1530eb42
 example/fail-in-source.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -150,7 +148,7 @@ program-call-counts.txt:
   last: "    577 sed"
   hash: 2e7748e828f452a0e1bf1542fff97443597bf67f
 teog:
-  input: 0b48c2d2119ee5da073bbd22e21058930c414f65
+  input: a538faceb25e8c3b6387bd09fe6bbe79d5393076
   status: 0
-  total: 0c5300e4f7f2a80733abcbcf5234d05bfaa6c74a
+  total: 374e74da9a6e6ec7040919ccee1b36b0a210afee
   version: 8

@@ -333,9 +333,10 @@ class Presenter
   def present_summary(io)
     io.puts
     present_failed_example_details(io)
-    puts unless pass?
+    io.puts unless pass?
     present_summary_briefly(io)
     present_non_assertion_error_summary(io)
+    io.puts unless non_assertion_errors.empty?
   end
 end
 
