@@ -1,9 +1,5 @@
 provide-module spec-scratch-eval %~
 
-declare-option \
-    -docstring 'The most recent output of spec-scratch-eval' \
-    str scratch_commands_output
-
 # An increasing number used in naming temporary scratch buffers.
 declare-option -hidden int scratch_commands_id 0
 
@@ -28,7 +24,6 @@ TODO: Describe." \
             )
             # Evaluate <command>... and save any raised error.
             set-option global scratch_commands_error ""
-            set-option global scratch_commands_output ""
             evaluate-commands -save-regs t %arg(2)
             # TODO: Ensure that we are in normal mode.
             # Check whether the command changed the current buffer.
@@ -38,9 +33,6 @@ TODO: Describe." \
                     kak_quote fail "temporary buffer changed to $kak_buffile"
                 fi
             )
-            # Extract the output of the command.
-            execute-keys '%H'
-            set-option global scratch_commands_output "%val(selection)"
         ) catch %(
             # Swallow any raised error, but save it for use in <final-command>.
             set-option global scratch_commands_error "%val(error)"
