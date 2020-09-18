@@ -1,4 +1,16 @@
 ---
+all.err: empty
+all.out:
+  size: { lines: 303, words: 881, bytes: 8911 }
+  first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mE\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.
+    ..."
+  last: ''
+  hash: dacf4984d08a5330f1a1bcc63ff5aacade62a3f0
+all.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/difference-in-trailing-whitespace.kak.err: empty
 example/difference-in-trailing-whitespace.kak.out:
   size: { lines: 25, words: 68, bytes: 694 }
@@ -148,7 +160,7 @@ program-call-counts.txt:
   last: "    577 sed"
   hash: ad9e8179831afa5102ed815a5b8d231b0eecb57a
 teog:
-  input: 56e98a9a0c389e92a7c345d74aed3bb302e78894
+  input: acf6c3560e19d26d3aee70fb37997f4e7d83e3ea
   status: 0
-  total: 2ec36306d007177dd1bd8469456bdf7d56a20c98
+  total: 83d6862cf3138dbc8db626944dec4e0658acbc81
   version: 8

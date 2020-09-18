@@ -23,7 +23,7 @@ do
     command -v "program" >/dev/null 2>&1 || eval ln -s "\"\$$program\"" bin/
 done
 
-# Run kak-spec on all samples.
+# Run kak-spec on all samples one by one.
 {
     for sample in example/*.kak
     do
@@ -31,6 +31,13 @@ done
             script/stabilize >"$sample.out" 2>"$sample.err"
         echo $? >"$sample.status"
     done
+} &
+
+# Run kak-spec on all samples in a batch.
+{
+    bin/kak-spec example/*.kak |
+        script/stabilize >"all.out" 2>"all.err"
+    echo $? >"all.status"
 } &
 
 # Run kak-spec with a title filter.
