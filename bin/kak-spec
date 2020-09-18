@@ -10,10 +10,6 @@ export KAK_SPEC_DELIMITER
 KAK_SPEC_PROGRAM="$0"
 export KAK_SPEC_PROGRAM
 
-KAK_SPEC_PRELUDE_SH="$(cat "$root_dir/lib/prelude.sh")"
-export KAK_SPEC_PRELUDE_SH
-eval "$KAK_SPEC_PRELUDE_SH"
-
 KAK_SPEC_SEND_MESSAGE="$(cat "$root_dir/lib/send_message.sh")"
 export KAK_SPEC_SEND_MESSAGE
 
@@ -31,6 +27,26 @@ trap clean_up EXIT
 
 KAK_SPEC_DIR="$scratch_dir"
 export KAK_SPEC_DIR
+
+#
+#	Locate the prelude.kak plugin
+#
+
+for candidate_plugin_dir in "$root_dir/.." "$HOME/.config/kak/plugins"
+do
+    candidate="$candidate_plugin_dir/prelude.kak/rc/prelude.sh"
+    if test -f "$candidate"; then
+        KAK_SPEC_PRELUDE_PATH="$candidate"
+        break
+    fi
+done
+
+if ! test "$KAK_SPEC_PRELUDE_PATH"; then
+    echo "${0##*/}: missing dependency \"prelude.kak\""
+    exit 1
+fi >&2
+export KAK_SPEC_PRELUDE_PATH
+. "$KAK_SPEC_PRELUDE_PATH"
 
 #
 #       Parse Command Line Arguments
@@ -114,16 +130,16 @@ for argument
 do
     KAK_SPEC_INDEX="$index" \
         kak -ui dummy -n -e "$(
-            kak_quote try "
-                source $(kak_quote "$root_dir/rc/spec.kak")
-                source $(kak_quote "$root_dir/rc/spec-scratch-eval.kak")
+            kak_escape try "
+                source $(kak_escape "$root_dir/rc/spec.kak")
+                source $(kak_escape "$root_dir/rc/spec-scratch-eval.kak")
                 buffer '*debug*'
                 require-module spec
             " catch "
                 quit! 1
             "
-            kak_quote try "$(kak_quote spec-source "$argument")"
-            kak_quote spec-quit-begin
+            kak_escape try "$(kak_escape spec-source "$argument")"
+            kak_escape spec-quit-begin
         )" &
     kak_pid_list="$kak_pid_list $!"
     index="$(expr "$index" + 1)"

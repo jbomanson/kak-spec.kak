@@ -18,7 +18,7 @@ The <matcher> argument controls the comparison:
 - 'error'  matches any raised error or '' against regex <expected-value>" \
 %(
     spec-scope "Implicit spec scope" %sh(
-        eval "$KAK_SPEC_PRELUDE_SH"
+        . "$KAK_SPEC_PRELUDE_PATH"
         # Usage:
         #   encode_comparison \
         #       comparison_explicit|comparison_implicit \
@@ -27,8 +27,8 @@ The <matcher> argument controls the comparison:
         {
             printf "%s " \
                 "$1" \
-                "$(kak_quote "${2#-expect-}")" \
-                "$(kak_quote "$3")" \
+                "$(kak_escape "${2#-expect-}")" \
+                "$(kak_escape "$3")" \
                 "$KAK_SPEC_DELIMITER" \
                 "$4" \
                 "$KAK_SPEC_DELIMITER"
@@ -52,11 +52,11 @@ The <matcher> argument controls the comparison:
                 closing_symbol="$(echo "$opening_symbol" | tr '[{(<' ']})>')"
                 expansion="${1%-*}"
                 expansion="${expansion#-expect-}"
-                comparisons="$comparisons comparison_explicit $(kak_quote "$expansion")"
+                comparisons="$comparisons comparison_explicit $(kak_escape "$expansion")"
                 while true
                 do
                     if test "$#" -eq 0; then
-                        kak_quote fail Missing closing delimiter "'$closing_symbol'"
+                        kak_escape fail Missing closing delimiter "'$closing_symbol'"
                         exit
                     fi
                     shift
@@ -65,7 +65,7 @@ The <matcher> argument controls the comparison:
                         break
                         ;;
                     (*)
-                        comparisons="$comparisons $(kak_quote "$1")"
+                        comparisons="$comparisons $(kak_escape "$1")"
                         ;;
                     esac
                 done
@@ -89,11 +89,13 @@ The <matcher> argument controls the comparison:
                 shift 2
                 ;;
             (-exec)
-                option_eval="execute-keys $(kak_quote "$2")"
+                option_eval="execute-keys $(kak_escape "$2")"
+                # Prettify reports by removing a trailing space produced by kak_escape.
+                option_eval="${option_eval% }"
                 shift 2
                 ;;
             (-*)
-                kak_quote fail "spec: Unknown option '$1'"
+                kak_escape fail "spec: Unknown option '$1'"
                 exit 1
                 ;;
             (*)
@@ -113,13 +115,13 @@ The <matcher> argument controls the comparison:
         done
         # Call spec-scratch-eval with the user given command and with a <final-command> that
         # sends a message to the translator.
-        kak_quote spec-scratch-eval "$option_input" "$option_eval" \
+        kak_escape spec-scratch-eval "$option_input" "$option_eval" \
             "spec-send \
                 message_assert \
                 $error_comparison \
                 $comparisons \
                 END_OF_EXPECTATIONS \
-                $(kak_quote "$option_title" "$option_input" "$option_eval")
+                $(kak_escape "$option_title" "$option_input" "$option_eval")
             " \
     )
 )

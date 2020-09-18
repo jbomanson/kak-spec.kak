@@ -155,12 +155,12 @@ option-title.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 program-call-counts.txt:
-  size: { lines: 11, words: 22, bytes: 137 }
-  first: "      2 cat"
-  last: "    652 sed"
-  hash: d64025d3344508784718b844c15c040dad320c52
+  size: { lines: 9, words: 18, bytes: 113 }
+  first: "      5 ruby"
+  last: "    238 sh"
+  hash: 72d568751d720f607e61c5c6278f2d49e7b5b6b4
 teog:
-  input: 1967edd11510d4355d60706e7c30938c51c87a8c
+  input: eb09dd9369d339b34b08acb258ed062326d5358a
   status: 0
-  total: ba836fa88c79cac7d498a8a51cd2735e3bd75b69
+  total: 3ec37f6b0e61ae565c197b06ab655d89bc626549
   version: 8
