@@ -1,11 +1,11 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 303, words: 881, bytes: 8911 }
+  size: { lines: 303, words: 897, bytes: 9031 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mE\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.
     ..."
   last: ''
-  hash: dacf4984d08a5330f1a1bcc63ff5aacade62a3f0
+  hash: 23cf713336b938a535121b9f8d730102947649a9
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -123,10 +123,10 @@ example/selections.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/simple.kak.err: empty
 example/simple.kak.out:
-  size: { lines: 37, words: 85, bytes: 903 }
+  size: { lines: 37, words: 93, bytes: 963 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: "\e[31m14 examples, 2 failures, 0 errors\e[0m"
-  hash: 410f51676a99481bb26cb3fbbe623fbea659ba8a
+  hash: 1368c032535ee31f88fa1a23c896799932caef3f
 example/simple.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -134,10 +134,10 @@ example/simple.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/switches.kak.err: empty
 example/switches.kak.out:
-  size: { lines: 48, words: 124, bytes: 1216 }
+  size: { lines: 48, words: 132, bytes: 1276 }
   first: "\e[32m.\e[0m\e[31mF\e[0m\e[31mF\e[0m"
   last: "\e[31m3 examples, 2 failures, 0 errors\e[0m"
-  hash: 71a1779be97c3eaa3cdaca783f10d1808005a66f
+  hash: 5a3c396d9057ce25dda42d878c8827402cde520b
 example/switches.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -145,10 +145,10 @@ example/switches.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 option-title.err: empty
 option-title.out:
-  size: { lines: 29, words: 75, bytes: 695 }
-  first: "\e[31mF\e[0m"
-  last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: 0b857b8257cd41ad15f6444fa07a480b47c63b42
+  size: { lines: 3, words: 10, bytes: 70 }
+  first: ''
+  last: "\e[32m0 examples, 0 failures, 0 errors\e[0m"
+  hash: ca6d7662d7d2a970d3e1a4c284b23eaa358b227a
 option-title.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -160,7 +160,7 @@ program-call-counts.txt:
   last: "    132 grep"
   hash: b9ba7e18e1ffd1ae15ef270d7cde93e1326ed767
 teog:
-  input: c0f4032676a9d55b0fc4f5c609a393674395ecca
+  input: 69dd622e46c5fd0d4d36c22d623482b833a7be0e
   status: 0
-  total: e410a05383250740cedaee37637f477552308677
+  total: b8b7ca9876909badddf6fa26236c1c709d15c0d6
   version: 8

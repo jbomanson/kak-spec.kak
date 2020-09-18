@@ -9,8 +9,8 @@ spec \
     )
 
 spec \
-    -expect-%val(selection_length) 4 \
-    -title "Test selection length after c" \
+    -expect-%val(selection_length) 100 \
+    -title "Smoke test: Test selection length after c" \
     -input "xyz" \
     -eval %(
         execute-keys cword<esc>
@@ -19,7 +19,7 @@ spec \
 spec \
     -expect-%val(selection_length) 4 \
     -expect-%val(error) "This is an error" \
-    -title "Test an error" \
+    -title "Smoke test: Fail in test" \
     -input "xyz" \
     -eval %(
         execute-keys cword<esc>

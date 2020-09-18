@@ -1,8 +1,8 @@
 require-module spec
 
 evaluate-commands -save-regs n %(
-    spec -expect-%val(selection) "oops" -title "nop" -input "abc" -eval nop
-    spec -expect-%val(error) "joo" -title "raise joo" -input "" -eval %(raise joo)
+    spec -expect-%val(selection) "oops" -title "Smoke test: nop" -input "abc" -eval nop
+    spec -expect-%val(error) "joo" -title "Smoke test: raise joo" -input "" -eval %(raise joo)
 
     spec -expect-%val(selection) "x" -title "nop" -input "x" -eval nop
     spec -expect-%val(selection) " " -title "nop" -input " " -eval nop
