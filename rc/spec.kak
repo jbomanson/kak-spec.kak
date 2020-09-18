@@ -7,10 +7,6 @@ require-module spec-scratch-eval
 # A temporary variable used to monitor the growth of the debug buffer from test to test.
 declare-option -hidden int scratch_unit_test_debug_line_count 0
 
-# A monotonically increasing counter that is used to stamp messages sent internally to #
-# reporter.
-declare-option -hidden int scratch_unit_test_message_count 0
-
 define-command spec \
     -params .. \
     -docstring "spec [<switches>]
@@ -182,8 +178,7 @@ define-command spec-send \
 send a message to reporter' \
 %(
     evaluate-commands -save-regs a %(
-        set-register a %opt(scratch_unit_test_message_count) %arg(@)
-        set-option -add global scratch_unit_test_message_count 1
+        set-register a %arg(@)
         nop %sh(
             eval "$KAK_SPEC_SEND_MESSAGE"
             send_message "$kak_quoted_reg_a"

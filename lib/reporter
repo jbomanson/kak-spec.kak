@@ -368,19 +368,9 @@ end
 
 # A wrapper over an IO for reading messages sent with the kakoune command `spec-send`.
 class MessageReader
-  # An implementation detail of {MessageReader}.
-  # A temporarily stored message together with some metadata.
-  Message = Struct.new(:size_in_lines, :number, :payload_arguments)
-
   def initialize(io)
     # An IO object that will be set to nil after the first time it returns nil.
     @io = io
-    # A generally monotonically increasing message number.
-    # Unless something goes wrong or there are no more messages, the next {#read_message} call
-    # will return a message with this number.
-    @next_expected_number = 0
-    # A temporary collection of messages read from io but not yet by the user.
-    @unread_messages = []
   end
 
   # Reads the next message as an array of strings.
@@ -389,29 +379,11 @@ class MessageReader
   # Returns nil once there are no more messages.
   # @return [Array<String>, nil]
   def read_message
-    loop do
-      if index = @unread_messages.find_index {|message| message.number == @next_expected_number}
-        # Use a previously read message.
-        @next_expected_number += 1
-        break @unread_messages.delete_at(index).payload_arguments
-      elsif header_line = @io && @io.gets || (@io = nil)
-        # Receive a new message.
-        size_in_lines = header_line.to_i
-        size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
-        number_s, *payload_arguments = @io.take(size_in_lines).join.shellsplit
-        @unread_messages << Message.new(size_in_lines, number_s.to_i, payload_arguments)
-      elsif @unread_messages.empty?
-        # There are no more messages.
-        break
-      else
-        # There are unread messages with unexpected message numbers.
-        next_available_number = @unread_messages.min_by(&:number)
-        STDERR.puts "kak-spec: reporter: warning: " +
-          "expected message number #{@next_expected_number}, " +
-          "settling for #{next_available_number}"
-        # Tolerate this situation by pretending to expect the next available message.
-        @next_expected_number = next_available_number
-      end
+    if header_line = @io && @io.gets
+      # Receive a new message.
+      size_in_lines = header_line.to_i
+      size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
+      @io.take(size_in_lines).join.shellsplit
     end
   end
 
