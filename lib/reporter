@@ -480,81 +480,81 @@ def parse_debug_line_number(number_as_string)
   number_as_string.to_i - 1
 end
 
-# Reads commands from a fifo until the "quit" command arrives.
-# The commands can consist of one or more lines.
-# The first line must indicate the type of the command.
-def handle_fifo(source_file, fifo)
-  unless File.exist?(fifo)
-    raise "Missing fifo '#{fifo}' for source '#{source_file}'"
-  end
-
-  presenter = Presenter.new
-  File.open(fifo, "r") do |io|
-    message_reader = MessageReader.new(io)
-    task, session, client = message_reader.read_message
-    unless task == "message_init" && session && client
-      throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
+Main = Struct.new(:presenter) do
+  # Reads commands from a fifo until the "quit" command arrives.
+  # The commands can consist of one or more lines.
+  # The first line must indicate the type of the command.
+  def handle_fifo(source_file, fifo)
+    unless File.exist?(fifo)
+      raise "Missing fifo '#{fifo}' for source '#{source_file}'"
     end
-    scope_stack = [Scope.top_level]
-    scope_universe = []
-    until_reader = message_reader.until_message("message_quit")
-    until_reader.to_a.each do |message_components|
-      stubbornly do
-        task, *arguments = message_components
-        case task.chomp
-        when "message_assert"
-          presenter.present_assertion(STDOUT, Assertion.from_arguments(scope_stack.last, arguments))
-        when "message_non_assertion_error"
-          presenter.present_error(STDOUT, NonAssertionError.new(scope_stack.last, arguments.join(" ")))
-        when "message_scope_begin"
-          description, debug_line_begin = arguments
-          scope_stack << Scope.new(scope_stack.last, description, parse_debug_line_number(debug_line_begin))
-          scope_universe << scope_stack.last
-        when "message_scope_end"
-          description, debug_line_end = arguments
-          if scope_stack.last.description == description
-            scope_stack.pop.debug_line_end = parse_debug_line_number(debug_line_end)
+    File.open(fifo, "r") do |io|
+      message_reader = MessageReader.new(io)
+      task, session, client = message_reader.read_message
+      unless task == "message_init" && session && client
+        throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
+      end
+      scope_stack = [Scope.top_level]
+      scope_universe = []
+      until_reader = message_reader.until_message("message_quit")
+      until_reader.to_a.each do |message_components|
+        stubbornly do
+          task, *arguments = message_components
+          case task.chomp
+          when "message_assert"
+            presenter.present_assertion(STDOUT, Assertion.from_arguments(scope_stack.last, arguments))
+          when "message_non_assertion_error"
+            presenter.present_error(STDOUT, NonAssertionError.new(scope_stack.last, arguments.join(" ")))
+          when "message_scope_begin"
+            description, debug_line_begin = arguments
+            scope_stack << Scope.new(scope_stack.last, description, parse_debug_line_number(debug_line_begin))
+            scope_universe << scope_stack.last
+          when "message_scope_end"
+            description, debug_line_end = arguments
+            if scope_stack.last.description == description
+              scope_stack.pop.debug_line_end = parse_debug_line_number(debug_line_end)
+            else
+              throw \
+                "Expected end of scope #{scope_stack.last}, " +
+                "got end of scope #{description}"
+            end
           else
-            throw \
-              "Expected end of scope #{scope_stack.last}, " +
-              "got end of scope #{description}"
+            throw "Unexpected task: #{([task] + arguments).shelljoin}"
           end
-        else
-          throw "Unexpected task: #{([task] + arguments).shelljoin}"
         end
       end
+      # Attribute debug information to the appropriate scopes.
+      debug_buffer_lines = until_reader.target_message.last.each_line.to_a
+      scope_universe.reverse_each do |scope|
+        lines = debug_buffer_lines[scope.debug_line_begin...scope.debug_line_end]
+        scope.debug = lines.join
+        lines.each(&:clear)
+      end
+      # Print any unaccounted debug values.
+      unless (stray_debug_message = debug_buffer_lines.join) == DEBUG_EXPECTED_CONTENT
+        STDOUT.puts
+        STDOUT.puts "P.S.:"
+        format_block(
+          STDOUT,
+          "Contents of *debug* that oddly did not fall into any context in '#{source_file}'",
+          stray_debug_message,
+        )
+      end
+      system("echo 'evaluate-commands -client #{client} %(spec-quit-end)' | kak -p #{session}")
     end
-    # Attribute debug information to the appropriate scopes.
-    debug_buffer_lines = until_reader.target_message.last.each_line.to_a
-    scope_universe.reverse_each do |scope|
-      lines = debug_buffer_lines[scope.debug_line_begin...scope.debug_line_end]
-      scope.debug = lines.join
-      lines.each(&:clear)
+  end
+
+  def main(kak_spec_arguments)
+    kak_spec_arguments.each_with_index do |argument, index|
+      handle_fifo(argument, File.join(kak_spec_dir, index.to_s))
     end
     # Present a summary of assertions.
     presenter.present_summary(STDOUT)
-    # Print any unaccounted debug values.
-    unless (stray_debug_message = debug_buffer_lines.join) == DEBUG_EXPECTED_CONTENT
-      STDOUT.puts
-      STDOUT.puts "P.S.:"
-      format_block(
-        STDOUT,
-        "Contents of *debug* that did not fall into any file, context, or test",
-        stray_debug_message,
-      )
-    end
-    system("echo 'evaluate-commands -client #{client} %(spec-quit-end)' | kak -p #{session}")
-  end
-end
-
-def main(kak_spec_arguments)
-  kak_spec_arguments.each_with_index do |argument, index|
-    handle_fifo(argument, File.join(kak_spec_dir, index.to_s))
   end
 end
 
 begin
-  main(ARGV.clone)
+  Main.new(Presenter.new).main(ARGV.clone)
 rescue => e
   puts e.to_s
   puts e.backtrace

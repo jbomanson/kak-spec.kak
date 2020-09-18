@@ -105,9 +105,9 @@ do
     index="$(expr "$index" + 1)"
 done
 
-# Listen to all of the fifos.
+# Listen to all of the fifos and report test results to standard output.
 "$REPORTER" "$@" &
-translator_pid=$!
+reporter_pid=$!
 
 index=0
 for argument
@@ -129,13 +129,10 @@ do
     index="$(expr "$index" + 1)"
 done
 
-test $# -gt 0 && wait $kak_pid_list
-kak_status=$?
-
-# The translator should have quit by now unless something went wrong.
-kill "$translator_pid" >/dev/null 2>&1
-wait "$translator_pid"
+# Wait for all kak processes and the reporter process.
+wait $reporter_pid $kak_pid_list
+wait_status=$?
 
 test "$fifo_holder_pid_list" && kill $fifo_holder_pid_list
 
-exit "$kak_status"
+exit "$wait_status"
