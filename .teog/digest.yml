@@ -148,7 +148,7 @@ program-call-counts.txt:
   last: "    577 sed"
   hash: ad9e8179831afa5102ed815a5b8d231b0eecb57a
 teog:
-  input: 4fee102356b42479232268941ab6c5be9e98c935
+  input: 5af60ecddcc1ea5ed8992eff00e0a2bb6d32753d
   status: 0
-  total: 792a75ea3ec834ea75f2f4dc31fe1aec458a56eb
+  total: 25d36aaecc280743a3efd2ff0d5c4b1a952b2c87
   version: 8

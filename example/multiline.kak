@@ -1,6 +1,6 @@
 require-module spec
 
-spec-assert \
+spec \
     -title "Change multiple output lines" \
     -input "First input line
 Second input line
@@ -12,7 +12,7 @@ Third input line" \
 Second output line
 Third output line"
 
-spec-assert \
+spec \
     -title "Smoke test: Change multiple output lines" \
     -input "First input line
 Second input line

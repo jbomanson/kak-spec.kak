@@ -26,7 +26,7 @@ def newline_marker
   $newline_marker ||= Terminal.in_color("¬", NEWLINE_MARKER_COLOR)
 end
 
-TEST_CASE_KAKOUNE_COMMAND_NAME = "spec-assert"
+TEST_CASE_KAKOUNE_COMMAND_NAME = "spec"
 
 class TranslationException < StandardError
 end
@@ -147,7 +147,7 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_array, :actual_arra
     array.shift(delimiter_index).tap { array.shift }
   end
 
-  # Parses expectation message components sent with spec-assert.
+  # Parses expectation message components sent with spec.
   def self.partition_and_create_from_arguments(array)
     comparisons = []
     remaining_arguments = array.clone

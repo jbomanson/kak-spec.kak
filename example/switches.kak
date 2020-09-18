@@ -1,6 +1,6 @@
 require-module spec
 
-spec-assert \
+spec \
     -expect-%val(selection_length) 1 \
     -title "c" \
     -input "xyz" \
@@ -8,7 +8,7 @@ spec-assert \
         execute-keys cword<esc>
     )
 
-spec-assert \
+spec \
     -expect-%val(selection_length) 4 \
     -title "Test selection length after c" \
     -input "xyz" \
@@ -16,7 +16,7 @@ spec-assert \
         execute-keys cword<esc>
     )
 
-spec-assert \
+spec \
     -expect-%val(selection_length) 4 \
     -expect-%val(error) "This is an error" \
     -title "Test an error" \

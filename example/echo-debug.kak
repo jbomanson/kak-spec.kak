@@ -1,6 +1,6 @@
 require-module spec
 
-spec-assert \
+spec \
     -title "Smoke test: Print something to the debug buffer" \
     -input "Just some text" \
     -eval %(

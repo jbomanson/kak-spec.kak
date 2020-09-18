@@ -11,9 +11,9 @@ declare-option -hidden int scratch_unit_test_debug_line_count 0
 # reporter.
 declare-option -hidden int scratch_unit_test_message_count 0
 
-define-command spec-assert \
+define-command spec \
     -params .. \
-    -docstring "spec-assert [<switches>]
+    -docstring "spec [<switches>]
 Runs <command> in a temporary scratch buffer initialized with a string that
 contains <input> and where that <input> is selected, and then compares the
 result against <expected-output>.
@@ -21,7 +21,7 @@ The <matcher> argument controls the comparison:
 - 'output' compares the final contents of the buffer to <expected-value>
 - 'error'  matches any raised error or '' against regex <expected-value>" \
 %(
-    spec-scope "Implicit spec-assert scope" %sh(
+    spec-scope "Implicit spec scope" %sh(
         eval "$KAK_SPEC_PRELUDE_SH"
         # Usage:
         #   encode_comparison \
@@ -97,7 +97,7 @@ The <matcher> argument controls the comparison:
                 shift 2
                 ;;
             (-*)
-                kak_quote fail "spec-assert: Unknown option '$1'"
+                kak_quote fail "spec: Unknown option '$1'"
                 exit 1
                 ;;
             (*)

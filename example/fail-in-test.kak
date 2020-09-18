@@ -1,6 +1,6 @@
 require-module spec
 
-spec-assert \
+spec \
     -title "Test a failure inside a test" \
     -input "Just some input" \
     -eval %(
@@ -8,7 +8,7 @@ spec-assert \
     ) \
     -expect-%val(error) "This is a failure inside a test"
 
-spec-assert \
+spec \
     -title "Smoke test: Test a failure inside a test" \
     -input "Just some input" \
     -eval %(
