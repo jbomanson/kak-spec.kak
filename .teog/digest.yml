@@ -157,10 +157,10 @@ option-title.status:
 program-call-counts.txt:
   size: { lines: 8, words: 16, bytes: 95 }
   first: "      2 cat"
-  last: "    577 sed"
-  hash: 064d228a7165fafa248ec37c6f18e66c0f2a058f
+  last: "    575 sed"
+  hash: c2b874d3cdd16ae6ab45806eda12c294b25e6319
 teog:
-  input: 2bc0d8b481229928aad23a0e7e808348a037051d
+  input: 4303dadb6fa9daaa8d4c894253bd90206f029b23
   status: 0
-  total: ee16ce82e0808ef112b160205a6eac65778be48d
+  total: 68eeb234d35fe7416f3a0f1758c4ee5240264f4d
   version: 8

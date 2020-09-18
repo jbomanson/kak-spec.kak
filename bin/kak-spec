@@ -112,14 +112,10 @@ kak -ui dummy -n -e "$(
     " catch "
         quit! 1
     "
-    kak_quote try "
-        $(
-            for argument
-            do
-                kak_quote try "$(kak_quote spec-source "$argument")"
-            done
-        )
-    "
+    for argument
+    do
+        kak_quote try "$(kak_quote spec-source "$argument")"
+    done
     kak_quote spec-quit-begin
 )"
 kak_status=$?
