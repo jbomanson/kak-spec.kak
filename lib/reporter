@@ -379,11 +379,28 @@ class MessageReader
   # Returns nil once there are no more messages.
   # @return [Array<String>, nil]
   def read_message
-    if header_line = @io && @io.gets
-      # Receive a new message.
-      size_in_lines = header_line.to_i
-      size_in_lines == 0 and throw "Expected <size_in_lines>, got '#{header_line}'"
-      @io.take(size_in_lines).join.shellsplit
+    if @io
+      # Read lines until the first newline outside of kakoune-style single quotes.
+      message_string = ""
+      num_quotes = 0
+      while true
+        unless line = @io.gets
+          @io = nil
+          message_string.empty? ? return : break
+        end
+        message_string << line
+        num_quotes += line.count("'")
+        break if num_quotes % 2 == 0
+      end
+      message_string.chomp!
+      unless message_string.start_with?("'") && message_string.end_with?("'")
+        throw "Bad message_string: #{message_string}"
+      end
+      # Parse an array quoted by kakoune using single quotes (') to surround elements
+      # and doubled-up single quotes ('') to escape regular single quotes.
+      message_string.scan(/'(?:[^']|'')*'/).map do |quoted_element|
+        quoted_element[1..-2].gsub("''", "'")
+      end
     end
   end
 

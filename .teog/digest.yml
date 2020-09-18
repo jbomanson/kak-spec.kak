@@ -155,12 +155,12 @@ option-title.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 program-call-counts.txt:
-  size: { lines: 9, words: 18, bytes: 113 }
+  size: { lines: 8, words: 16, bytes: 102 }
   first: "      5 ruby"
-  last: "    238 sh"
-  hash: 72d568751d720f607e61c5c6278f2d49e7b5b6b4
+  last: "    132 grep"
+  hash: b9ba7e18e1ffd1ae15ef270d7cde93e1326ed767
 teog:
-  input: eb09dd9369d339b34b08acb258ed062326d5358a
+  input: c0f4032676a9d55b0fc4f5c609a393674395ecca
   status: 0
-  total: 3ec37f6b0e61ae565c197b06ab655d89bc626549
+  total: e410a05383250740cedaee37637f477552308677
   version: 8

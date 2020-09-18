@@ -10,9 +10,6 @@ export KAK_SPEC_DELIMITER
 KAK_SPEC_PROGRAM="$0"
 export KAK_SPEC_PROGRAM
 
-KAK_SPEC_SEND_MESSAGE="$(cat "$root_dir/lib/send_message.sh")"
-export KAK_SPEC_SEND_MESSAGE
-
 REPORTER="$root_dir/lib/reporter"
 
 scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
@@ -128,19 +125,19 @@ reporter_pid=$!
 index=0
 for argument
 do
-    KAK_SPEC_INDEX="$index" \
-        kak -ui dummy -n -e "$(
-            kak_escape try "
-                source $(kak_escape "$root_dir/rc/spec.kak")
-                source $(kak_escape "$root_dir/rc/spec-scratch-eval.kak")
-                buffer '*debug*'
-                require-module spec
-            " catch "
-                quit! 1
-            "
-            kak_escape try "$(kak_escape spec-source "$argument")"
-            kak_escape spec-quit-begin
-        )" &
+    kak -ui dummy -n -e "$(
+        kak_escape try "
+            source $(kak_escape "$root_dir/rc/spec.kak")
+            source $(kak_escape "$root_dir/rc/spec-scratch-eval.kak")
+            declare-option str spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index")
+            buffer '*debug*'
+            require-module spec
+        " catch "
+            quit! 1
+        "
+        kak_escape try "$(kak_escape spec-source "$argument")"
+        kak_escape spec-quit-begin
+    )" &
     kak_pid_list="$kak_pid_list $!"
     index="$(expr "$index" + 1)"
 done

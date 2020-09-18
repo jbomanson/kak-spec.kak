@@ -179,13 +179,11 @@ define-command spec-send \
     -docstring 'spec-send <message-name> [<argument>]+:
 send a message to reporter' \
 %(
-    evaluate-commands -save-regs a %(
-        set-register a %arg(@)
-        nop %sh(
-            eval "$KAK_SPEC_SEND_MESSAGE"
-            send_message "$kak_quoted_reg_a"
-        )
-    )
+    echo -to-file %opt(spec_fifo) -quoting kakoune %arg(@)
+    # Send an unquoted newline to signal the end of the message.
+    # The -to-file switch disables the usual trailing newline.
+    echo -to-file %opt(spec_fifo) '
+'
 )
 
 define-command spec-quit-begin \
