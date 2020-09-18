@@ -17,6 +17,11 @@ def kak_spec_delimiter
   $kak_spec_delimiter ||= ENV["KAK_SPEC_DELIMITER"]
 end
 
+# Returns a temporary directory set up by kak-spec.
+def kak_spec_dir
+  $kak_spec_dir ||= ENV["KAK_SPEC_DIR"]
+end
+
 # Returns a path to the kak-spec program.
 def kak_spec_program
   $kak_spec_program ||= ENV["KAK_SPEC_PROGRAM"]
@@ -478,11 +483,9 @@ end
 # Reads commands from a fifo until the "quit" command arrives.
 # The commands can consist of one or more lines.
 # The first line must indicate the type of the command.
-def main(fifo)
+def handle_fifo(source_file, fifo)
   unless File.exist?(fifo)
-    puts "Usage: reporter <fifo>"
-    puts "Error: file does not exist: \"#{fifo}\""
-    exit
+    raise "Missing fifo '#{fifo}' for source '#{source_file}'"
   end
 
   presenter = Presenter.new
@@ -544,8 +547,14 @@ def main(fifo)
   end
 end
 
+def main(kak_spec_arguments)
+  kak_spec_arguments.each_with_index do |argument, index|
+    handle_fifo(argument, File.join(kak_spec_dir, index.to_s))
+  end
+end
+
 begin
-  main(ARGV.shift)
+  main(ARGV.clone)
 rescue => e
   puts e.to_s
   puts e.backtrace

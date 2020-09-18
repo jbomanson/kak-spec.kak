@@ -1,11 +1,10 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 303, words: 881, bytes: 8911 }
-  first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mE\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.
-    ..."
-  last: ''
-  hash: dacf4984d08a5330f1a1bcc63ff5aacade62a3f0
+  size: { lines: 365, words: 1015, bytes: 9818 }
+  first: "\e[31mF\e[0m"
+  last: "\e[31m3 examples, 2 failures, 0 errors\e[0m"
+  hash: b7f5b6e731dba456c338145ff9a963c65247155a
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -155,12 +154,12 @@ option-title.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 program-call-counts.txt:
-  size: { lines: 8, words: 16, bytes: 95 }
+  size: { lines: 11, words: 22, bytes: 137 }
   first: "      2 cat"
-  last: "    575 sed"
-  hash: c2b874d3cdd16ae6ab45806eda12c294b25e6319
+  last: "    652 sed"
+  hash: d64025d3344508784718b844c15c040dad320c52
 teog:
-  input: 4303dadb6fa9daaa8d4c894253bd90206f029b23
+  input: b7e722d1e4160977499c8e5330aafad33260b7ed
   status: 0
-  total: 68eeb234d35fe7416f3a0f1758c4ee5240264f4d
+  total: b19ee96a5240cc5729b6288960b1a8f76651bd5c
   version: 8

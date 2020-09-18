@@ -94,38 +94,48 @@ if ! test -x "$REPORTER" >/dev/null; then
     exit 1;
 fi >&2
 
-# Listen to the fifo.
-mkfifo "$KAK_SPEC_DIR/fifo"
-"$REPORTER" "$KAK_SPEC_DIR/fifo" &
+# Make one fifo per argument.
+index=0
+for argument
+do
+    mkfifo "$KAK_SPEC_DIR/$index"
+    # Keep the fifo open.
+    sleep 100000d >"$KAK_SPEC_DIR/$index" 2>&1 </dev/null &
+    fifo_holder_pid_list="$fifo_holder_pid_list $!"
+    index="$(expr "$index" + 1)"
+done
+
+# Listen to all of the fifos.
+"$REPORTER" "$@" &
 translator_pid=$!
 
-# Keep the fifo open.
-sleep 100000d >"$KAK_SPEC_DIR/fifo" 2>&1 </dev/null &
-fifo_holder_pid=$!
+index=0
+for argument
+do
+    KAK_SPEC_INDEX="$index" \
+        kak -ui dummy -n -e "$(
+            kak_quote try "
+                source $(kak_quote "$root_dir/rc/spec.kak")
+                source $(kak_quote "$root_dir/rc/spec-scratch-eval.kak")
+                buffer '*debug*'
+                require-module spec
+            " catch "
+                quit! 1
+            "
+            kak_quote try "$(kak_quote spec-source "$argument")"
+            kak_quote spec-quit-begin
+        )" &
+    kak_pid_list="$kak_pid_list $!"
+    index="$(expr "$index" + 1)"
+done
 
-kak -ui dummy -n -e "$(
-    kak_quote try "
-        source $(kak_quote "$root_dir/rc/spec.kak")
-        source $(kak_quote "$root_dir/rc/spec-scratch-eval.kak")
-        buffer '*debug*'
-        require-module spec
-    " catch "
-        quit! 1
-    "
-    for argument
-    do
-        kak_quote try "$(kak_quote spec-source "$argument")"
-    done
-    kak_quote spec-quit-begin
-)"
+test $# -gt 0 && wait $kak_pid_list
 kak_status=$?
 
 # The translator should have quit by now unless something went wrong.
 kill "$translator_pid" >/dev/null 2>&1
 wait "$translator_pid"
 
-if test "$fifo_holder_pid" -gt 0; then
-    kill "$fifo_holder_pid"
-fi
+test "$fifo_holder_pid_list" && kill $fifo_holder_pid_list
 
 exit "$kak_status"
