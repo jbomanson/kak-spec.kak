@@ -452,51 +452,62 @@ def parse_debug_line_number(number_as_string)
   number_as_string.to_i - 1
 end
 
-Main = Struct.new(:presenter) do
-  # Reads commands from a fifo until the "quit" command arrives.
-  # The commands can consist of one or more lines.
-  # The first line must indicate the type of the command.
-  def handle_fifo(source_file, fifo)
-    unless File.exist?(fifo)
-      raise "Missing fifo '#{fifo}' for source '#{source_file}'"
+# A wrapper class that helps implement state machines.
+StateMachine = Struct.new(:state) do
+  def transition(method_name, *args)
+    unless new_state = state.send(method_name, *args)
+      raise "BUG: State #{state}##{method_name} -> #{new_state}"
     end
-    File.open(fifo, "r") do |io|
-      message_reader = MessageReader.new(io)
-      task, session, client = message_reader.read_message
+    self.state = new_state
+  end
+end
+
+module MessageHandler
+  Uninitiated = Struct.new(:presenter) do
+    def handle_message(task, session, client)
       unless task == "message_init" && session && client
-        throw "Expected message_init <session> <client>, received: #{([task] + arguments).shelljoin}"
+        throw "Expected message_init <session> <client>, received: #{[task, session, client]}"
       end
-      scope_stack = [Scope.top_level]
-      scope_universe = []
-      until_reader = message_reader.until_message("message_quit")
-      until_reader.to_a.each do |message_components|
-        stubbornly do
-          task, *arguments = message_components
-          case task.chomp
-          when "message_assert"
-            presenter.present_assertion(STDOUT, Assertion.from_arguments(scope_stack.last, arguments))
-          when "message_non_assertion_error"
-            presenter.present_error(STDOUT, NonAssertionError.new(scope_stack.last, arguments.join(" ")))
-          when "message_scope_begin"
-            description, debug_line_begin = arguments
-            scope_stack << Scope.new(scope_stack.last, description, parse_debug_line_number(debug_line_begin))
-            scope_universe << scope_stack.last
-          when "message_scope_end"
-            description, debug_line_end = arguments
-            if scope_stack.last.description == description
-              scope_stack.pop.debug_line_end = parse_debug_line_number(debug_line_end)
-            else
-              throw \
-                "Expected end of scope #{scope_stack.last}, " +
-                "got end of scope #{description}"
-            end
-          else
-            throw "Unexpected task: #{([task] + arguments).shelljoin}"
-          end
+      Initiated.new(*values, session, client)
+    end
+  end
+
+  Initiated = Struct.new(*Uninitiated.members, :session, :client) do
+    def scope_stack
+      @scope_stack ||= [Scope.top_level]
+    end
+
+    def scope_universe
+      @scope_universe ||= []
+    end
+
+    def handle_message(task, *arguments)
+      case task.chomp
+      when "message_assert"
+        presenter.present_assertion(STDOUT, Assertion.from_arguments(scope_stack.last, arguments))
+      when "message_non_assertion_error"
+        presenter.present_error(STDOUT, NonAssertionError.new(scope_stack.last, arguments.join(" ")))
+      when "message_scope_begin"
+        description, debug_line_begin = arguments
+        scope_stack << Scope.new(scope_stack.last, description, parse_debug_line_number(debug_line_begin))
+        scope_universe << scope_stack.last
+      when "message_scope_end"
+        description, debug_line_end = arguments
+        if scope_stack.last.description == description
+          scope_stack.pop.debug_line_end = parse_debug_line_number(debug_line_end)
+        else
+          throw \
+            "Expected end of scope #{scope_stack.last}, " +
+            "got end of scope #{description}"
         end
+      else
+        throw "Unexpected task: #{([task] + arguments).shelljoin}"
       end
+      self
+    end
+
+    def finish(source_file, debug_buffer_lines)
       # Attribute debug information to the appropriate scopes.
-      debug_buffer_lines = until_reader.target_message.last.each_line.to_a
       scope_universe.reverse_each do |scope|
         lines = debug_buffer_lines[scope.debug_line_begin...scope.debug_line_end]
         scope.debug = lines.join
@@ -513,6 +524,37 @@ Main = Struct.new(:presenter) do
         )
       end
       system("echo 'evaluate-commands -client #{client} %(spec-quit-end)' | kak -p #{session}")
+      Finished.new
+    end
+  end
+
+  class Finished
+  end
+end
+
+Main = Struct.new(:presenter) do
+  # Reads commands from a fifo until the "quit" command arrives.
+  # The commands can consist of one or more lines.
+  # The first line must indicate the type of the command.
+  def handle_fifo(source_file, fifo)
+    unless File.exist?(fifo)
+      raise "Missing fifo '#{fifo}' for source '#{source_file}'"
+    end
+    machine = StateMachine.new(MessageHandler::Uninitiated.new(presenter))
+    File.open(fifo, "r") do |io|
+      message_reader = MessageReader.new(io)
+      machine.transition(:handle_message, *message_reader.read_message)
+      until_reader = message_reader.until_message("message_quit")
+      until_reader.to_a.each do |message_components|
+        stubbornly do
+          machine.transition(:handle_message, *message_components)
+        end
+      end
+      machine.transition(
+        :finish,
+        source_file,
+        until_reader.target_message.last.each_line.to_a,
+      )
     end
   end
 
