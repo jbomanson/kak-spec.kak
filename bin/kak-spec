@@ -103,7 +103,7 @@ translator_pid=$!
 sleep 100000d >"$KAK_SPEC_DIR/fifo" 2>&1 </dev/null &
 fifo_holder_pid=$!
 
-{
+kak -ui dummy -n -e "$(
     kak_quote try "
         source $(kak_quote "$root_dir/rc/spec.kak")
         source $(kak_quote "$root_dir/rc/spec-scratch-eval.kak")
@@ -121,9 +121,7 @@ fifo_holder_pid=$!
         )
     "
     kak_quote spec-quit-begin
-} >"$KAK_SPEC_DIR/source.kak"
-
-kak -ui dummy -n -e 'source %sh(printf "%s" "$KAK_SPEC_DIR/source.kak")'
+)"
 kak_status=$?
 
 # The translator should have quit by now unless something went wrong.
