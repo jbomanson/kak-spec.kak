@@ -56,8 +56,8 @@ done
     # Show those that are called more than once.
     cat ".strace.txt" | grep -Eo 'execve\("[^"]*"' | sed -r 's,.*/|",,g' |
         sort | uniq -c | sort -n |
-        grep -E '^\s*([2-9]|1[0-9])' >program-call-counts.txt
-} &
+        grep -E '^\s*([2-9]|1[0-9])'
+} >program-call-counts.out 2>program-call-counts.err &
 
 wait
 
