@@ -12,6 +12,8 @@ export KAK_SPEC_PROGRAM
 
 REPORTER="$root_dir/lib/reporter"
 
+version=0.1.0
+
 scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
 
 clean_up () {
@@ -51,15 +53,29 @@ export KAK_SPEC_PRELUDE_PATH
 
 usage ()
 {
-    echo "Usage:"
-    echo "  kak-spec [<option>...] <test-source-file.kak>..."
-    echo
-    echo "where <option> is one of"
-    echo "  -eval=<regex>    -- Run only assertions whose -eval  argument matches <regex>"
-    echo "  -title=<regex>   -- Run only assertions whose -title argument matches <regex>"
-    echo "  -input=<regex>   -- Run only assertions whose -input argument matches <regex>"
-}
+    cat <<EOF
+Usage: kak-spec [<option>...] <script>...
 
+Runs tests specified in given kakoune <script> files.
+
+Each <script> is ran in a separate **temporary kakoune session**.
+No guarantees are made of the order in which different test source files are ran.
+However, tests defined in the same source file:
+- are executed in they order they are defined,
+- can use options, commands, etc defined before them in tests or on the top level, and
+- may inadvertently disturb one another due to the above.
+
+See <https://github.com/jbomanson/kak-spec> for instructions on how to write tests.
+
+Options:
+-eval=<regex>     -- Run only tests whose eval  matches <regex>.
+-input=<regex>    -- Run only tests whose input matches <regex>.
+-title=<regex>    -- Run only tests whose title matches <regex>.
+
+-h, -help, --help -- Show this help message
+-version          -- Show the current version of kak-spec
+EOF
+}
 
 while true
 do
@@ -82,6 +98,10 @@ do
         ;;
     -h | -help | help)
         usage
+        exit
+        ;;
+    -version)
+        echo "kak-spec $version"
         exit
         ;;
     -*)

@@ -1,0 +1,59 @@
+<%
+  bin_kak_spec = File.read("bin/kak-spec")
+
+  help = File.read("bin/kak-spec")[/cat <<EOF\K.*?^(?=EOF)/m].
+    gsub(/<(\w+)>/, '_\1_').
+    gsub(/(?<!\w)-([\w%()\[\]{}<>-]+)|(?<!\/)kak-spec/, '**\0**')
+
+  paragraphs = help.split("\n\n").map(&:strip)
+  options_index = paragraphs.find_index(&/^Options:/.method(:=~))
+
+  synopsis = paragraphs[0]
+  description = paragraphs[1...options_index].join("\n\n")
+  options = paragraphs[options_index..-1].join("\n\n")
+
+  synopsis.gsub!("Usage: ", "")
+  options.gsub!("Options:\n", "")
+  options.gsub!(/^(\*\*-\w.*)\*\*--\*\*/) {"\n" + $~[1] + "\n:"}
+
+  # Ensure that consecutive dashes are not converted into a long dash.
+  [synopsis, description, options].each do |section|
+    section.gsub!(/--/, '`--`')
+  end
+1
+%>% KAK-SPEC(1) kak-spec <%= bin_kak_spec[/version=\K.*/] -%> | kak-spec Manual
+
+NAME
+====
+
+**kak-spec** — A unit testing framework for Kakoune scripts and plugins
+
+SYNOPSIS
+========
+
+| <%= synopsis %>
+
+DESCRIPTION
+===========
+
+<%= description %>
+
+OPTIONS
+=======
+
+<%= options %>
+
+BUGS
+====
+
+See GitHub Issues: <https://github.com/jbomanson/kak-spec/issues>
+
+AUTHOR
+======
+
+Jori Bomanson <jori.bomanson@gmail.com>
+
+SEE ALSO
+========
+
+kak(1)

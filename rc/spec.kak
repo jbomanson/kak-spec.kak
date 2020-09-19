@@ -9,13 +9,35 @@ declare-option -hidden int scratch_unit_test_debug_line_count 0
 
 define-command spec \
     -params .. \
-    -docstring "spec [<switches>]
-Runs <command> in a temporary scratch buffer initialized with a string that
-contains <input> and where that <input> is selected, and then compares the
-result against <expected-output>.
-The <matcher> argument controls the comparison:
-- 'output' compares the final contents of the buffer to <expected-value>
-- 'error'  matches any raised error or '' against regex <expected-value>" \
+    -docstring 'spec <option>...: Define a unit test.
+
+-title <title>
+  A title to be shown if the test fails.
+
+-input <input>
+  Initial contents written to and selected in the scratch buffer where the test begins.
+  The scratch buffer will always contain a newline in addition to <input>.
+
+-eval <commands>
+  Commands evaluated in the test.
+  Mutually exclusive with -exec.
+  Example: -eval %(set-register dquote "Hello world!"; execute-keys R)
+
+-exec <keys>
+  Keys to be executed in the buffer.
+  Mutually exclusive with -eval.
+  Example: -exec %(cHello world!)
+
+-expect-<expansion> <value>
+  Expects kakoune <expansion> to expand to <value> at the end of the test.
+  Example: -expect-%val(selection) "Hello world!"
+  Example: -expect-%val(error) "Something went wrong"
+
+-expect-<expansion>-( <value>... )
+  Expects kakoune <expansion> to expand to the given array.
+  The delimiters can be (), [], {}, or <>.
+  Example: -expect-%val(selections)-[ "word" "pair of words" ]
+' \
 %(
     spec-scope "Implicit spec scope" %sh(
         . "$KAK_SPEC_PRELUDE_PATH"
