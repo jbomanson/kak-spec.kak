@@ -7,7 +7,7 @@ root_dir="$( ( cd "${0%/*}/.."; pwd ) )"
 KAK_SPEC_DELIMITER="bf152d0f8a1e657258d3059c47ff9625057d5ab0515eef9d6eec61592372af98"
 export KAK_SPEC_DELIMITER
 
-REPORTER="$root_dir/lib/reporter"
+REPORTER="$root_dir/lib/reporter.rb"
 
 version=0.1.0
 

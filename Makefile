@@ -1,32 +1,37 @@
-PREFIX     ?= /usr/local
-BUILD      ?= build
-BIN_SOURCE := $(wildcard bin/*)
+PREFIX		?= /usr/local
+BIN_SOURCE	:= $(wildcard bin/*)
+MAN_SOURCE	:= $(wildcard man/*.1.md.erb)
+MAN_OUTPUT	:= $(patsubst man/%.1.md.erb,share/man/man1/%.1,$(MAN_SOURCE))
 
 all:
 	true
 
-doc: lib/reporter
+doc: lib/reporter.rb
 	yard doc $<
+
+# This target represents files that should be checked in the repository.
+preprocess: README.md $(MAN_OUTPUT)
+
+#
+#       Preprocess Documentation
+#
 
 README.md: README.md.erb lib/runner.sh rc/spec.kak
 	erb -T- $< >$@
 
+#
+#       Preprocess Man Pages
+#
 
-#       Build Man Pages
+preprocess_man: $(MAN_OUTPUT)
 
-
-MAN_SOURCE	:= $(wildcard man/*.1.md.erb)
-MAN_BUILD	:= $(patsubst man/%.1.md.erb,$(BUILD)/share/man/man1/%.1.gz,$(MAN_SOURCE))
-
-build_man: $(MAN_BUILD)
-
-$(BUILD)/share/man/man1/%.1.gz: man/%.1.md.erb
+share/man/man1/%.1: man/%.1.md.erb
 	@mkdir -p $(@D)
-	erb -T- $< | pandoc --standalone --to man | gzip >$@
+	erb -T- $< | pandoc --standalone --to man >$@
 
-
+#
 #       Install everything
-
+#
 
 install: install_bin install_man
 
@@ -36,6 +41,6 @@ install_bin: $(BIN_SOURCE)
 	install -d $(DESTDIR)$(PREFIX)/share
 	ln -f -s -t $(DESTDIR)$(PREFIX)/share $(PWD)
 
-install_man: $(MAN_BUILD)
+install_man: $(MAN_OUTPUT)
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1/
 	ln -f -s -t $(DESTDIR)$(PREFIX)/share/man/man1 $(abspath $+)
