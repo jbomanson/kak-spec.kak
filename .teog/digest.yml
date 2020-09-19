@@ -160,7 +160,7 @@ program-call-counts.txt:
   last: "    132 grep"
   hash: b9ba7e18e1ffd1ae15ef270d7cde93e1326ed767
 teog:
-  input: b5f3a359e432f609389f6811affe98fac05202cf
+  input: e972acff1ecaba19528816fd4fafb8344ab522f1
   status: 0
-  total: 8f311bd444f57284059d33331566a268e49f7c32
+  total: f0d257ab9a2412ceb06024a65f08d9b287e5df73
   version: 8

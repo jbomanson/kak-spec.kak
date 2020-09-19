@@ -8,7 +8,7 @@ all:
 doc: lib/reporter
 	yard doc $<
 
-README.md: README.md.erb bin/kak-spec rc/spec.kak
+README.md: README.md.erb lib/runner.sh rc/spec.kak
 	erb -T- $< >$@
 
 
@@ -33,6 +33,8 @@ install: install_bin install_man
 install_bin: $(BIN_SOURCE)
 	install -d $(DESTDIR)$(PREFIX)/bin/
 	ln -f -s -t $(DESTDIR)$(PREFIX)/bin $(abspath $+)
+	install -d $(DESTDIR)$(PREFIX)/share
+	ln -f -s -t $(DESTDIR)$(PREFIX)/share $(PWD)
 
 install_man: $(MAN_BUILD)
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1/

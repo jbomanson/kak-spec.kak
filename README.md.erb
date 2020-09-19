@@ -83,7 +83,7 @@ More examples can be found in the
 
 <%=
   # Extract and format the help text from the executable.
-  File.read("bin/kak-spec")[/cat <<EOF\K.*?^(?=EOF)/m].
+  File.read("lib/runner.sh")[/cat <<EOF\K.*?^(?=EOF)/m].
     gsub(/^(?=-\w)/, '- ').
     gsub(/<(\w+)>/, '_\1_').
     gsub(/(?<!\w)-([\w%()\[\]{}<>-]+)|kak-spec/, '**\0**')
