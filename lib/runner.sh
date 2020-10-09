@@ -15,6 +15,8 @@ scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
 
 clean_up () {
     code=$?
+    test "$(printf "%s" $reporter_pid $kak_pid_list $fifo_holder_pid_list)" &&
+        kill $reporter_pid $kak_pid_list $fifo_holder_pid_list
     rm -r "$scratch_dir"
     exit $code
 }
@@ -162,7 +164,10 @@ done
 # Wait for all kak processes and the reporter process.
 wait $reporter_pid $kak_pid_list
 wait_status=$?
+reporter_pid=
+kak_pid_list=
 
 test "$fifo_holder_pid_list" && kill $fifo_holder_pid_list
+fifo_holder_pid_list=
 
 exit "$wait_status"
