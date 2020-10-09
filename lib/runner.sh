@@ -154,7 +154,7 @@ do
         " catch "
             quit! 1
         "
-        kak_escape try "$(kak_escape spec-scope "$argument" source "$argument")"
+        kak_escape try "$(kak_escape spec-scope "$argument" "$(kak_escape source "$argument")")"
         kak_escape spec-quit-begin
     )" &
     kak_pid_list="$kak_pid_list $!"

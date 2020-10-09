@@ -158,8 +158,8 @@ Evaluates <commands> so that any assertions in them have context information.' \
 
 define-command spec-scope \
     -hidden \
-    -params 2..3 \
-    -docstring 'spec-scope <description> <command> [<argument>]:
+    -params 2 \
+    -docstring 'spec-scope <description> <command>:
 Evaluates <commands> so that any assertions in them have scope information.' \
 %(
     # Save the current length of *debug*.
@@ -168,7 +168,7 @@ Evaluates <commands> so that any assertions in them have scope information.' \
     )
     spec-send message_scope_begin %arg(1) %opt(scratch_unit_test_debug_line_count)
     try %(
-        evaluate-commands %arg(2) %arg(3)
+        evaluate-commands %arg(2)
     ) catch %(
         # Send the error as a command to the translator.
         spec-send message_non_assertion_error %val(error)
