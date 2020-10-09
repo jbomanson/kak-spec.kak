@@ -130,9 +130,9 @@ fi >&2
 index=0
 for argument
 do
-    mkfifo "$KAK_SPEC_DIR/$index"
+    mkfifo "$KAK_SPEC_DIR/$index.fifo"
     # Keep the fifo open.
-    sleep 100000d >"$KAK_SPEC_DIR/$index" 2>&1 </dev/null &
+    sleep 100000d >"$KAK_SPEC_DIR/$index.fifo" 2>&1 </dev/null &
     fifo_holder_pid_list="$fifo_holder_pid_list $!"
     index="$(expr "$index" + 1)"
 done
@@ -148,7 +148,7 @@ do
         kak_escape try "
             source $(kak_escape "$root_dir/rc/spec.kak")
             source $(kak_escape "$root_dir/rc/spec-scratch-eval.kak")
-            declare-option str spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index")
+            declare-option str spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
             buffer '*debug*'
             require-module spec
         " catch "

@@ -577,7 +577,7 @@ Main = Struct.new(:presenter) do
 
   def main(kak_spec_arguments)
     kak_spec_arguments.each_with_index do |argument, index|
-      handle_fifo(argument, File.join(kak_spec_dir, index.to_s))
+      handle_fifo(argument, File.join(kak_spec_dir, index.to_s + ".fifo"))
     end
     # Present a summary of assertions.
     presenter.present_summary(STDOUT)
