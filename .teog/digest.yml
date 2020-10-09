@@ -167,12 +167,12 @@ option-title.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 program-call-counts.err: empty
 program-call-counts.out:
-  size: { lines: 9, words: 18, bytes: 114 }
+  size: { lines: 10, words: 20, bytes: 128 }
   first: "      5 ruby"
   last: "    138 grep"
-  hash: f68264f0b02b19f24dfe68759dbc02f2e4249c7d
+  hash: 4b4c633baa01562eeeac2f80523bc947be1af979
 teog:
-  input: 489372a5cc3c4fa12803a19ee69a83917a6fd04e
+  input: aaa8a4e2ce8c43509564d44cb13eda4040a282f8
   status: 0
-  total: 195a38b8d7a9fd2707b35cd360d2ec7fc5d0fb37
+  total: 81abf1fa1a96d1da9ff72652dbb3e9a923d5f3f0
   version: 8

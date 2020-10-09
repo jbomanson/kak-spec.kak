@@ -144,12 +144,14 @@ reporter_pid=$!
 index=0
 for argument
 do
+    mkdir "$KAK_SPEC_DIR/$index.dir"
     env --chdir="${argument%/*}" \
         kak -ui dummy -n -e "$(
             kak_escape try "
                 source $(kak_escape "$root_dir/rc/spec.kak")
                 source $(kak_escape "$root_dir/rc/spec-scratch-eval.kak")
                 declare-option str spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
+                declare-option str spec_tmp $(kak_escape "$KAK_SPEC_DIR/$index.dir")
                 buffer '*debug*'
                 require-module spec
             " catch "
