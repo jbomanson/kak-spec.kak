@@ -1,6 +1,6 @@
-require-module spec
+require-module kak-spec
 
-spec \
+kak-spec \
     -title "Change multiple output lines" \
     -input "First input line
 Second input line
@@ -12,7 +12,7 @@ Third input line" \
 Second output line
 Third output line"
 
-spec \
+kak-spec \
     -title "Smoke test: Change multiple output lines" \
     -input "First input line
 Second input line

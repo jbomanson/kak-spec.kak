@@ -8,7 +8,7 @@ The framework is designed to help plugin developers, but it can also be useful f
 behavior of the kakoune scripting language.
 Using **kak-spec** is a matter of
 - installing **kak-spec**
-- writing unit tests in kakoune script using the provided **spec** module, and
+- writing unit tests in kakoune script using the provided **kak-spec** module, and
 - running the tests form the command line using **kak-spec**.
 
 ## Dependencies
@@ -56,8 +56,8 @@ This is important, because the installation process makes soft links to content 
 
 ### Writing tests
 
-Tests are written in kakoune source files that call `require-module spec` and then use the
-provided kakoune command **spec** to define tests.
+Tests are written in kakoune source files that call `require-module kak-spec` and then use the
+provided kakoune command **kak-spec** to define tests.
 Here is an example test file:
 ```kak
 <%=
@@ -71,11 +71,11 @@ More examples can be found in the
 #### Kakoune Command Usage
 
 <%=
-  # Extract and format the docstring of the spec command.
-  File.read("rc/spec.kak")[/define-command spec [^']*'\K[^']*/].
+  # Extract and format the docstring of the kak-spec command.
+  File.read("rc/kak-spec.kak")[/define-command kak-spec [^']*'\K[^']*/].
     gsub(/^(?=-\w)/, '- ').
     gsub(/<(\w+)>/, '_\1_').
-    gsub(/(-([\w%()\[\]{}<>-]+))+|(?<!\S)[()\[\]{}<>](?!\S)|spec/, '**\0**').
+    gsub(/(-([\w%()\[\]{}<>-]+))+|(?<!\S)[()\[\]{}<>](?!\S)|kak-spec/, '**\0**').
     gsub(/^ *Example/, "  - Example")
 -%>
 
@@ -93,12 +93,12 @@ More examples can be found in the
 
 **kak-spec** works well with file watcher programs such as
 [entr](http://eradman.com/entrproject/) that rerun arbitrary commands as some files change.
-For example, in a git project with test files in a directory hierarchy under `spec`, one could
+For example, in a git project with test files in a directory hierarchy under `kak-spec`, one could
 run:
 ```sh
 while true; do
   git ls-files | entr -cd kak-spec spec/**/*.kak
 done
 ```
-These commands would rerun kak-spec on *.kak files under `spec` whenever any file currently
+These commands would rerun kak-spec on *.kak files under `kak-spec` whenever any file currently
 tracked by git changes.

@@ -31,7 +31,7 @@ def newline_marker
   $newline_marker ||= Terminal.in_color("¬", NEWLINE_MARKER_COLOR)
 end
 
-TEST_CASE_KAKOUNE_COMMAND_NAME = "spec"
+TEST_CASE_KAKOUNE_COMMAND_NAME = "kak-spec"
 
 class TranslationException < StandardError
 end
@@ -152,7 +152,7 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_array, :actual_arra
     array.shift(delimiter_index).tap { array.shift }
   end
 
-  # Parses expectation message components sent with spec.
+  # Parses expectation message components sent with kak-spec.
   def self.partition_and_create_from_arguments(array)
     comparisons = []
     remaining_arguments = array.clone
@@ -366,7 +366,7 @@ def stubbornly
   end
 end
 
-# A wrapper over an IO for reading messages sent with the kakoune command `spec-send`.
+# A wrapper over an IO for reading messages sent with the kakoune command `kak-spec-send`.
 class MessageReader
   def initialize(io)
     # An IO object that will be set to nil after the first time it returns nil.
@@ -375,7 +375,7 @@ class MessageReader
 
   # Reads the next message as an array of strings.
   # The order in which messages are read is exactly the same as in which they are sent via the
-  # kakoune command `spec-send`.
+  # kakoune command `kak-spec-send`.
   # Returns nil once there are no more messages.
   # @return [Array<String>, nil]
   def read_message
@@ -540,7 +540,7 @@ module MessageHandler
           stray_debug_message,
         )
       end
-      system("echo 'evaluate-commands -client #{client} %(spec-quit-end)' | kak -p #{session}")
+      system("echo 'evaluate-commands -client #{client} %(kak-spec-quit-end)' | kak -p #{session}")
       Finished.new
     end
   end

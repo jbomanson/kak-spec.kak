@@ -1,6 +1,6 @@
-require-module spec
+require-module kak-spec
 
-spec \
+kak-spec \
     -title "Smoke test: Difference in trailing whitespace" \
     -input "Some input" \
     -eval %(

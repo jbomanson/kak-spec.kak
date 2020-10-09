@@ -1,4 +1,4 @@
-provide-module spec-scratch-eval %~
+provide-module kak-spec-scratch-eval %~
 
 # An increasing number used in naming temporary scratch buffers.
 declare-option -hidden int scratch_commands_id 0
@@ -6,15 +6,15 @@ declare-option -hidden int scratch_commands_id 0
 # A temporary variable used to hold caught errors.
 declare-option -hidden str scratch_commands_error
 
-define-command spec-scratch-eval \
+define-command kak-spec-scratch-eval \
     -params 3 \
-    -docstring "spec-scratch-eval <input> <command> <final-command>:
+    -docstring "kak-spec-scratch-eval <input> <command> <final-command>:
 TODO: Describe." \
 %(
     evaluate-commands -save-regs '' %(
         # Open a temporary scratch buffer with a unique name.
         set-option -add global scratch_commands_id 1
-        edit! -scratch "*spec-scratch-eval-%opt(scratch_commands_id)*"
+        edit! -scratch "*kak-spec-scratch-eval-%opt(scratch_commands_id)*"
         try %(
             # Initialize the buffer with <input>.
             evaluate-commands -save-regs '"' %(
@@ -30,7 +30,7 @@ TODO: Describe." \
             set-option global scratch_commands_error "%val(error)"
         )
         evaluate-commands -save-regs '' %arg(3)
-        delete-buffer "*spec-scratch-eval-%opt(scratch_commands_id)*"
+        delete-buffer "*kak-spec-scratch-eval-%opt(scratch_commands_id)*"
     )
 )
 

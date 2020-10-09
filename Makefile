@@ -16,7 +16,7 @@ preprocess: README.md $(MAN_OUTPUT)
 #       Preprocess Documentation
 #
 
-README.md: README.md.erb lib/runner.sh rc/spec.kak
+README.md: README.md.erb lib/runner.sh rc/kak-spec.kak
 	erb -T- $< >$@
 
 #

@@ -8,7 +8,7 @@ The framework is designed to help plugin developers, but it can also be useful f
 behavior of the kakoune scripting language.
 Using **kak-spec** is a matter of
 - installing **kak-spec**
-- writing unit tests in kakoune script using the provided **spec** module, and
+- writing unit tests in kakoune script using the provided **kak-spec** module and command, and
 - running the tests form the command line using **kak-spec**.
 
 ## Dependencies
@@ -56,24 +56,24 @@ This is important, because the installation process makes soft links to content 
 
 ### Writing tests
 
-Tests are written in kakoune source files that call `require-module spec` and then use the
-provided kakoune command **spec** to define tests.
+Tests are written in kakoune source files that call `require-module kak-spec` and then use the
+provided kakoune command **kak-spec** to define tests.
 Here is an example test file:
 ```kak
-require-module spec
+require-module kak-spec
 
-spec \
+kak-spec \
     -title 'Test "selections" of a substring' \
     -input 'one-two-three' \
     -exec stwo<ret> \
     -expect-%val(selections) 'two'
 
-spec \
+kak-spec \
     -title 'Test "selections" after no actions' \
     -input 'one-two-three' \
     -expect-%val(selections) 'one-two-three'
 
-spec \
+kak-spec \
     -title 'Test "selections" of many substrings using kak-spec [] syntax' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
@@ -81,7 +81,7 @@ spec \
         'one' 'two' 'three' \
     ]
 
-spec \
+kak-spec \
     -title 'Test "selections" of many substrings using kak-spec () syntax' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
@@ -89,7 +89,7 @@ spec \
         'one' 'two' 'three' \
     )
 
-spec \
+kak-spec \
     -title 'Test "selections" of many substrings using kak-spec {} syntax' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
@@ -97,7 +97,7 @@ spec \
         'one' 'two' 'three' \
     }
 
-spec \
+kak-spec \
     -title 'Test "selections" of many substrings using kak-spec <> syntax' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
@@ -105,19 +105,19 @@ spec \
         'one' 'two' 'three' \
     >
 
-spec \
+kak-spec \
     -title 'Smoke test: Test "selections" of everything' \
     -input 'one-two-three' \
     -exec '%H' \
     -expect-%val(selections) 'fire'
 
-spec \
+kak-spec \
     -title 'Smoke test: Test "selections" of many substrings against a single string' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
     -expect-%val(selections) 'fire'
 
-spec \
+kak-spec \
     -title 'Smoke test: Test "selections" of many substrings' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
@@ -131,7 +131,7 @@ More examples can be found in the
 
 #### Kakoune Command Usage
 
-**spec** _option_...: Define a unit test.
+**kak-spec** _option_...: Define a unit test.
 
 - **-title** _title_
   A title to be shown if the test fails.
@@ -165,10 +165,10 @@ More examples can be found in the
 
 Usage: **kak-spec** [_option_...] _script_...
 
-Runs tests specified in given kakoune _script_ files.
+Runs tests kak-specified in given kakoune _script_ files.
 
 Each _script_ is ran in a separate **temporary kakoune session**.
-Different _script_ runs may happen in any order, possibly in parallel.
+No guarantees are made of the order in which different test source files are ran.
 However, tests defined in the same source file:
 - are executed in they order they are defined,
 - can use options, commands, etc defined before them in tests or on the top level, and
@@ -188,12 +188,12 @@ Options:
 
 **kak-spec** works well with file watcher programs such as
 [entr](http://eradman.com/entrproject/) that rerun arbitrary commands as some files change.
-For example, in a git project with test files in a directory hierarchy under `spec`, one could
+For example, in a git project with test files in a directory hierarchy under `kak-spec`, one could
 run:
 ```sh
 while true; do
   git ls-files | entr -cd kak-spec spec/**/*.kak
 done
 ```
-These commands would rerun kak-spec on *.kak files under `spec` whenever any file currently
+These commands would rerun kak-spec on *.kak files under `kak-spec` whenever any file currently
 tracked by git changes.

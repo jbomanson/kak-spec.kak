@@ -1,15 +1,15 @@
 declare-option str scratch_unit_test_client %val(client)
 
-provide-module spec %~
+provide-module kak-spec %~
 
-require-module spec-scratch-eval
+require-module kak-spec-scratch-eval
 
 # A temporary variable used to monitor the growth of the debug buffer from test to test.
 declare-option -hidden int scratch_unit_test_debug_line_count 0
 
-define-command spec \
+define-command kak-spec \
     -params .. \
-    -docstring 'spec <option>...: Define a unit test.
+    -docstring 'kak-spec <option>...: Define a unit test.
 
 -title <title>
   A title to be shown if the test fails.
@@ -39,7 +39,7 @@ define-command spec \
   Example: -expect-%val(selections)-[ "word" "pair of words" ]
 ' \
 %(
-    spec-context "Implicit spec context" %sh(
+    kak-spec-context "Implicit kak-spec context" %sh(
         . "$KAK_SPEC_PRELUDE_PATH"
         # Usage:
         #   encode_comparison \
@@ -117,7 +117,7 @@ define-command spec \
                 shift 2
                 ;;
             (-*)
-                kak_escape fail "spec: Unknown option '$1'"
+                kak_escape fail "kak-spec: Unknown option '$1'"
                 exit 1
                 ;;
             (*)
@@ -135,10 +135,10 @@ define-command spec \
                 grep -Eq \"\$KAK_SPEC_option_$option\" ||
                     exit"
         done
-        # Call spec-scratch-eval with the user given command and with a <final-command> that
+        # Call kak-spec-scratch-eval with the user given command and with a <final-command> that
         # sends a message to the translator.
-        kak_escape spec-scratch-eval "$option_input" "$option_eval" \
-            "spec-send \
+        kak_escape kak-spec-scratch-eval "$option_input" "$option_eval" \
+            "kak-spec-send \
                 message_assert \
                 $error_comparison \
                 $comparisons \
@@ -148,26 +148,26 @@ define-command spec \
     )
 )
 
-define-command spec-context \
+define-command kak-spec-context \
     -params 2 \
-    -docstring 'spec-context <context-message> <commands>:
+    -docstring 'kak-spec-context <context-message> <commands>:
 Evaluates <commands> so that any assertions in them have context information.' \
 %(
     # Save the current length of *debug*.
     evaluate-commands -buffer *debug* %(
         set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
     )
-    spec-send message_scope_begin %arg(1) %opt(scratch_unit_test_debug_line_count)
+    kak-spec-send message_scope_begin %arg(1) %opt(scratch_unit_test_debug_line_count)
     try %(
         evaluate-commands %arg(2)
     ) catch %(
         # Send the error as a command to the translator.
-        spec-send message_non_assertion_error %val(error)
+        kak-spec-send message_non_assertion_error %val(error)
         # Save the current length of *debug*.
         evaluate-commands -buffer *debug* %(
             set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
         )
-        spec-send message_scope_end %arg(1) %opt(scratch_unit_test_debug_line_count)
+        kak-spec-send message_scope_end %arg(1) %opt(scratch_unit_test_debug_line_count)
         # Re-raise the caught error.
         fail "%val(error)"
     )
@@ -175,38 +175,38 @@ Evaluates <commands> so that any assertions in them have context information.' \
     evaluate-commands -buffer *debug* %(
         set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
     )
-    spec-send message_scope_end %arg(1) %opt(scratch_unit_test_debug_line_count)
+    kak-spec-send message_scope_end %arg(1) %opt(scratch_unit_test_debug_line_count)
 )
 
-define-command spec-send \
+define-command kak-spec-send \
     -hidden \
     -params 1.. \
-    -docstring 'spec-send <message-name> [<argument>]+:
+    -docstring 'kak-spec-send <message-name> [<argument>]+:
 send a message to reporter' \
 %(
-    echo -to-file %opt(spec_fifo) -quoting kakoune %arg(@)
+    echo -to-file %opt(kak_spec_fifo) -quoting kakoune %arg(@)
     # Send an unquoted newline to signal the end of the message.
     # The -to-file switch disables the usual trailing newline.
-    echo -to-file %opt(spec_fifo) '
+    echo -to-file %opt(kak_spec_fifo) '
 '
 )
 
-define-command spec-quit-begin \
+define-command kak-spec-quit-begin \
     -hidden \
-    -docstring 'spec-quit-begin: begin quitting kak-spec and kakoune' \
+    -docstring 'kak-spec-quit-begin: begin quitting kak-spec and kakoune' \
 %(
     buffer *debug*
     execute-keys '%'
-    spec-send message_quit %val(selection)
+    kak-spec-send message_quit %val(selection)
 )
 
-define-command spec-quit-end \
+define-command kak-spec-quit-end \
     -hidden \
-    -docstring 'spec-quit-end: finish quitting kak-spec and kakoune' \
+    -docstring 'kak-spec-quit-end: finish quitting kak-spec and kakoune' \
 %(
     quit!
 )
 
-spec-send message_init %val(session) %opt(scratch_unit_test_client)
+kak-spec-send message_init %val(session) %opt(scratch_unit_test_client)
 
 ~

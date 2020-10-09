@@ -1,6 +1,6 @@
-require-module spec
+require-module kak-spec
 
-spec \
+kak-spec \
     -expect-%val(selection_length) 1 \
     -title "c" \
     -input "xyz" \
@@ -8,7 +8,7 @@ spec \
         execute-keys cword<esc>
     )
 
-spec \
+kak-spec \
     -expect-%val(selection_length) 100 \
     -title "Smoke test: Test selection length after c" \
     -input "xyz" \
@@ -16,7 +16,7 @@ spec \
         execute-keys cword<esc>
     )
 
-spec \
+kak-spec \
     -expect-%val(selection_length) 4 \
     -expect-%val(error) "This is an error" \
     -title "Smoke test: Fail in test" \

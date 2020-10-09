@@ -3,7 +3,7 @@
 root_dir="$( ( cd "${0%/*}/.."; pwd ) )"
 
 # A magic string that is used in internal communications of kak-spec.
-# It is assumed that inone of the arguments passed to the kakoune spec command.
+# It is assumed that inone of the arguments passed to the kakoune kak-spec command.
 KAK_SPEC_DELIMITER="bf152d0f8a1e657258d3059c47ff9625057d5ab0515eef9d6eec61592372af98"
 export KAK_SPEC_DELIMITER
 
@@ -55,7 +55,7 @@ usage ()
     cat <<EOF
 Usage: kak-spec [<option>...] <script>...
 
-Runs tests specified in given kakoune <script> files.
+Runs tests kak-specified in given kakoune <script> files.
 
 Each <script> is ran in a separate **temporary kakoune session**.
 Different <script> runs may happen in any order, possibly in parallel.
@@ -148,20 +148,20 @@ do
     env --chdir="${argument%/*}" \
         kak -ui dummy -n -e "$(
             kak_escape try "
-                source $(kak_escape "$root_dir/rc/spec.kak")
-                source $(kak_escape "$root_dir/rc/spec-scratch-eval.kak")
-                declare-option str spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
-                declare-option str spec_tmp $(kak_escape "$KAK_SPEC_DIR/$index.dir")
+                source $(kak_escape "$root_dir/rc/kak-spec.kak")
+                source $(kak_escape "$root_dir/rc/kak-spec-scratch-eval.kak")
+                declare-option str kak_spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
+                declare-option str kak_spec_tmp $(kak_escape "$KAK_SPEC_DIR/$index.dir")
                 buffer '*debug*'
-                require-module spec
+                require-module kak-spec
             " catch "
                 quit! 1
             "
-            kak_escape try "$(kak_escape spec-context "$argument" "$(
+            kak_escape try "$(kak_escape kak-spec-context "$argument" "$(
                 # Source the absolute path of the argument.
                 kak_escape source "$( ( cd "${argument%/*}"; pwd ) )/${argument##*/}"
             )")"
-            kak_escape spec-quit-begin
+            kak_escape kak-spec-quit-begin
         )" &
     kak_pid_list="$kak_pid_list $!"
     index="$(expr "$index" + 1)"
