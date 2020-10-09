@@ -172,7 +172,7 @@ program-call-counts.out:
   last: "    138 grep"
   hash: f14351de55507bd3157be6c93fdfae19206bb3f6
 teog:
-  input: feb7c34f033d3ac5e3fdc5cd54487655b3fee0b6
+  input: 9b0475924de3524be7398ce8a6b6f550de30e90c
   status: 0
-  total: ffd18d6a5ced476c01312bab6d8a36017684f612
+  total: 77e20ccb9eb52c4ca004afce7b343bbb1c314677
   version: 8

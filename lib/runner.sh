@@ -21,7 +21,7 @@ clean_up () {
     exit $code
 }
 
-trap clean_up EXIT
+trap "trap - TERM && clean_up" INT TERM EXIT
 
 KAK_SPEC_DIR="$scratch_dir"
 export KAK_SPEC_DIR
