@@ -1,11 +1,11 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 336, words: 993, bytes: 9951 }
+  size: { lines: 336, words: 993, bytes: 9989 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mE\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.
     ..."
   last: ''
-  hash: 57a69c5c08a950ba54f5932d765816c61629af52
+  hash: 3b17c5b8276bce2467073ffb025c3a5f98853fbf
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -13,10 +13,10 @@ all.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/current-directory.kak.err: empty
 example/current-directory.kak.out:
-  size: { lines: 39, words: 108, bytes: 1002 }
+  size: { lines: 39, words: 108, bytes: 1026 }
   first: "\e[31mF\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 2 failures, 0 errors\e[0m"
-  hash: d4ff45013bd3b5c1cb3dacd1b96b0c8d9f8e8117
+  hash: ed5a923055ba61cce20768d9123be7e9f6cd3b29
 example/current-directory.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -68,10 +68,10 @@ example/exec.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-context.kak.err: empty
 example/fail-in-context.kak.out:
-  size: { lines: 18, words: 44, bytes: 401 }
+  size: { lines: 18, words: 44, bytes: 408 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: d50c80e212e0e021dcaa02cf31a3a3488e60694c
+  hash: bbac321716998bc533b5e465b72cd8d79b4a7539
 example/fail-in-context.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -79,10 +79,10 @@ example/fail-in-context.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-source.kak.err: empty
 example/fail-in-source.kak.out:
-  size: { lines: 18, words: 44, bytes: 395 }
+  size: { lines: 18, words: 44, bytes: 402 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: d7fd6509f3cecf5096176a5b332b96fd1530eb42
+  hash: c61023a021b506da6a3d2819c77e365b794ceec1
 example/fail-in-source.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -167,12 +167,12 @@ option-title.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 program-call-counts.err: empty
 program-call-counts.out:
-  size: { lines: 8, words: 16, bytes: 102 }
+  size: { lines: 9, words: 18, bytes: 114 }
   first: "      5 ruby"
   last: "    138 grep"
-  hash: f14351de55507bd3157be6c93fdfae19206bb3f6
+  hash: f68264f0b02b19f24dfe68759dbc02f2e4249c7d
 teog:
-  input: ddb3a068e9d57f6800ce75bc38569cb94c38095b
+  input: 489372a5cc3c4fa12803a19ee69a83917a6fd04e
   status: 0
-  total: bd36cab8be70629c4970bc929d8d2f4e104b83a7
+  total: 195a38b8d7a9fd2707b35cd360d2ec7fc5d0fb37
   version: 8

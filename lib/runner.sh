@@ -144,19 +144,23 @@ reporter_pid=$!
 index=0
 for argument
 do
-    kak -ui dummy -n -e "$(
-        kak_escape try "
-            source $(kak_escape "$root_dir/rc/spec.kak")
-            source $(kak_escape "$root_dir/rc/spec-scratch-eval.kak")
-            declare-option str spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
-            buffer '*debug*'
-            require-module spec
-        " catch "
-            quit! 1
-        "
-        kak_escape try "$(kak_escape spec-context "$argument" "$(kak_escape source "$argument")")"
-        kak_escape spec-quit-begin
-    )" &
+    env --chdir="${argument%/*}" \
+        kak -ui dummy -n -e "$(
+            kak_escape try "
+                source $(kak_escape "$root_dir/rc/spec.kak")
+                source $(kak_escape "$root_dir/rc/spec-scratch-eval.kak")
+                declare-option str spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
+                buffer '*debug*'
+                require-module spec
+            " catch "
+                quit! 1
+            "
+            kak_escape try "$(kak_escape spec-context "$argument" "$(
+                # Source the absolute path of the argument.
+                kak_escape source "$( ( cd "${argument%/*}"; pwd ) )/${argument##*/}"
+            )")"
+            kak_escape spec-quit-begin
+        )" &
     kak_pid_list="$kak_pid_list $!"
     index="$(expr "$index" + 1)"
 done
