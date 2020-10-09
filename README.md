@@ -168,7 +168,7 @@ Usage: **kak-spec** [_option_...] _script_...
 Runs tests specified in given kakoune _script_ files.
 
 Each _script_ is ran in a separate **temporary kakoune session**.
-No guarantees are made of the order in which different test source files are ran.
+Different _script_ runs may happen in any order, possibly in parallel.
 However, tests defined in the same source file:
 - are executed in they order they are defined,
 - can use options, commands, etc defined before them in tests or on the top level, and
