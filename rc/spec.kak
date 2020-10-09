@@ -39,7 +39,7 @@ define-command spec \
   Example: -expect-%val(selections)-[ "word" "pair of words" ]
 ' \
 %(
-    spec-scope "Implicit spec scope" %sh(
+    spec-context "Implicit spec context" %sh(
         . "$KAK_SPEC_PRELUDE_PATH"
         # Usage:
         #   encode_comparison \
@@ -152,15 +152,6 @@ define-command spec-context \
     -params 2 \
     -docstring 'spec-context <context-message> <commands>:
 Evaluates <commands> so that any assertions in them have context information.' \
-%(
-    spec-scope %arg(@)
-)
-
-define-command spec-scope \
-    -hidden \
-    -params 2 \
-    -docstring 'spec-scope <description> <command>:
-Evaluates <commands> so that any assertions in them have scope information.' \
 %(
     # Save the current length of *debug*.
     evaluate-commands -buffer *debug* %(
