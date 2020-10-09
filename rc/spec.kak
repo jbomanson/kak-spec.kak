@@ -148,14 +148,6 @@ define-command spec \
     )
 )
 
-define-command spec-source \
-    -params 1 \
-    -docstring 'spec-source <filename>:
-Define a test suite source file.' \
-%(
-    spec-scope %arg(1) source %arg(1)
-)
-
 define-command spec-context \
     -params 2 \
     -docstring 'spec-context <context-message> <commands>:
