@@ -1,11 +1,11 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 336, words: 993, bytes: 9989 }
+  size: { lines: 336, words: 993, bytes: 9959 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mE\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.
     ..."
   last: ''
-  hash: 3b17c5b8276bce2467073ffb025c3a5f98853fbf
+  hash: e57d66648a967071368abb77abea5d3b7ff82ff6
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -68,10 +68,10 @@ example/exec.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-context.kak.err: empty
 example/fail-in-context.kak.out:
-  size: { lines: 18, words: 44, bytes: 408 }
+  size: { lines: 18, words: 44, bytes: 393 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: bbac321716998bc533b5e465b72cd8d79b4a7539
+  hash: 189b2cbb1cbc7e608f0354c6d2c95e50db0d0ff0
 example/fail-in-context.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -79,10 +79,10 @@ example/fail-in-context.kak.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-source.kak.err: empty
 example/fail-in-source.kak.out:
-  size: { lines: 18, words: 44, bytes: 402 }
+  size: { lines: 18, words: 44, bytes: 387 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: c61023a021b506da6a3d2819c77e365b794ceec1
+  hash: df509eb55ec8310567151d0ed89dcb53673ab7d4
 example/fail-in-source.kak.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -167,12 +167,12 @@ option-title.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 program-call-counts.err: empty
 program-call-counts.out:
-  size: { lines: 10, words: 20, bytes: 128 }
+  size: { lines: 11, words: 22, bytes: 144 }
   first: "      5 ruby"
   last: "    138 grep"
-  hash: 4b4c633baa01562eeeac2f80523bc947be1af979
+  hash: 4a8192c2059f2d715e8a21d4fce2e836e33697e8
 teog:
-  input: 725c96850f6c7d5671ac0408613c36cec3d4eb47
+  input: 2f8ccb085a393140923036d79261b09aeb290f44
   status: 0
-  total: f7c3712fe27ee961ee4e0d14597ba5d15d548c2c
+  total: 02a36418edf12215c95e7edf7e4357455058dbd0
   version: 8

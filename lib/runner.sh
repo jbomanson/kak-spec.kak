@@ -145,7 +145,7 @@ index=0
 for argument
 do
     mkdir "$KAK_SPEC_DIR/$index.dir"
-    env --chdir="${argument%/*}" \
+    env --chdir="$(dirname "$argument")" \
         kak -ui dummy -n -e "$(
             kak_escape try "
                 source $(kak_escape "$root_dir/rc/kak-spec.kak")
@@ -159,7 +159,7 @@ do
             "
             kak_escape try "$(kak_escape kak-spec-context "$argument" "$(
                 # Source the absolute path of the argument.
-                kak_escape source "$( ( cd "${argument%/*}"; pwd ) )/${argument##*/}"
+                kak_escape source "${argument##*/}"
             )")"
             kak_escape kak-spec-quit-begin
         )" &
