@@ -2,6 +2,7 @@ PREFIX		?= /usr/local
 BIN_SOURCE	:= $(wildcard bin/*)
 MAN_SOURCE	:= $(wildcard man/*.1.md.erb)
 MAN_OUTPUT	:= $(patsubst man/%.1.md.erb,share/man/man1/%.1,$(MAN_SOURCE))
+README_DEPENDENCIES	:= lib/runner.sh rc/kak-spec.kak
 
 all:
 	true
@@ -16,7 +17,7 @@ preprocess: README.md $(MAN_OUTPUT)
 #       Preprocess Documentation
 #
 
-README.md: README.md.erb lib/runner.sh rc/kak-spec.kak
+README.md: README.md.erb $(README_DEPENDENCIES)
 	erb -T- $< >$@
 
 #
@@ -25,7 +26,7 @@ README.md: README.md.erb lib/runner.sh rc/kak-spec.kak
 
 preprocess_man: $(MAN_OUTPUT)
 
-share/man/man1/%.1: man/%.1.md.erb
+share/man/man1/%.1: man/%.1.md.erb $(README_DEPENDENCIES)
 	@mkdir -p $(@D)
 	erb -T- $< | pandoc --standalone --to man >$@
 
