@@ -1,5 +1,3 @@
-require-module kak-spec
-
 kak-spec \
     -title "Smoke test: Difference in trailing whitespace" \
     -input "Some input" \

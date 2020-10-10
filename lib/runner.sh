@@ -15,6 +15,7 @@ scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
 
 clean_up () {
     code=$?
+    test -f "$scratch_dir/debug" && cat "$scratch_dir/debug"
     test "$(printf "%s" $reporter_pid $kak_pid_list $fifo_holder_pid_list)" &&
         kill $reporter_pid $kak_pid_list $fifo_holder_pid_list
     rm -r "$scratch_dir"
@@ -148,13 +149,13 @@ do
     env --chdir="$(dirname "$argument")" \
         kak -ui dummy -n -e "$(
             kak_escape try "
-                source $(kak_escape "$root_dir/lib/kak-spec.kak-spec")
-                source $(kak_escape "$root_dir/lib/kak-spec-scratch-eval.kak-spec")
                 declare-option str kak_spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
                 declare-option str kak_spec_tmp $(kak_escape "$KAK_SPEC_DIR/$index.dir")
-                buffer '*debug*'
-                require-module kak-spec
+                source $(kak_escape "$root_dir/lib/kak-spec-scratch-eval.kak-spec")
+                source $(kak_escape "$root_dir/lib/kak-spec.kak-spec")
             " catch "
+                buffer '*debug*'
+                write $(kak_escape "$KAK_SPEC_DIR/debug")
                 quit! 1
             "
             kak_escape try "$(kak_escape kak-spec-context "$argument" "$(

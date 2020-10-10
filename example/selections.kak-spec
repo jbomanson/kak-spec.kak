@@ -1,5 +1,3 @@
-require-module kak-spec
-
 kak-spec \
     -title 'Test "selections" of a substring' \
     -input 'one-two-three' \

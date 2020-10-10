@@ -15,8 +15,6 @@ Using **kak-spec** is a matter of
 
 Example test [example/selections.kak-spec](https://github.com/jbomanson/kak-spec/example/selections.kak-spec):
 ```kak
-require-module kak-spec
-
 kak-spec \
     -title 'Test "selections" of a substring' \
     -input 'one-two-three' \
@@ -145,7 +143,7 @@ Failures:
     How to run this test:
 [94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\$ example/selections.kak-spec
 
-Finished in 181.22 milliseconds
+Finished in 81.22 milliseconds
 [31m9 examples, 3 failures, 0 errors[0m
 ```
 
