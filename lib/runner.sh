@@ -56,7 +56,7 @@ usage ()
     cat <<EOF
 Usage: kak-spec [<option>...] <script>...
 
-Runs tests kak-specified in given kakoune <script> files.
+Runs tests specified in kakoune <script> files.
 
 Each <script> is ran in a separate **temporary kakoune session**.
 Different <script> runs may happen in any order, possibly in parallel.

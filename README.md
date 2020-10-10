@@ -229,7 +229,7 @@ This is important, because the installation process makes soft links to content 
 
 Usage: **kak-spec** [_option_...] _script_...
 
-Runs tests **kak-spec**ified in given kakoune _script_ files.
+Runs tests specified in kakoune _script_ files.
 
 Each _script_ is ran in a separate **temporary kakoune session**.
 Different _script_ runs may happen in any order, possibly in parallel.
@@ -238,7 +238,7 @@ However, tests defined in the same source file:
 - can use options, commands, etc defined before them in tests or on the top level, and
 - may inadvertently disturb one another due to the above.
 
-See <https://github.com/jbomanson/**kak-spec**> for instructions on how to write tests.
+See <https://github.com/jbomanson/kak-spec> for instructions on how to write tests.
 
 Options:
 - **-eval**=_regex_     **--** Run only tests whose eval  matches _regex_.
