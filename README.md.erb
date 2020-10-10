@@ -20,7 +20,7 @@ Example test [example/selections.kak](https://github.com/jbomanson/kak-spec/exam
 
 Test output produced by `kak-spec example/selections.kak`:
 ```
-<%= %x(bin/kak-spec example/selections.kak) -%>
+<%= %x(bin/kak-spec example/selections.kak).gsub(/\d\d\.\d\d/, "81.22") -%>
 ```
 
 More examples can be found in the
