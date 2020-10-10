@@ -7,9 +7,24 @@
 The framework is designed to help plugin developers, but it can also be useful for studying the
 behavior of the kakoune scripting language.
 Using **kak-spec** is a matter of
-- installing **kak-spec**
-- writing unit tests in kakoune script using the provided **kak-spec** module, and
-- running the tests form the command line using **kak-spec**.
+- installing it,
+- writing unit tests in kakoune script, and
+- running the tests using an executable called **kak-spec**.
+
+## Example
+
+Example test [example/selections.kak](https://github.com/jbomanson/kak-spec/example/selections.kak):
+```kak
+<%= File.read("example/selections.kak") -%>
+```
+
+Test output produced by `kak-spec example/selections.kak`:
+```
+<%= %x(bin/kak-spec example/selections.kak) -%>
+```
+
+More examples can be found in the
+[example](https://github.com/jbomanson/kak-spec/example) directory.
 
 ## Dependencies
 
@@ -54,21 +69,7 @@ This is important, because the installation process makes soft links to content 
 
 ## Usage
 
-### Writing tests
-
-Tests are written in kakoune source files that call `require-module kak-spec` and then use the
-provided kakoune command **kak-spec** to define tests.
-Here is an example test file:
-```kak
-<%=
-    File.read("example/selections.kak")
--%>
-```
-
-More examples can be found in the
-[example](https://github.com/jbomanson/kak-spec/example) directory.
-
-#### Kakoune Command Usage
+#### Defining Tests: Kakoune Command Usage
 
 <%=
   # Extract and format the docstring of the kak-spec command.

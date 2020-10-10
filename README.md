@@ -7,58 +7,13 @@
 The framework is designed to help plugin developers, but it can also be useful for studying the
 behavior of the kakoune scripting language.
 Using **kak-spec** is a matter of
-- installing **kak-spec**
-- writing unit tests in kakoune script using the provided **kak-spec** module and command, and
-- running the tests form the command line using **kak-spec**.
+- installing it,
+- writing unit tests in kakoune script, and
+- running the tests using an executable called **kak-spec**.
 
-## Dependencies
+## Example
 
-- ruby
-
-- [prelude.kak](https://github.com/alexherbo2/prelude.kak)
-
-## Installation of kak-spec and the prelude.kak dependency
-
-The following alternative steps will install a `kak-spec` executable under
-`/path/to/prefix/directory/bin`, and man pages under
-`/path/to/prefix/directory/share/man/man1`.
-A typical choice for `/path/to/prefix/directory` would be `~/.local`.
-
-### Alternative #1: With plug.kak
-
-You can install **kak-spec** using the
-[plug.kak](https://github.com/andreyorst/plug.kak) plugin manager by extending
-your `kakrc` with:
-
-```kak
-plug "alexherbo2/prelude.kak"
-plug "jbomanson/kak-spec" noload do %(
-    make install PREFIX=/path/to/prefix/directory
-)
-```
-
-Then start Kakoune and run `:plug-install`.
-
-### Alternative #2: Manually
-
-```sh
-cd /path/to/plugins/directory
-git clone --depth=1 https://github.com/alexherbo2/prelude.kak
-git clone --depth=1 https://github.com/jbomanson/kak-spec
-cd kak-spec && make install PREFIX=/path/to/prefix/directory
-```
-
-After the installation is done, the cloned directories should stay where they are.
-This is important, because the installation process makes soft links to content inside the
-`kak-spec` directory and `kak-spec` expects to find `prelude.kak` from a location next to it.
-
-## Usage
-
-### Writing tests
-
-Tests are written in kakoune source files that call `require-module kak-spec` and then use the
-provided kakoune command **kak-spec** to define tests.
-Here is an example test file:
+Example test [example/selections.kak](https://github.com/jbomanson/kak-spec/example/selections.kak):
 ```kak
 require-module kak-spec
 
@@ -126,10 +81,121 @@ kak-spec \
     ]
 ```
 
+Test output produced by `kak-spec example/selections.kak`:
+```
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[31mF[0m[31mF[0m[31mF[0m
+
+Failures:
+
+  [31mSmoke test: Test "selections" of everything[0m
+
+    Input:
+[94m      1|[0mone-two-three
+
+    Evaluated commands:
+[94m      1|[0mexecute-keys '%H'
+
+    Expected %val(selections) with 1 element:
+[94m      1:  1|[0mfire
+
+    Actual %val(selections) with 1 element:
+[94m      1:  1|[0mone-two-three
+
+    How to run this test:
+[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ everything\$ example/selections.kak
+
+  [31mSmoke test: Test "selections" of many substrings against a single string[0m
+
+    Input:
+[94m      1|[0mone-two-three
+
+    Evaluated commands:
+[94m      1|[0mexecute-keys 's\w+<ret>'
+
+    Expected %val(selections) with 1 element:
+[94m      1:  1|[0mfire
+
+    Actual %val(selections) with 3 elements:
+[94m      1:  1|[0mone
+[94m      2:  1|[0mtwo
+[94m      3:  1|[0mthree
+
+    How to run this test:
+[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ against\\\ a\\\ single\\\ string\$ example/selections.kak
+
+  [31mSmoke test: Test "selections" of many substrings[0m
+
+    Input:
+[94m      1|[0mone-two-three
+
+    Evaluated commands:
+[94m      1|[0mexecute-keys 's\w+<ret>'
+
+    Expected %val(selections) with 4 elements:
+[94m      1:  1|[0mone
+[94m      2:  1|[0mtwo
+[94m      3:  1|[0mthree
+[94m      4:  1|[0mfour
+
+    Actual %val(selections) with 3 elements:
+[94m      1:  1|[0mone
+[94m      2:  1|[0mtwo
+[94m      3:  1|[0mthree
+
+    How to run this test:
+[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\$ example/selections.kak
+
+Finished in 81.22 milliseconds
+[31m9 examples, 3 failures, 0 errors[0m
+```
+
 More examples can be found in the
 [example](https://github.com/jbomanson/kak-spec/example) directory.
 
-#### Kakoune Command Usage
+## Dependencies
+
+- ruby
+
+- [prelude.kak](https://github.com/alexherbo2/prelude.kak)
+
+## Installation of kak-spec and the prelude.kak dependency
+
+The following alternative steps will install a `kak-spec` executable under
+`/path/to/prefix/directory/bin`, and man pages under
+`/path/to/prefix/directory/share/man/man1`.
+A typical choice for `/path/to/prefix/directory` would be `~/.local`.
+
+### Alternative #1: With plug.kak
+
+You can install **kak-spec** using the
+[plug.kak](https://github.com/andreyorst/plug.kak) plugin manager by extending
+your `kakrc` with:
+
+```kak
+plug "alexherbo2/prelude.kak"
+plug "jbomanson/kak-spec" noload do %(
+    make install PREFIX=/path/to/prefix/directory
+)
+```
+
+Then start Kakoune and run `:plug-install`.
+
+### Alternative #2: Manually
+
+```sh
+cd /path/to/plugins/directory
+git clone --depth=1 https://github.com/alexherbo2/prelude.kak
+git clone --depth=1 https://github.com/jbomanson/kak-spec
+cd kak-spec && make install PREFIX=/path/to/prefix/directory
+```
+
+After the installation is done, the cloned directories should stay where they are.
+This is important, because the installation process makes soft links to content inside the
+`kak-spec` directory and `kak-spec` expects to find `prelude.kak` from a location next to it.
+
+## Usage
+
+#### Defining Tests: Kakoune Command Usage
 
 **kak-spec** _option_...: Define a unit test.
 
@@ -165,10 +231,10 @@ More examples can be found in the
 
 Usage: **kak-spec** [_option_...] _script_...
 
-Runs tests kak-specified in given kakoune _script_ files.
+Runs tests **kak-spec**ified in given kakoune _script_ files.
 
 Each _script_ is ran in a separate **temporary kakoune session**.
-No guarantees are made of the order in which different test source files are ran.
+Different _script_ runs may happen in any order, possibly in parallel.
 However, tests defined in the same source file:
 - are executed in they order they are defined,
 - can use options, commands, etc defined before them in tests or on the top level, and
