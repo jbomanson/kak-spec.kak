@@ -6,7 +6,7 @@ MAN_OUTPUT	:= $(patsubst man/%.1.md.erb,share/man/man1/%.1,$(MAN_SOURCE))
 all:
 	true
 
-doc: lib/reporter.rb
+doc: lib/reporter.rb preprocess
 	yard doc $<
 
 # This target represents files that should be checked in the repository.
