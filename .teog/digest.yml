@@ -1,144 +1,144 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 336, words: 993, bytes: 9959 }
+  size: { lines: 336, words: 993, bytes: 10059 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mE\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.
     ..."
   last: ''
-  hash: f258dda65a207e31f0c89a02eb9aa28036ef5231
+  hash: b6ec1de7b338cf88a2aa939afe617c7c1427017b
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/current-directory.kak.err: empty
-example/current-directory.kak.out:
-  size: { lines: 39, words: 108, bytes: 1026 }
+example/current-directory.kak-spec.err: empty
+example/current-directory.kak-spec.out:
+  size: { lines: 39, words: 108, bytes: 1036 }
   first: "\e[31mF\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 2 failures, 0 errors\e[0m"
-  hash: ed5a923055ba61cce20768d9123be7e9f6cd3b29
-example/current-directory.kak.status:
+  hash: 92319898354c48c9aa7ea998f0372565196ef591
+example/current-directory.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/difference-in-trailing-whitespace.kak.err: empty
-example/difference-in-trailing-whitespace.kak.out:
-  size: { lines: 25, words: 68, bytes: 694 }
+example/difference-in-trailing-whitespace.kak-spec.err: empty
+example/difference-in-trailing-whitespace.kak-spec.out:
+  size: { lines: 25, words: 68, bytes: 699 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: b5239d7b64dcbe8a9762164285084c0416e14f98
-example/difference-in-trailing-whitespace.kak.status:
+  hash: 50ead37eddfb86d01fb2f66e8ab9e6e74a414edf
+example/difference-in-trailing-whitespace.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/echo-debug.kak.err: empty
-example/echo-debug.kak.out:
-  size: { lines: 28, words: 83, bytes: 746 }
+example/echo-debug.kak-spec.err: empty
+example/echo-debug.kak-spec.out:
+  size: { lines: 28, words: 83, bytes: 751 }
   first: "\e[31mF\e[0m"
   last: "\e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: 5b38ddb9fe1b87a75a44959632a69bb15ac81a13
-example/echo-debug.kak.status:
+  hash: 6a2c9e62099713859d461f930bcd6d79fe398d7f
+example/echo-debug.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/empty.kak.err: empty
-example/empty.kak.out:
-  size: { lines: 45, words: 134, bytes: 1295 }
+example/empty.kak-spec.err: empty
+example/empty.kak-spec.out:
+  size: { lines: 45, words: 134, bytes: 1305 }
   first: "\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m5 examples, 2 failures, 0 errors\e[0m"
-  hash: eeb6b7d5cb295c51069879bd04657ba9b9a27a47
-example/empty.kak.status:
+  hash: a3e83ffe2f43dcdce3f950171b36ae443e160d37
+example/empty.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/exec.kak.err: empty
-example/exec.kak.out:
-  size: { lines: 23, words: 59, bytes: 562 }
+example/exec.kak-spec.err: empty
+example/exec.kak-spec.out:
+  size: { lines: 23, words: 59, bytes: 567 }
   first: "\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m"
   last: "\e[31m3 examples, 1 failures, 0 errors\e[0m"
-  hash: 5ecbe2dbadbdd896c3818f51d4bf195fc4b5a3e7
-example/exec.kak.status:
+  hash: f31ce3b35f5b37ff6d41424c49dd7c231ef398dc
+example/exec.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/fail-in-context.kak.err: empty
-example/fail-in-context.kak.out:
-  size: { lines: 18, words: 44, bytes: 393 }
+example/fail-in-context.kak-spec.err: empty
+example/fail-in-context.kak-spec.out:
+  size: { lines: 18, words: 44, bytes: 403 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: 189b2cbb1cbc7e608f0354c6d2c95e50db0d0ff0
-example/fail-in-context.kak.status:
+  hash: e1dd9ac975bd7f99b1109f47b310a816d338b857
+example/fail-in-context.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/fail-in-source.kak.err: empty
-example/fail-in-source.kak.out:
-  size: { lines: 18, words: 44, bytes: 387 }
+example/fail-in-source.kak-spec.err: empty
+example/fail-in-source.kak-spec.out:
+  size: { lines: 18, words: 44, bytes: 397 }
   first: "\e[31mE\e[0m"
   last: ''
-  hash: df509eb55ec8310567151d0ed89dcb53673ab7d4
-example/fail-in-source.kak.status:
+  hash: 496d805cb7be0f7f75e3b644983f10859ac4b565
+example/fail-in-source.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/fail-in-test.kak.err: empty
-example/fail-in-test.kak.out:
-  size: { lines: 25, words: 89, bytes: 719 }
+example/fail-in-test.kak-spec.err: empty
+example/fail-in-test.kak-spec.out:
+  size: { lines: 25, words: 89, bytes: 724 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
-  hash: 5b8c3c3d0dd98cee444f27d8d1db2d46cbd74b0d
-example/fail-in-test.kak.status:
+  hash: 89c6d1f64acdd3b67158de552dc34e923b74b77d
+example/fail-in-test.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/multiline.kak.err: empty
-example/multiline.kak.out:
-  size: { lines: 31, words: 94, bytes: 949 }
+example/multiline.kak-spec.err: empty
+example/multiline.kak-spec.out:
+  size: { lines: 31, words: 94, bytes: 954 }
   first: "\e[32m.\e[0m\e[31mF\e[0m"
   last: "\e[31m2 examples, 1 failures, 0 errors\e[0m"
-  hash: 3513cf34dc1e4b94fe516b8d39c319348a1ef0e2
-example/multiline.kak.status:
+  hash: 1b08d1ea254e98441964c872c6364c9d0dec0091
+example/multiline.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/selections.kak.err: empty
-example/selections.kak.out:
-  size: { lines: 64, words: 180, bytes: 1828 }
+example/selections.kak-spec.err: empty
+example/selections.kak-spec.out:
+  size: { lines: 64, words: 180, bytes: 1843 }
   first: "\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m"
   last: "\e[31m9 examples, 3 failures, 0 errors\e[0m"
-  hash: f67d668ac56630414788e9953ee650074d825bcb
-example/selections.kak.status:
+  hash: 77dd4da27cca7e6e67acc893ebbfd90e5564a067
+example/selections.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/simple.kak.err: empty
-example/simple.kak.out:
-  size: { lines: 37, words: 93, bytes: 963 }
+example/simple.kak-spec.err: empty
+example/simple.kak-spec.out:
+  size: { lines: 37, words: 93, bytes: 973 }
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: "\e[31m14 examples, 2 failures, 0 errors\e[0m"
-  hash: 1368c032535ee31f88fa1a23c896799932caef3f
-example/simple.kak.status:
+  hash: dce3eb82edd02848fd3f409bdf6b753936502aa0
+example/simple.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/switches.kak.err: empty
-example/switches.kak.out:
-  size: { lines: 48, words: 132, bytes: 1276 }
+example/switches.kak-spec.err: empty
+example/switches.kak-spec.out:
+  size: { lines: 48, words: 132, bytes: 1286 }
   first: "\e[32m.\e[0m\e[31mF\e[0m\e[31mF\e[0m"
   last: "\e[31m3 examples, 2 failures, 0 errors\e[0m"
-  hash: 5a3c396d9057ce25dda42d878c8827402cde520b
-example/switches.kak.status:
+  hash: cb05d9985e28bea1f09a949574bb243189bdfe6e
+example/switches.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
@@ -160,19 +160,19 @@ program-call-counts.out:
   first: "      5 ruby"
   last: "    138 grep"
   hash: 4a8192c2059f2d715e8a21d4fce2e836e33697e8
-spec/selection.kak.err: empty
-spec/selection.kak.out:
+spec/selection.kak-spec.err: empty
+spec/selection.kak-spec.out:
   size: { lines: 3, words: 11, bytes: 110 }
   first: "\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
   last: "\e[32m4 examples, 0 failures, 0 errors\e[0m"
   hash: 41939793a884d6711410e1b4c7dcefbd459ad6c4
-spec/selection.kak.status:
+spec/selection.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: b77df1f63336ce18cd403da57f11ff6c8d51e387
+  input: a61b38201d70fdbdaed16704c83fd47a4a9f8c69
   status: 0
-  total: ab01fe47aaf2a5d5f4046a368b2484803d698f3e
+  total: 657cea950634508d9b2d611c9788752f439034b0
   version: 8

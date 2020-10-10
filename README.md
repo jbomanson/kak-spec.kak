@@ -13,7 +13,7 @@ Using **kak-spec** is a matter of
 
 ## Example
 
-Example test [example/selections.kak](https://github.com/jbomanson/kak-spec/example/selections.kak):
+Example test [example/selections.kak-spec](https://github.com/jbomanson/kak-spec/example/selections.kak-spec):
 ```kak
 require-module kak-spec
 
@@ -81,7 +81,7 @@ kak-spec \
     ]
 ```
 
-Test output produced by `kak-spec example/selections.kak`:
+Test output produced by `kak-spec example/selections.kak-spec`:
 ```
 [32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[31mF[0m[31mF[0m[31mF[0m
 
@@ -102,7 +102,7 @@ Failures:
 [94m      1:  1|[0mone-two-three
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ everything\$ example/selections.kak
+[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ everything\$ example/selections.kak-spec
 
   [31mSmoke test: Test "selections" of many substrings against a single string[0m
 
@@ -121,7 +121,7 @@ Failures:
 [94m      3:  1|[0mthree
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ against\\\ a\\\ single\\\ string\$ example/selections.kak
+[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ against\\\ a\\\ single\\\ string\$ example/selections.kak-spec
 
   [31mSmoke test: Test "selections" of many substrings[0m
 
@@ -143,7 +143,7 @@ Failures:
 [94m      3:  1|[0mthree
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\$ example/selections.kak
+[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\$ example/selections.kak-spec
 
 Finished in 81.22 milliseconds
 [31m9 examples, 3 failures, 0 errors[0m
@@ -258,8 +258,8 @@ For example, in a git project with test files in a directory hierarchy under `ka
 run:
 ```sh
 while true; do
-  git ls-files | entr -cd kak-spec spec/**/*.kak
+  git ls-files | entr -cd kak-spec spec/**/*.kak-spec
 done
 ```
-These commands would rerun kak-spec on *.kak files under `kak-spec` whenever any file currently
+These commands would rerun kak-spec on *.kak-spec files under `kak-spec` whenever any file currently
 tracked by git changes.

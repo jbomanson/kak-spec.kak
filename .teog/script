@@ -25,7 +25,7 @@ done
 
 # Run kak-spec on all samples one by one.
 {
-    for sample in example/*.kak spec/*.kak
+    for sample in example/*.kak-spec spec/*.kak-spec
     do
         bin/kak-spec "$sample" |
             script/stabilize >"$sample.out" 2>"$sample.err"
@@ -35,14 +35,14 @@ done
 
 # Run kak-spec on all samples in a batch.
 {
-    bin/kak-spec example/*.kak spec/*.kak |
+    bin/kak-spec example/*.kak-spec spec/*.kak-spec |
         script/stabilize >"all.out" 2>"all.err"
     echo $? >"all.status"
 } &
 
 # Run kak-spec with a title filter.
 {
-    bin/kak-spec --title=an.error example/switches.kak |
+    bin/kak-spec --title=an.error example/switches.kak-spec |
         script/stabilize >option-title.out 2>option-title.err
     echo $? >option-title.status
 } &
@@ -50,7 +50,7 @@ done
 # Process all examples through strace.
 {
     strace -f --output=".strace.txt" \
-        bin/kak-spec example/*.kak spec/*.kak >/dev/null 2>&1
+        bin/kak-spec example/*.kak-spec spec/*.kak-spec >/dev/null 2>&1
 
     # Make a histogram of calls to programs by their basename.
     # Show those that are called more than once.

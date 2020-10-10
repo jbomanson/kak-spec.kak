@@ -2,7 +2,7 @@ PREFIX		?= /usr/local
 BIN_SOURCE	:= $(wildcard bin/*)
 MAN_SOURCE	:= $(wildcard man/*.1.md.erb)
 MAN_OUTPUT	:= $(patsubst man/%.1.md.erb,share/man/man1/%.1,$(MAN_SOURCE))
-README_DEPENDENCIES	:= lib/runner.sh rc/kak-spec.kak
+README_DEPENDENCIES	:= lib/runner.sh rc/kak-spec.kak-spec
 
 all:
 	true

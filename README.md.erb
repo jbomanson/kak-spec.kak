@@ -13,14 +13,14 @@ Using **kak-spec** is a matter of
 
 ## Example
 
-Example test [example/selections.kak](https://github.com/jbomanson/kak-spec/example/selections.kak):
+Example test [example/selections.kak-spec](https://github.com/jbomanson/kak-spec/example/selections.kak-spec):
 ```kak
-<%= File.read("example/selections.kak") -%>
+<%= File.read("example/selections.kak-spec") -%>
 ```
 
-Test output produced by `kak-spec example/selections.kak`:
+Test output produced by `kak-spec example/selections.kak-spec`:
 ```
-<%= %x(bin/kak-spec example/selections.kak).gsub(/\d\d\.\d\d/, "81.22") -%>
+<%= %x(bin/kak-spec example/selections.kak-spec).gsub(/\d\d\.\d\d/, "81.22") -%>
 ```
 
 More examples can be found in the
@@ -73,7 +73,7 @@ This is important, because the installation process makes soft links to content 
 
 <%=
   # Extract and format the docstring of the kak-spec command.
-  File.read("rc/kak-spec.kak")[/define-command kak-spec [^']*'\K[^']*/].
+  File.read("rc/kak-spec.kak-spec")[/define-command kak-spec [^']*'\K[^']*/].
     gsub(/^(?=-\w)/, '- ').
     gsub(/<(\w+)>/, '_\1_').
     gsub(/(-([\w%()\[\]{}<>-]+))+|(?<!\S)[()\[\]{}<>](?!\S)|kak-spec/, '**\0**').
@@ -98,8 +98,8 @@ For example, in a git project with test files in a directory hierarchy under `ka
 run:
 ```sh
 while true; do
-  git ls-files | entr -cd kak-spec spec/**/*.kak
+  git ls-files | entr -cd kak-spec spec/**/*.kak-spec
 done
 ```
-These commands would rerun kak-spec on *.kak files under `kak-spec` whenever any file currently
+These commands would rerun kak-spec on *.kak-spec files under `kak-spec` whenever any file currently
 tracked by git changes.
