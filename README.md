@@ -145,7 +145,7 @@ Failures:
     How to run this test:
 [94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\$ example/selections.kak-spec
 
-Finished in 81.22 milliseconds
+Finished in 181.22 milliseconds
 [31m9 examples, 3 failures, 0 errors[0m
 ```
 

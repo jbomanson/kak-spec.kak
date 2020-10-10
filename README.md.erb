@@ -73,7 +73,7 @@ This is important, because the installation process makes soft links to content 
 
 <%=
   # Extract and format the docstring of the kak-spec command.
-  File.read("rc/kak-spec.kak-spec")[/define-command kak-spec [^']*'\K[^']*/].
+  File.read("lib/kak-spec.kak-spec")[/define-command kak-spec [^']*'\K[^']*/].
     gsub(/^(?=-\w)/, '- ').
     gsub(/<(\w+)>/, '_\1_').
     gsub(/(-([\w%()\[\]{}<>-]+))+|(?<!\S)[()\[\]{}<>](?!\S)|kak-spec/, '**\0**').
