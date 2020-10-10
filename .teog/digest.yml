@@ -5,7 +5,7 @@ all.out:
   first: "\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mE\e[0m\e[31mE\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[31mF\e[0m\e[32m.\e[0m\e[32m.
     ..."
   last: ''
-  hash: e57d66648a967071368abb77abea5d3b7ff82ff6
+  hash: f258dda65a207e31f0c89a02eb9aa28036ef5231
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -110,17 +110,6 @@ example/multiline.kak.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/selection.kak.err: empty
-example/selection.kak.out:
-  size: { lines: 3, words: 11, bytes: 110 }
-  first: "\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
-  last: "\e[32m4 examples, 0 failures, 0 errors\e[0m"
-  hash: 41939793a884d6711410e1b4c7dcefbd459ad6c4
-example/selection.kak.status:
-  size: { lines: 1, words: 1, bytes: 2 }
-  first: '0'
-  last: '0'
-  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/selections.kak.err: empty
 example/selections.kak.out:
   size: { lines: 64, words: 180, bytes: 1828 }
@@ -171,8 +160,19 @@ program-call-counts.out:
   first: "      5 ruby"
   last: "    138 grep"
   hash: 4a8192c2059f2d715e8a21d4fce2e836e33697e8
+spec/selection.kak.err: empty
+spec/selection.kak.out:
+  size: { lines: 3, words: 11, bytes: 110 }
+  first: "\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m\e[32m.\e[0m"
+  last: "\e[32m4 examples, 0 failures, 0 errors\e[0m"
+  hash: 41939793a884d6711410e1b4c7dcefbd459ad6c4
+spec/selection.kak.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 93ffe7e8d8aa7b2e2b1f7c95f492cb896dc1ce1c
+  input: b77df1f63336ce18cd403da57f11ff6c8d51e387
   status: 0
-  total: dab1696a8a7e1db3de3960bbced4e8b8df310606
+  total: ab01fe47aaf2a5d5f4046a368b2484803d698f3e
   version: 8
