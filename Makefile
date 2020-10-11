@@ -39,8 +39,8 @@ install: install_bin install_man
 install_bin: $(BIN_SOURCE)
 	install -d $(DESTDIR)$(PREFIX)/bin/
 	ln -f -s -t $(DESTDIR)$(PREFIX)/bin $(abspath $+)
-	install -d $(DESTDIR)$(PREFIX)/share
-	ln -f -s -t $(DESTDIR)$(PREFIX)/share $(PWD)
+	install -d $(DESTDIR)$(PREFIX)/share/kak-spec
+	ln -f -s -t $(DESTDIR)$(PREFIX)/share/kak-spec $(PWD)/lib
 
 install_man: $(MAN_OUTPUT)
 	install -d $(DESTDIR)$(PREFIX)/share/man/man1/
