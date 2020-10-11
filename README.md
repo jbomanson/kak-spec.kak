@@ -59,19 +59,19 @@ kak-spec \
     >
 
 kak-spec \
-    -title 'Smoke test: Test "selections" of everything' \
+    -title 'Test "selections" of everything (this should fail)' \
     -input 'one-two-three' \
     -exec '%H' \
     -expect-%val(selections) 'fire'
 
 kak-spec \
-    -title 'Smoke test: Test "selections" of many substrings against a single string' \
+    -title 'Test "selections" of many substrings against a single string (this should fail)' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
     -expect-%val(selections) 'fire'
 
 kak-spec \
-    -title 'Smoke test: Test "selections" of many substrings' \
+    -title 'Test "selections" of many substrings (this should fail)' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
     -expect-%val(selections)-[ \
@@ -85,7 +85,7 @@ Test output produced by `kak-spec example/selections.kak-spec`:
 
 Failures:
 
-  [31mSmoke test: Test "selections" of everything[0m
+  [31mTest "selections" of everything (this should fail)[0m
 
     Input:
 [94m      1|[0mone-two-three
@@ -100,9 +100,9 @@ Failures:
 [94m      1:  1|[0mone-two-three
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ everything\$ example/selections.kak-spec
+[94m      1|[0mbin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ everything\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
-  [31mSmoke test: Test "selections" of many substrings against a single string[0m
+  [31mTest "selections" of many substrings against a single string (this should fail)[0m
 
     Input:
 [94m      1|[0mone-two-three
@@ -119,9 +119,9 @@ Failures:
 [94m      3:  1|[0mthree
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ against\\\ a\\\ single\\\ string\$ example/selections.kak-spec
+[94m      1|[0mbin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ against\\\ a\\\ single\\\ string\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
-  [31mSmoke test: Test "selections" of many substrings[0m
+  [31mTest "selections" of many substrings (this should fail)[0m
 
     Input:
 [94m      1|[0mone-two-three
@@ -141,7 +141,7 @@ Failures:
 [94m      3:  1|[0mthree
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Smoke\\\ test:\\\ Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\$ example/selections.kak-spec
+[94m      1|[0mbin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
 Finished in 81.22 milliseconds
 [31m9 examples, 3 failures, 0 errors[0m

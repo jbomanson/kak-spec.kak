@@ -1,6 +1,6 @@
 evaluate-commands -save-regs n %(
-    kak-spec -expect-%val(selection) "oops" -title "Smoke test: nop" -input "abc" -eval nop
-    kak-spec -expect-%val(error) "joo" -title "Smoke test: raise joo" -input "" -eval %(raise joo)
+    kak-spec -expect-%val(selection) "oops" -title "nop (this should fail)" -input "abc" -eval nop
+    kak-spec -expect-%val(error) "joo" -title "raise joo (this should fail)" -input "" -eval %(raise joo)
 
     kak-spec -expect-%val(selection) "x" -title "nop" -input "x" -eval nop
     kak-spec -expect-%val(selection) " " -title "nop" -input " " -eval nop

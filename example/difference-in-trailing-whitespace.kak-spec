@@ -1,5 +1,5 @@
 kak-spec \
-    -title "Smoke test: Difference in trailing whitespace" \
+    -title "Difference in trailing whitespace (this should fail)" \
     -input "Some input" \
     -eval %(
         execute-keys 'sinput<ret>coutput <esc>%H'

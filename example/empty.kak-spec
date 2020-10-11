@@ -15,7 +15,7 @@ kak-spec \
     -expect-%reg(dquote)-( '' )
 
 kak-spec \
-    -title 'Smoke test: Test set-register with zero arguments' \
+    -title 'Test set-register with zero arguments' \
     -eval %(
         set-register dquote
     ) \
@@ -29,7 +29,7 @@ kak-spec \
     -expect-%reg(dquote)-( 'one' '' 'three' '' 'five' )
 
 kak-spec \
-    -title 'Smoke test: Test set-register with some empty arguments' \
+    -title 'Test set-register with some empty arguments' \
     -eval %(
         set-register dquote 'one' '' '' '' 'five'
     ) \

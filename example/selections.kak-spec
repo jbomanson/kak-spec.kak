@@ -42,19 +42,19 @@ kak-spec \
     >
 
 kak-spec \
-    -title 'Smoke test: Test "selections" of everything' \
+    -title 'Test "selections" of everything (this should fail)' \
     -input 'one-two-three' \
     -exec '%H' \
     -expect-%val(selections) 'fire'
 
 kak-spec \
-    -title 'Smoke test: Test "selections" of many substrings against a single string' \
+    -title 'Test "selections" of many substrings against a single string (this should fail)' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
     -expect-%val(selections) 'fire'
 
 kak-spec \
-    -title 'Smoke test: Test "selections" of many substrings' \
+    -title 'Test "selections" of many substrings (this should fail)' \
     -input 'one-two-three' \
     -exec 's\w+<ret>' \
     -expect-%val(selections)-[ \

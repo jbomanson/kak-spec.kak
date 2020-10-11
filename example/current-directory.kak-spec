@@ -1,9 +1,9 @@
 kak-spec \
-    -title "Smoke test: Print current directory outside a test" \
+    -title "Print current directory outside a test (this should fail)" \
     -input %sh(printf "%s" "$PWD") \
     -expect-%val(selection) ""
 
 kak-spec \
-    -title "Smoke test: Print current directory inside a test" \
+    -title "Print current directory inside a test (this should fail)" \
     -input "Some input" \
     -eval %(fail %sh(printf "%s" "$PWD"))

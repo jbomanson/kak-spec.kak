@@ -1,5 +1,5 @@
 kak-spec \
-    -title "Smoke test: Print something to the debug buffer" \
+    -title "Print something to the debug buffer (this should fail)" \
     -input "Just some text" \
     -eval %(
         echo -debug Hello debug buffer!

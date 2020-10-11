@@ -11,7 +11,7 @@ Second output line
 Third output line"
 
 kak-spec \
-    -title "Smoke test: Change multiple output lines" \
+    -title "Change multiple output lines (this should fail)" \
     -input "First input line
 Second input line
 Third input line" \

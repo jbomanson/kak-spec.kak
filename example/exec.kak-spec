@@ -5,7 +5,7 @@ kak-spec \
     -expect-%val(selection_length) 1
 
 kak-spec \
-    -title "Smoke test: Test selection length after c" \
+    -title "Test selection length after c (this should fail)" \
     -input "xyz" \
     -exec cword<esc> \
     -expect-%val(selection_length) 4

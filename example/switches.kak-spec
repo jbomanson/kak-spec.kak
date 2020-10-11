@@ -8,7 +8,7 @@ kak-spec \
 
 kak-spec \
     -expect-%val(selection_length) 100 \
-    -title "Smoke test: Test selection length after c" \
+    -title "Test selection length after c (this should fail)" \
     -input "xyz" \
     -eval %(
         execute-keys cword<esc>
@@ -17,7 +17,7 @@ kak-spec \
 kak-spec \
     -expect-%val(selection_length) 4 \
     -expect-%val(error) "This is an error" \
-    -title "Smoke test: Fail in test" \
+    -title "Fail in test (this should fail)" \
     -input "xyz" \
     -eval %(
         execute-keys cword<esc>
