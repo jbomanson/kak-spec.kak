@@ -81,70 +81,70 @@ kak-spec \
 
 Test output produced by `kak-spec example/selections.kak-spec`:
 ```
-[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[31mF[0m[31mF[0m[31mF[0m
+......FFF
 
 Failures:
 
-  [31mTest "selections" of everything (this should fail)[0m
+  Test "selections" of everything (this should fail)
 
     Input:
-[94m      1|[0mone-two-three
+      1|one-two-three
 
     Evaluated commands:
-[94m      1|[0mexecute-keys '%H'
+      1|execute-keys '%H'
 
     Expected %val(selections) with 1 element:
-[94m      1:  1|[0mfire
+      1:  1|fire
 
     Actual %val(selections) with 1 element:
-[94m      1:  1|[0mone-two-three
+      1:  1|one-two-three
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ everything\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
+      1|bin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ everything\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
-  [31mTest "selections" of many substrings against a single string (this should fail)[0m
+  Test "selections" of many substrings against a single string (this should fail)
 
     Input:
-[94m      1|[0mone-two-three
+      1|one-two-three
 
     Evaluated commands:
-[94m      1|[0mexecute-keys 's\w+<ret>'
+      1|execute-keys 's\w+<ret>'
 
     Expected %val(selections) with 1 element:
-[94m      1:  1|[0mfire
+      1:  1|fire
 
     Actual %val(selections) with 3 elements:
-[94m      1:  1|[0mone
-[94m      2:  1|[0mtwo
-[94m      3:  1|[0mthree
+      1:  1|one
+      2:  1|two
+      3:  1|three
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ against\\\ a\\\ single\\\ string\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
+      1|bin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ against\\\ a\\\ single\\\ string\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
-  [31mTest "selections" of many substrings (this should fail)[0m
+  Test "selections" of many substrings (this should fail)
 
     Input:
-[94m      1|[0mone-two-three
+      1|one-two-three
 
     Evaluated commands:
-[94m      1|[0mexecute-keys 's\w+<ret>'
+      1|execute-keys 's\w+<ret>'
 
     Expected %val(selections) with 4 elements:
-[94m      1:  1|[0mone
-[94m      2:  1|[0mtwo
-[94m      3:  1|[0mthree
-[94m      4:  1|[0mfour
+      1:  1|one
+      2:  1|two
+      3:  1|three
+      4:  1|four
 
     Actual %val(selections) with 3 elements:
-[94m      1:  1|[0mone
-[94m      2:  1|[0mtwo
-[94m      3:  1|[0mthree
+      1:  1|one
+      2:  1|two
+      3:  1|three
 
     How to run this test:
-[94m      1|[0mbin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
+      1|bin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
 Finished in 81.22 milliseconds
-[31m9 examples, 3 failures, 0 errors[0m
+9 examples, 3 failures, 0 errors
 ```
 
 More examples can be found in the
@@ -241,6 +241,8 @@ However, tests defined in the same source file:
 See <https://github.com/jbomanson/kak-spec> for instructions on how to write tests.
 
 Options:
+- **-color**=(never|always|auto)
+                  **--** Print terminal color codes never, always, or only when the output is to a terminal.
 - **-eval**=_regex_     **--** Run only tests whose eval  matches _regex_.
 - **-input**=_regex_    **--** Run only tests whose input matches _regex_.
 - **-title**=_regex_    **--** Run only tests whose title matches _regex_.

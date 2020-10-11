@@ -68,6 +68,8 @@ However, tests defined in the same source file:
 See <https://github.com/jbomanson/kak-spec> for instructions on how to write tests.
 
 Options:
+-color=(never|always|auto)
+                  -- Print terminal color codes never, always, or only when the output is to a terminal.
 -eval=<regex>     -- Run only tests whose eval  matches <regex>.
 -input=<regex>    -- Run only tests whose input matches <regex>.
 -title=<regex>    -- Run only tests whose title matches <regex>.
@@ -77,6 +79,8 @@ Options:
 EOF
 }
 
+# Names of environment variables to be passed to the reporter.
+reporter_env=""
 while true
 do
     argument="$1"
@@ -90,6 +94,13 @@ do
         # Normalize assignment style arguments into pairs of arguments.
         shift
         set -- "${argument%%=*}" "${argument#*=}" "$@"
+        ;;
+    -color)
+        # Pass these options to the reporter as environment variables.
+        variable="KAK_SPEC_REPORTER_${argument#-}"
+        eval "$variable=\"\$2\""
+        reporter_env="$reporter_env $variable=\"\$$variable\""
+        shift 2
         ;;
     -eval | -input | -title)
         # Take these options as environment variable switches.
@@ -139,7 +150,7 @@ do
 done
 
 # Listen to all of the fifos and report test results to standard output.
-"$REPORTER" "$@" &
+eval env -- $reporter_env '"$REPORTER" "$@" &'
 reporter_pid=$!
 
 index=0

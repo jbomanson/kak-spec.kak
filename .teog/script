@@ -1,5 +1,7 @@
 #! /bin/sh
 
+kak_spec_options="-color=always"
+
 # Prepare to use an almost minimal PATH as set by `env -i` with the addition of the local bin/.
 # Make local soft links to all required programs that are not on the minimal PATH created by
 # env -i.
@@ -27,7 +29,7 @@ done
 {
     for sample in example/*.kak-spec spec/*.kak-spec
     do
-        bin/kak-spec "$sample" |
+        bin/kak-spec $kak_spec_options "$sample" |
             script/stabilize >"$sample.out" 2>"$sample.err"
         echo $? >"$sample.status"
     done
@@ -35,14 +37,14 @@ done
 
 # Run kak-spec on all samples in a batch.
 {
-    bin/kak-spec example/*.kak-spec spec/*.kak-spec |
+    bin/kak-spec $kak_spec_options example/*.kak-spec spec/*.kak-spec |
         script/stabilize >"all.out" 2>"all.err"
     echo $? >"all.status"
 } &
 
 # Run kak-spec with a title filter.
 {
-    bin/kak-spec --title=an.error example/switches.kak-spec |
+    bin/kak-spec $kak_spec_options --title=an.error example/switches.kak-spec |
         script/stabilize >option-title.out 2>option-title.err
     echo $? >option-title.status
 } &
@@ -50,7 +52,7 @@ done
 # Process all examples through strace.
 {
     strace -f --output=".strace.txt" \
-        bin/kak-spec example/*.kak-spec spec/*.kak-spec >/dev/null 2>&1
+        bin/kak-spec $kak_spec_options example/*.kak-spec spec/*.kak-spec >/dev/null 2>&1
 
     # Make a histogram of calls to programs by their basename.
     # Show those that are called more than once.

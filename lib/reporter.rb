@@ -31,6 +31,10 @@ def newline_marker
   $newline_marker ||= Terminal.in_color("¬", NEWLINE_MARKER_COLOR)
 end
 
+def kak_spec_reporter_color
+  $kak_spec_reporter_color ||= (ENV["KAK_SPEC_REPORTER_color"] || "auto")
+end
+
 TEST_CASE_KAKOUNE_COMMAND_NAME = "kak-spec"
 
 class TranslationException < StandardError
@@ -39,9 +43,14 @@ end
 module Terminal
   extend self
 
+  def enabled?
+    (@@enabled ||= [kak_spec_reporter_color == "always" || (kak_spec_reporter_color == "auto" && STDOUT.tty?)]).first
+  end
+
   # Wraps a string with terminal color codes.
   def in_color(text, color)
     # TODO: Disable if the output is not a terminal.
+    return text unless enabled?
     # Source of color codes:
     # https://misc.flogisoft.com/bash/tip_colors_and_formatting
     code =
