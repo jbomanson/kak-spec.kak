@@ -11,6 +11,7 @@ EOF
 
 LINE_NUMBER_COLOR    = :light_blue
 NEWLINE_MARKER_COLOR = :light_blue
+TITLE_COLOR          = :cyan
 
 # Returns a magic string used in messages.
 def kak_spec_delimiter
@@ -98,6 +99,11 @@ module Terminal
     # Highlight trailing whitespace.
     line.gsub(/[[:blank:]]+$/) {|text| Terminal.in_color(text, :red_background)}
   end
+
+  def format_title(io, level, content)
+    io.puts Terminal.in_color(("#" * level) + " " + content, TITLE_COLOR)
+    io.puts
+  end
 end
 
 def throw(*args)
@@ -126,28 +132,28 @@ end
 def format_block_content(io, text, indent = "    ", is_empty_special = false)
   if is_empty_special && text.empty?
     io << Terminal.in_color(indent, LINE_NUMBER_COLOR)
-    io << "\n"
+    io.puts
   else
     text.each_line.each_with_index do |line, line_index|
       io << Terminal.in_color("#{indent}%3i|" % (line_index + 1), LINE_NUMBER_COLOR)
       io << mark_newlines_explicitly(Terminal.any_trailing_whitespace_in_color(line))
-      io << "\n" unless line.end_with?("\n")
+      io.puts unless line.end_with?("\n")
     end
   end
 end
 
 def format_block(io, title, text, indent = "    ")
-  io << "\n"
-  io << "#{indent}#{title}:\n"
+  io << "#{title}:\n"
   format_block_content(io, text, indent)
+  io.puts
 end
 
 def format_array(io, title, text_array)
-  io << "\n"
-  io << "    #{title} with #{text_array.size} #{text_array.size == 1 ? "element" : "elements"}:\n"
+  io << "#{title} with #{text_array.size} #{text_array.size == 1 ? "element" : "elements"}:\n"
   text_array.each_with_index do |text, array_index|
     format_block_content(io, text, "    %3s:" % (array_index + 1), true)
   end
+  io.puts
 end
 
 # An object representing a comparisiong between an actual and expected value of a kakoune kakoune_expansion.
@@ -232,7 +238,7 @@ module Assertion
 
   # Assuming this assertion did not {#pass?}, returns a description of the relevant details.
   def failure_details(io)
-    io << "  #{Terminal.in_color(test_case.title, :red)}\n"
+    Terminal.format_title(io, 3, test_case.title)
   end
 end
 
@@ -275,7 +281,7 @@ NonAssertionError = Struct.new(:scope, :message) do
   end
 
   def non_assertion_error_details(io)
-    io << "  #{Terminal.in_color("Error", :red)}\n"
+    Terminal.format_title(io, 3, "Error")
     scope.each_with_index do |context_scope, index|
       format_block(
         io,
@@ -294,9 +300,10 @@ class Presenter
   attr_reader :assertions
   attr_reader :non_assertion_errors
 
-  def initialize
+  def initialize(io)
     @assertions = []
     @non_assertion_errors = []
+    Terminal.format_title(io, 1, "kak-spec")
   end
 
   def present_assertion(io, assertion)
@@ -319,11 +326,9 @@ class Presenter
 
   def present_failed_example_details(io)
     return if failure_count == 0
-    io.puts
-    io.puts "Failures:"
+    Terminal.format_title(io, 2, "Failures")
     assertions.each_with_index do |assertion, index|
       next if assertion.pass?
-      io.puts
       assertion.failure_details(io)
     end
   end
@@ -331,10 +336,8 @@ class Presenter
   # Summarises failed examples in a way that shows files and line numbers.
   def present_non_assertion_error_summary(io)
     return if non_assertion_errors.empty?
-    io.puts
-    io.puts "Errors other than assertion failures:"
+    Terminal.format_title(io, 2, "Errors other than assertion failures")
     non_assertion_errors.each do |error|
-      io.puts
       error.non_assertion_error_details(io)
     end
   end
@@ -342,6 +345,7 @@ class Presenter
   def present_summary_briefly(io)
     elapsed_time =
       Process.clock_gettime(Process::CLOCK_MONOTONIC) - STARTUP_MONOTONIC_TIME
+    Terminal.format_title(io, 2, "Summary")
     io.puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
     io.puts Terminal.in_color(
       "#{assertions.size} examples, " +
@@ -352,12 +356,14 @@ class Presenter
   end
 
   def present_summary(io)
+    # Print two newlines: one to end any progress ticks and another to separate the ticks from
+    # what follows.
+    io.puts
     io.puts
     present_failed_example_details(io)
-    io.puts unless pass?
     present_summary_briefly(io)
-    present_non_assertion_error_summary(io)
     io.puts unless non_assertion_errors.empty?
+    present_non_assertion_error_summary(io)
   end
 end
 
@@ -594,7 +600,7 @@ Main = Struct.new(:presenter) do
 end
 
 begin
-  Main.new(Presenter.new).main(ARGV.clone)
+  Main.new(Presenter.new(STDOUT)).main(ARGV.clone)
 rescue => e
   puts e.to_s
   puts e.backtrace
