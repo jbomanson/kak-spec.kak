@@ -9,8 +9,8 @@ DEBUG_EXPECTED_CONTENT = <<EOF
 
 EOF
 
-LINE_NUMBER_COLOR    = :light_blue
-NEWLINE_MARKER_COLOR = :light_blue
+LINE_NUMBER_COLOR    = :blue
+NEWLINE_MARKER_COLOR = :blue
 TITLE_COLOR          = :cyan
 
 # Returns a magic string used in messages.
