@@ -98,7 +98,7 @@ For example, in a git project with test files in a directory hierarchy under `ka
 run:
 ```sh
 while true; do
-  git ls-files | entr -cd kak-spec spec/**/*.kak-spec
+  git ls-files | entr -cd kak-spec
 done
 ```
 These commands would rerun kak-spec on *.kak-spec files under `kak-spec` whenever any file currently
