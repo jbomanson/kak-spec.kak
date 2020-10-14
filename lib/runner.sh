@@ -9,7 +9,7 @@ export KAK_SPEC_DELIMITER
 
 REPORTER="$root_dir/lib/reporter.rb"
 
-version=0.1.0
+version=0.1.1
 
 scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
 
