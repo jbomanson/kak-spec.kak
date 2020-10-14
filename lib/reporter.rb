@@ -9,9 +9,10 @@ DEBUG_EXPECTED_CONTENT = <<EOF
 
 EOF
 
-LINE_NUMBER_COLOR    = :blue
-NEWLINE_MARKER_COLOR = :blue
-TITLE_COLOR          = :cyan
+LINE_NUMBER_COLOR      = :blue
+NEWLINE_MARKER_COLOR   = :blue
+TITLE_COLOR            = :cyan
+LIST_ITEM_BULLET_COLOR = :cyan
 
 # Returns a magic string used in messages.
 def kak_spec_delimiter
@@ -34,6 +35,10 @@ end
 
 def kak_spec_reporter_color
   $kak_spec_reporter_color ||= (ENV["KAK_SPEC_REPORTER_color"] || "auto")
+end
+
+def list_item_bullet
+  @list_item_bullet ||= Terminal.in_color("-", LIST_ITEM_BULLET_COLOR) + " "
 end
 
 TEST_CASE_KAKOUNE_COMMAND_NAME = "kak-spec"
@@ -143,13 +148,13 @@ def format_block_content(io, text, indent = "    ", is_empty_special = false)
 end
 
 def format_block(io, title, text, indent = "    ")
-  io << "#{title}:\n"
+  io.puts list_item_bullet + title + ":"
   format_block_content(io, text, indent)
   io.puts
 end
 
 def format_array(io, title, text_array)
-  io << "#{title} with #{text_array.size} #{text_array.size == 1 ? "element" : "elements"}:\n"
+  io.puts list_item_bullet + "#{title} with #{text_array.size} #{text_array.size == 1 ? "element" : "elements"}:"
   text_array.each_with_index do |text, array_index|
     format_block_content(io, text, "    %3s:" % (array_index + 1), true)
   end
@@ -348,8 +353,8 @@ class Presenter
     elapsed_time =
       Process.clock_gettime(Process::CLOCK_MONOTONIC) - STARTUP_MONOTONIC_TIME
     Terminal.format_title(@io, 2, "Summary")
-    @io.puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
-    @io.puts Terminal.in_color(
+    @io.puts list_item_bullet + "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
+    @io.puts list_item_bullet + Terminal.in_color(
       "#{assertions.size} examples, " +
       "#{failure_count} failures, " +
       "#{non_assertion_errors.size} errors",

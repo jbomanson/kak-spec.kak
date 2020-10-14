@@ -89,66 +89,66 @@ Test output produced by `kak-spec example/selections.kak-spec`:
 
 ### Test "selections" of everything (this should fail)
 
-Input:
+- Input:
       1|one-two-three
 
-Evaluated commands:
+- Evaluated commands:
       1|execute-keys '%H'
 
-Expected %val(selections) with 1 element:
+- Expected %val(selections) with 1 element:
       1:  1|fire
 
-Actual %val(selections) with 1 element:
+- Actual %val(selections) with 1 element:
       1:  1|one-two-three
 
-How to run this test:
+- How to run this test:
       1|bin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ everything\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
 ### Test "selections" of many substrings against a single string (this should fail)
 
-Input:
+- Input:
       1|one-two-three
 
-Evaluated commands:
+- Evaluated commands:
       1|execute-keys 's\w+<ret>'
 
-Expected %val(selections) with 1 element:
+- Expected %val(selections) with 1 element:
       1:  1|fire
 
-Actual %val(selections) with 3 elements:
+- Actual %val(selections) with 3 elements:
       1:  1|one
       2:  1|two
       3:  1|three
 
-How to run this test:
+- How to run this test:
       1|bin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ against\\\ a\\\ single\\\ string\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
 ### Test "selections" of many substrings (this should fail)
 
-Input:
+- Input:
       1|one-two-three
 
-Evaluated commands:
+- Evaluated commands:
       1|execute-keys 's\w+<ret>'
 
-Expected %val(selections) with 4 elements:
+- Expected %val(selections) with 4 elements:
       1:  1|one
       2:  1|two
       3:  1|three
       4:  1|four
 
-Actual %val(selections) with 3 elements:
+- Actual %val(selections) with 3 elements:
       1:  1|one
       2:  1|two
       3:  1|three
 
-How to run this test:
+- How to run this test:
       1|bin/kak-spec -title \^Test\\\ \"selections\"\\\ of\\\ many\\\ substrings\\\ \\\(this\\\ should\\\ fail\\\)\$ example/selections.kak-spec
 
 ## Summary
 
-Finished in 81.22 milliseconds
-9 examples, 3 failures, 0 errors
+- Finished in 81.22 milliseconds
+- 9 examples, 3 failures, 0 errors
 ```
 
 More examples can be found in the
