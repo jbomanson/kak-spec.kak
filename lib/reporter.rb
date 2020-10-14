@@ -298,22 +298,24 @@ end
 
 class Presenter
   attr_reader :assertions
+  attr_reader :io
   attr_reader :non_assertion_errors
 
   def initialize(io)
     @assertions = []
+    @io = io
     @non_assertion_errors = []
     Terminal.format_title(io, 1, "kak-spec")
   end
 
-  def present_assertion(io, assertion)
+  def present_assertion(assertion)
     @assertions << assertion
-    io.print assertion.progress_tick
+    @io.print assertion.progress_tick
   end
 
-  def present_error(io, error)
+  def present_error(error)
     @non_assertion_errors << error
-    io.print error.progress_tick
+    @io.print error.progress_tick
   end
 
   def failure_count
@@ -324,30 +326,30 @@ class Presenter
     non_assertion_errors.empty? && failure_count == 0
   end
 
-  def present_failed_example_details(io)
+  def present_failed_example_details
     return if failure_count == 0
-    Terminal.format_title(io, 2, "Failures")
+    Terminal.format_title(@io, 2, "Failures")
     assertions.each_with_index do |assertion, index|
       next if assertion.pass?
-      assertion.failure_details(io)
+      assertion.failure_details(@io)
     end
   end
 
   # Summarises failed examples in a way that shows files and line numbers.
-  def present_non_assertion_error_summary(io)
+  def present_non_assertion_error_summary
     return if non_assertion_errors.empty?
-    Terminal.format_title(io, 2, "Errors other than assertion failures")
+    Terminal.format_title(@io, 2, "Errors other than assertion failures")
     non_assertion_errors.each do |error|
-      error.non_assertion_error_details(io)
+      error.non_assertion_error_details(@io)
     end
   end
 
-  def present_summary_briefly(io)
+  def present_summary_briefly
     elapsed_time =
       Process.clock_gettime(Process::CLOCK_MONOTONIC) - STARTUP_MONOTONIC_TIME
-    Terminal.format_title(io, 2, "Summary")
-    io.puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
-    io.puts Terminal.in_color(
+    Terminal.format_title(@io, 2, "Summary")
+    @io.puts "Finished in %0.2f milliseconds" % (elapsed_time * 1000.0)
+    @io.puts Terminal.in_color(
       "#{assertions.size} examples, " +
       "#{failure_count} failures, " +
       "#{non_assertion_errors.size} errors",
@@ -355,15 +357,15 @@ class Presenter
     )
   end
 
-  def present_summary(io)
+  def present_summary
     # Print two newlines: one to end any progress ticks and another to separate the ticks from
     # what follows.
-    io.puts
-    io.puts
-    present_failed_example_details(io)
-    present_summary_briefly(io)
-    io.puts unless non_assertion_errors.empty?
-    present_non_assertion_error_summary(io)
+    @io.puts
+    @io.puts
+    present_failed_example_details
+    present_summary_briefly
+    @io.puts unless non_assertion_errors.empty?
+    present_non_assertion_error_summary
   end
 end
 
@@ -516,9 +518,9 @@ module MessageHandler
     def handle_message(task, *arguments)
       case task.chomp
       when "message_assert"
-        presenter.present_assertion(STDOUT, Assertion.from_arguments(scope_stack.last, arguments))
+        presenter.present_assertion(Assertion.from_arguments(scope_stack.last, arguments))
       when "message_non_assertion_error"
-        presenter.present_error(STDOUT, NonAssertionError.new(scope_stack.last, arguments.join(" ")))
+        presenter.present_error(NonAssertionError.new(scope_stack.last, arguments.join(" ")))
       when "message_scope_begin"
         description, debug_line_begin = arguments
         scope_stack << Scope.new(scope_stack.last, description, parse_debug_line_number(debug_line_begin))
@@ -547,10 +549,10 @@ module MessageHandler
       end
       # Print any unaccounted debug values.
       unless (stray_debug_message = debug_buffer_lines.join) == DEBUG_EXPECTED_CONTENT
-        STDOUT.puts
-        STDOUT.puts "P.S.:"
+        presenter.io.puts
+        presenter.io.puts "P.S.:"
         format_block(
-          STDOUT,
+          presenter.io,
           "Contents of *debug* that oddly did not fall into any context in '#{source_file}'",
           stray_debug_message,
         )
@@ -595,7 +597,7 @@ Main = Struct.new(:presenter) do
       handle_fifo(argument, File.join(kak_spec_dir, index.to_s + ".fifo"))
     end
     # Present a summary of assertions.
-    presenter.present_summary(STDOUT)
+    presenter.present_summary
   end
 end
 
