@@ -233,7 +233,7 @@ This is important, because the installation process makes soft links to content 
 
 Usage: **kak-spec** [_option_...] _script_...
 
-Runs tests specified in kakoune _script_ files.
+Runs tests specified in kakoune _script_ files or in files under a "spec" directory matching the pattern "*.**kak-spec**".
 
 Each _script_ is ran in a separate **temporary kakoune session**.
 Different _script_ runs may happen in any order, possibly in parallel.

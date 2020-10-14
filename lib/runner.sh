@@ -56,7 +56,7 @@ usage ()
     cat <<EOF
 Usage: kak-spec [<option>...] <script>...
 
-Runs tests specified in kakoune <script> files.
+Runs tests specified in kakoune <script> files or in files under a "spec" directory matching the pattern "*.kak-spec".
 
 Each <script> is ran in a separate **temporary kakoune session**.
 Different <script> runs may happen in any order, possibly in parallel.
@@ -128,6 +128,18 @@ do
         ;;
     esac
 done
+
+#
+#       Apply mass argument defaults
+#
+
+if test $# -eq 0 && test -d spec; then
+    find spec -type f -name "*.kak-spec" >"$scratch_dir/input-file-list"
+    while read -r file
+    do
+        set -- "$@" "$file"
+    done <"$scratch_dir/input-file-list"
+fi
 
 #
 #       Act
