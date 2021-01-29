@@ -211,7 +211,7 @@ This is important, because the installation process makes soft links to content 
 - **-eval** _commands_
   Commands evaluated in the test.
   Mutually exclusive with **-exec**.
-  - Example: **-eval** %(set**-register** dquote "Hello world!"; execute**-keys** R)
+  - Example: **-eval** %(**set-register** dquote "Hello world!"; **execute-keys** R)
 
 - **-exec** _keys_
   Keys to be executed in the buffer.

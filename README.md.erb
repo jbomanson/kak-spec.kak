@@ -76,7 +76,7 @@ This is important, because the installation process makes soft links to content 
   File.read("lib/kak-spec.kak-spec")[/define-command kak-spec [^']*'\K[^']*/].
     gsub(/^(?=-\w)/, '- ').
     gsub(/<(\w+)>/, '_\1_').
-    gsub(/(-([\w%()\[\]{}<>-]+))+|(?<!\S)[()\[\]{}<>](?!\S)|(?<!\/)kak-spec/, '**\0**').
+    gsub(/(\w*-([\w%()\[\]{}<>-]+))+|(?<!\S)[()\[\]{}<>](?!\S)|(?<!\/)kak-spec/, '**\0**').
     gsub(/^ *Example/, "  - Example")
 -%>
 
