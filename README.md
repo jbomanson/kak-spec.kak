@@ -219,14 +219,20 @@ This is important, because the installation process makes soft links to content 
   - Example: **-exec** %(cHello world!)
 
 - **-expect-_expansion_** _value_
-  Expects kakoune _expansion_ to expand to _value_ at the end of the test.
+  Expects kakoune _expansion_ to expand to _value_.
+  When _value_ is of the form _type_(_argument_), the comparison is specialized for one of the
+  types: bool, regex, or str.
   - Example: **-expect-%val(selection)** "Hello world!"
-  - Example: **-expect-%val(error)** "Something went wrong"
+  - Example: **-expect-%val(error)**     "Something went wrong"
+  - Example: **-expect-%val(selection)** "bool(true)"
+  - Example: **-expect-%val(selection)** "regex(\bH\w*o\b)"
+  - Example: **-expect-%val(selection)** "str(Hello world!)"
 
 - **-expect-_expansion_-(** _value_... **)**
-  Expects kakoune _expansion_ to expand to the given array.
+  Expects kakoune _expansion_ to expand to an array matching the given values.
   The delimiters can be (), [], {}, or <>.
   - Example: **-expect-%val(selections)-[** "word" "pair of words" **]**
+  - Example: **-expect-%val(selections)-[** "word" "regex(pair.+words)" **]**
 
 ### Running Tests: Command Line Usage
 

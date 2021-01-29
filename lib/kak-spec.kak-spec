@@ -27,14 +27,20 @@ define-command kak-spec \
   Example: -exec %(cHello world!)
 
 -expect-<expansion> <value>
-  Expects kakoune <expansion> to expand to <value> at the end of the test.
+  Expects kakoune <expansion> to expand to <value>.
+  When <value> is of the form <type>(<argument>), the comparison is specialized for one of the
+  types: bool, regex, or str.
   Example: -expect-%val(selection) "Hello world!"
-  Example: -expect-%val(error) "Something went wrong"
+  Example: -expect-%val(error)     "Something went wrong"
+  Example: -expect-%val(selection) "bool(true)"
+  Example: -expect-%val(selection) "regex(\bH\w*o\b)"
+  Example: -expect-%val(selection) "str(Hello world!)"
 
 -expect-<expansion>-( <value>... )
-  Expects kakoune <expansion> to expand to the given array.
+  Expects kakoune <expansion> to expand to an array matching the given values.
   The delimiters can be (), [], {}, or <>.
   Example: -expect-%val(selections)-[ "word" "pair of words" ]
+  Example: -expect-%val(selections)-[ "word" "regex(pair.+words)" ]
 ' \
 %(
     kak-spec-context "Implicit kak-spec context" %sh(
