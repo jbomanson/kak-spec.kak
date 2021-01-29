@@ -9,6 +9,7 @@ DEBUG_EXPECTED_CONTENT = <<EOF
 
 EOF
 
+EXPECTATION_TYPE_COLOR = :blue
 LINE_NUMBER_COLOR      = :blue
 NEWLINE_MARKER_COLOR   = :blue
 TITLE_COLOR            = :cyan
@@ -135,6 +136,7 @@ def mark_newlines_explicitly(string)
 end
 
 def format_block_content(io, text, indent = "    ", is_empty_special = false)
+  text = text.to_terminal_s
   if is_empty_special && text.empty?
     io << Terminal.in_color(indent, LINE_NUMBER_COLOR)
     io.puts
@@ -189,7 +191,7 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_array, :actual_arra
         # Assign all but the last two fields to individual arguments.
         *scalar_arguments,
         # Assign the last two fields to sequences of arguments.
-        extract_array(remaining_arguments),
+        extract_array(remaining_arguments).map(&ExpectedElement.method(:from_string)),
         extract_array(remaining_arguments),
       )
     end
@@ -211,7 +213,10 @@ Comparison = Struct.new(:type, :kakoune_expansion, :expected_array, :actual_arra
 
   # Determines whether this expectation passed.
   def pass?
-    expected_array == actual_array
+    expected_array.size == actual_array.size &&
+      [expected_array, actual_array].transpose.all? do |expected_element, actual_value|
+        expected_element.match_against_actual_value(actual_value)
+      end
   end
 end
 
@@ -275,6 +280,57 @@ module Assertion
       end
       format_block(io, "How to run this test", test_case.shell_command_details)
     end
+  end
+end
+
+# An expected value or form for a single value.
+class ExpectedElement
+  def self.for_terminal(function, argument)
+    Terminal.in_color(function + "(", EXPECTATION_TYPE_COLOR) +
+      argument +
+      Terminal.in_color(")", EXPECTATION_TYPE_COLOR)
+  end
+
+  def self.from_string(string)
+    if match = /^(\w+)\((.*)\)$/m.match(string)
+      type, argument = match.captures
+      terminal_s = for_terminal(type, argument)
+      case type
+      when "bool"
+        new(
+          terminal_s,
+          &(
+            case argument
+            when "true", "yes" then %w(true yes)
+            when "false", "no" then %w(false no)
+            else throw "Expected bool(...) to specify a boolean value, yes/true or no/false, got '#{argument}'"
+            end.method(:include?)
+          )
+        )
+      when "regex"
+        new(terminal_s) {|actual_value| /#{argument}/ =~ actual_value}
+      when "str"
+        new(terminal_s) {|actual_value| argument == actual_value}
+      else
+        throw "Expected a matcher of type bool, regex, or str, got '#{type}' in matcher '#{string}'"
+      end
+    else
+      new(string) {|actual_value| string == actual_value}
+    end
+  end
+
+  def initialize(terminal_string, &block)
+    block or raise "Missing block"
+    @terminal_string = terminal_string
+    @block = block
+  end
+
+  def to_terminal_s
+    @terminal_string
+  end
+
+  def match_against_actual_value(actual_value)
+    !!@block.call(actual_value)
   end
 end
 
@@ -371,6 +427,13 @@ class Presenter
     present_summary_briefly
     @io.puts unless non_assertion_errors.empty?
     present_non_assertion_error_summary
+  end
+end
+
+# Monkey patching!
+class String
+  def to_terminal_s
+    to_s
   end
 end
 

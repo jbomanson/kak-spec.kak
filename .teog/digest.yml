@@ -1,11 +1,22 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 340, words: 1124, bytes: 11038 }
+  size: { lines: 535, words: 1775, bytes: 17713 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: 487563d8d17efc9d851ab9b6e49fce6074d75ef2
+  hash: b37d68c2ed04bac62ae6b9562ff19f52bd0864cc
 all.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/bool-mismatch.kak-spec.err: empty
+example/bool-mismatch.kak-spec.out:
+  size: { lines: 138, words: 435, bytes: 4305 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[31m8 examples, 8 failures, 0 errors\e[0m"
+  hash: 2bfc68bad23b571af8c5187fc834e94c6f5ebff9
+example/bool-mismatch.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
@@ -109,6 +120,17 @@ example/multiline.kak-spec.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/regex-mismatch.kak-spec.err: empty
+example/regex-mismatch.kak-spec.out:
+  size: { lines: 42, words: 129, bytes: 1311 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[31m2 examples, 2 failures, 0 errors\e[0m"
+  hash: 211ee7acf9f67ed3b0f011574026c663adfe6440
+example/regex-mismatch.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/selections.kak-spec.err: empty
 example/selections.kak-spec.out:
   size: { lines: 68, words: 211, bytes: 2098 }
@@ -127,6 +149,17 @@ example/simple.kak-spec.out:
   last: "\e[36m-\e[0m \e[31m14 examples, 2 failures, 0 errors\e[0m"
   hash: f777b16f0317bd9017e47a2de31d74d571484471
 example/simple.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/str-mismatch.kak-spec.err: empty
+example/str-mismatch.kak-spec.out:
+  size: { lines: 45, words: 144, bytes: 1420 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[31m2 examples, 2 failures, 0 errors\e[0m"
+  hash: d5d90eff2b767cce6fb18e20feaa7ae663bd2a4a
+example/str-mismatch.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
@@ -157,8 +190,30 @@ program-call-counts.err: empty
 program-call-counts.out:
   size: { lines: 11, words: 22, bytes: 144 }
   first: "      5 ruby"
-  last: "    138 grep"
-  hash: 63a70ca2fd643f3918508c33e874182d1c6d134b
+  last: "    207 grep"
+  hash: 86b2d25cf1c9b28f28e9d11847f452de31f41ca2
+spec/bool.kak-spec.err: empty
+spec/bool.kak-spec.out:
+  size: { lines: 8, words: 17, bytes: 215 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[32m8 examples, 0 failures, 0 errors\e[0m"
+  hash: b2a132b3cd267a00847870285ea50beb66e69f25
+spec/bool.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+spec/regex.kak-spec.err: empty
+spec/regex.kak-spec.out:
+  size: { lines: 8, words: 17, bytes: 155 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[32m2 examples, 0 failures, 0 errors\e[0m"
+  hash: fa0ea375e8986b4c90a9a75b330e9b3b2734f6d7
+spec/regex.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 spec/selection.kak-spec.err: empty
 spec/selection.kak-spec.out:
   size: { lines: 8, words: 17, bytes: 175 }
@@ -170,8 +225,19 @@ spec/selection.kak-spec.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+spec/str.kak-spec.err: empty
+spec/str.kak-spec.out:
+  size: { lines: 8, words: 17, bytes: 145 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[32m1 examples, 0 failures, 0 errors\e[0m"
+  hash: 96ec41bf7bf2186d03e1ec7317ca37d8bbaadcff
+spec/str.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: b3a86785ab2b31e74a2dfa31a816f56d575c9e2c
+  input: d6c0dd09d2dce9a22cda9f827b4d97e27b2f5a45
   status: 0
-  total: 8ba87e331c9c9274ab4786985ba27aa4be2c4cf6
+  total: 75f380f942e4aced6e150dc4160e4ca2caa31f65
   version: 8

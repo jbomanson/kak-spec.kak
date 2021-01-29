@@ -1,0 +1,40 @@
+kak-spec \
+    -title "Test matching bool(true) and true" \
+    -input "true" \
+    -expect-%val(selection) "bool(true)"
+
+kak-spec \
+    -title "Test matching bool(true) and yes" \
+    -input "yes" \
+    -expect-%val(selection) "bool(true)"
+
+kak-spec \
+    -title "Test matching bool(false) and false" \
+    -input "false" \
+    -expect-%val(selection) "bool(false)"
+
+kak-spec \
+    -title "Test matching bool(false) and no" \
+    -input "no" \
+    -expect-%val(selection) "bool(false)"
+
+kak-spec \
+    -title "Test matching bool(yes) and true" \
+    -input "true" \
+    -expect-%val(selection) "bool(yes)"
+
+kak-spec \
+    -title "Test matching bool(yes) and yes" \
+    -input "yes" \
+    -expect-%val(selection) "bool(yes)"
+
+kak-spec \
+    -title "Test matching bool(no) and false" \
+    -input "false" \
+    -expect-%val(selection) "bool(no)"
+
+kak-spec \
+    -title "Test matching bool(no) and no" \
+    -input "no" \
+    -expect-%val(selection) "bool(no)"
+

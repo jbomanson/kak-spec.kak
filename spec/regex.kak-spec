@@ -1,0 +1,9 @@
+kak-spec \
+    -title "Test matching against a regular expression" \
+    -input "one-2-three" \
+    -expect-%val(selection) "regex(\d)"
+
+kak-spec \
+    -title "Test matching against an anchored regular expression" \
+    -input "one-two-three" \
+    -expect-%val(selection) "regex(^\w+-\w+-\w+$)"

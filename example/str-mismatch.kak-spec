@@ -1,0 +1,11 @@
+kak-spec \
+    -title "Test matching against an explicitly typed string (this should fail)" \
+    -input "Hello world!" \
+    -expect-%val(selection) "str(Hello there!)"
+
+kak-spec \
+    -title "Test matching against an explicitly typed multiline string (this should fail)" \
+    -input "Hello
+world!" \
+    -expect-%val(selection) "str(Hello
+there!)"

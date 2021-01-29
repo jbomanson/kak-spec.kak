@@ -1,0 +1,4 @@
+kak-spec \
+    -title "Test an explicitly typed str" \
+    -input "This is a string" \
+    -expect-%val(selection) "str(This is a string)"

@@ -1,0 +1,40 @@
+kak-spec \
+    -title "Test matching bool(false) and true (this should fail)" \
+    -input "true" \
+    -expect-%val(selection) "bool(false)"
+
+kak-spec \
+    -title "Test matching bool(false) and yes (this should fail)" \
+    -input "yes" \
+    -expect-%val(selection) "bool(false)"
+
+kak-spec \
+    -title "Test matching bool(true) and false (this should fail)" \
+    -input "false" \
+    -expect-%val(selection) "bool(true)"
+
+kak-spec \
+    -title "Test matching bool(true) and no (this should fail)" \
+    -input "no" \
+    -expect-%val(selection) "bool(true)"
+
+kak-spec \
+    -title "Test matching bool(no) and true (this should fail)" \
+    -input "true" \
+    -expect-%val(selection) "bool(no)"
+
+kak-spec \
+    -title "Test matching bool(no) and yes (this should fail)" \
+    -input "yes" \
+    -expect-%val(selection) "bool(no)"
+
+kak-spec \
+    -title "Test matching bool(yes) and false (this should fail)" \
+    -input "false" \
+    -expect-%val(selection) "bool(yes)"
+
+kak-spec \
+    -title "Test matching bool(yes) and no (this should fail)" \
+    -input "no" \
+    -expect-%val(selection) "bool(yes)"
+
