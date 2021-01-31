@@ -9,6 +9,7 @@ DEBUG_EXPECTED_CONTENT = <<EOF
 
 EOF
 
+ERROR_COLOR            = :red
 EXPECTATION_TYPE_COLOR = :blue
 LINE_NUMBER_COLOR      = :blue
 NEWLINE_MARKER_COLOR   = :blue
@@ -291,6 +292,10 @@ class ExpectedElement
       Terminal.in_color(")", EXPECTATION_TYPE_COLOR)
   end
 
+  def self.from_error(string)
+    new(Terminal.in_color(string, ERROR_COLOR)) { false }
+  end
+
   def self.from_string(string)
     if match = /^(\w+)\((.*)\)$/m.match(string)
       type, argument = match.captures
@@ -308,7 +313,16 @@ class ExpectedElement
           )
         )
       when "regex"
-        new(terminal_s) {|actual_value| /#{argument}/ =~ actual_value}
+        begin
+          regex = /#{argument}/
+        rescue RegexpError => e
+          error = e
+        end
+        if regex
+          new(terminal_s) {|actual_value| regex =~ actual_value}
+        else
+          from_error("An invalid expression #{string}: #{error.to_s}")
+        end
       when "str"
         new(terminal_s) {|actual_value| argument == actual_value}
       else
