@@ -17,9 +17,13 @@ clean_up () {
     code=$?
     trap - TERM
     test -f "$scratch_dir/debug" && cat "$scratch_dir/debug"
-    test "$(printf "%s" $reporter_pid $kak_pid_list $fifo_holder_pid_list)" &&
-        kill $reporter_pid $kak_pid_list $fifo_holder_pid_list
-    rm -r "$scratch_dir"
+    {
+        for pid in $reporter_pid $kak_pid_list $fifo_holder_pid_list
+        do
+            kill $pid
+        done
+        rm -rf "$scratch_dir"
+    } 2>/dev/null
     exit $code
 }
 
@@ -197,8 +201,5 @@ wait $kak_pid_list $reporter_pid
 reporter_status=$?
 reporter_pid=
 kak_pid_list=
-
-test "$fifo_holder_pid_list" && kill $fifo_holder_pid_list
-fifo_holder_pid_list=
 
 exit "$reporter_status"
