@@ -1,0 +1,4 @@
+kak-spec \
+    -title "Test matching bool(dragon) and true (this should fail)" \
+    -input "true" \
+    -expect-%val(selection) "bool(dragon)"
