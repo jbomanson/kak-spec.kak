@@ -1,10 +1,10 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 570, words: 1919, bytes: 19047 }
+  size: { lines: 567, words: 1903, bytes: 18958 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: 949d41679cd964e5e13aa0beabb858812c0c02b2
+  hash: 268b718bca9bc122cad736f3fdb55f616197f8b9
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -227,10 +227,10 @@ spec/bool.kak-spec.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 spec/not-explicitly-typed.kak-spec.err: empty
 spec/not-explicitly-typed.kak-spec.out:
-  size: { lines: 11, words: 32, bytes: 244 }
+  size: { lines: 8, words: 17, bytes: 155 }
   first: "\e[36m# kak-spec\e[0m"
-  last: "\e[36m-\e[0m \e[32m1 examples, 0 failures, 0 errors\e[0m"
-  hash: bb83793c45a10f5f2313b08b665ec6fce10dd7ca
+  last: "\e[36m-\e[0m \e[32m2 examples, 0 failures, 0 errors\e[0m"
+  hash: fa0ea375e8986b4c90a9a75b330e9b3b2734f6d7
 spec/not-explicitly-typed.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -270,7 +270,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: f47bc46b1dc17aba296fc46c8267ef18f92f6ca9
+  input: 6cfc0c9db221ec88503e135a2c47233cddb2e203
   status: 0
-  total: 7bf6c791081fa019bed88a3b38bbbaed8b35ec76
+  total: 12fb13c867f866fa66754b90c01b6044b311ff93
   version: 8

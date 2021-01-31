@@ -297,7 +297,7 @@ class ExpectedElement
   end
 
   def self.from_string(string)
-    if match = /^(\w+)\((.*)\)$/m.match(string)
+    if match = /\A(\w+)\((.*)\)\Z/m.match(string)
       type, argument = match.captures
       terminal_s = for_terminal(type, argument)
       case type
