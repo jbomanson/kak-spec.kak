@@ -214,6 +214,12 @@ example/switches.kak-spec.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+missing-file.err: empty
+missing-file.out:
+  size: { lines: 19, words: 40, bytes: 281 }
+  first: "# kak-spec"
+  last: ''
+  hash: e9d738326f0676fd83d3d59cbc9903be109b646a
 option-title.err: empty
 option-title.out:
   size: { lines: 8, words: 16, bytes: 135 }
@@ -287,7 +293,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: b05694356076b6848154da8128198c75e0e7ac6d
+  input: aeda8b2b277d3ad092b805df950d7cab4c562589
   status: 0
-  total: 80eafef04264116e98d1fbe7f397e8f5940c5629
+  total: 566a60ad1f4c067667ddd854ab6aff812fcffe99
   version: 8

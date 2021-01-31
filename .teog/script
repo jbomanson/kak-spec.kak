@@ -32,6 +32,11 @@ done
     ../bin/kak-spec | ../script/stabilize
 } >empty.out 2>empty.err &
 
+# Run kak-spec with a missing file argument.
+{
+    bin/kak-spec missing-file | script/stabilize
+} >missing-file.out 2>missing-file.err &
+
 # Run kak-spec on all samples one by one.
 {
     for sample in example/*.kak-spec spec/*.kak-spec
