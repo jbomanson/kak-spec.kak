@@ -15,6 +15,7 @@ scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
 
 clean_up () {
     code=$?
+    trap - TERM
     test -f "$scratch_dir/debug" && cat "$scratch_dir/debug"
     test "$(printf "%s" $reporter_pid $kak_pid_list $fifo_holder_pid_list)" &&
         kill $reporter_pid $kak_pid_list $fifo_holder_pid_list
@@ -22,7 +23,7 @@ clean_up () {
     exit $code
 }
 
-trap "trap - TERM && clean_up" INT TERM EXIT
+trap clean_up INT TERM EXIT
 
 KAK_SPEC_DIR="$scratch_dir"
 export KAK_SPEC_DIR
@@ -192,12 +193,12 @@ do
 done
 
 # Wait for all kak processes and the reporter process.
-wait $reporter_pid $kak_pid_list
-wait_status=$?
+wait $kak_pid_list $reporter_pid
+reporter_status=$?
 reporter_pid=
 kak_pid_list=
 
 test "$fifo_holder_pid_list" && kill $fifo_holder_pid_list
 fifo_holder_pid_list=
 
-exit "$wait_status"
+exit "$reporter_status"
