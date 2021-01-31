@@ -10,6 +10,12 @@ all.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+empty.err: empty
+empty.out:
+  size: { lines: 8, words: 16, bytes: 90 }
+  first: "# kak-spec"
+  last: "- 0 examples, 0 failures, 0 errors"
+  hash: 65600607b5f767ac17bebdb351add1db73621c19
 example/bool-mismatch.kak-spec.err: empty
 example/bool-mismatch.kak-spec.out:
   size: { lines: 138, words: 435, bytes: 4305 }
@@ -281,7 +287,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: b7b04b33b43f9fb7dc420fd0669e2c5b88853d3f
+  input: b05694356076b6848154da8128198c75e0e7ac6d
   status: 0
-  total: e0f3839fd6cb1cf8894b415a1e088fc2baae19ed
+  total: 80eafef04264116e98d1fbe7f397e8f5940c5629
   version: 8

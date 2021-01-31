@@ -25,6 +25,13 @@ do
     command -v "program" >/dev/null 2>&1 || eval ln -s "\"\$$program\"" bin/
 done
 
+# Run kak-spec in an empty directory.
+{
+    mkdir -p empty
+    cd empty
+    ../bin/kak-spec | ../script/stabilize
+} >empty.out 2>empty.err &
+
 # Run kak-spec on all samples one by one.
 {
     for sample in example/*.kak-spec spec/*.kak-spec
