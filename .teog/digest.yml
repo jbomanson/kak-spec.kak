@@ -236,7 +236,7 @@ program-call-counts.out:
   size: { lines: 11, words: 22, bytes: 144 }
   first: "      5 ruby"
   last: "    222 grep"
-  hash: ef5eb141032520cad9b8148a1e976808c560b879
+  hash: 34af00c9259f52e320f911b1d4580048dc2ed8fc
 spec/bool.kak-spec.err: empty
 spec/bool.kak-spec.out:
   size: { lines: 8, words: 17, bytes: 215 }
@@ -293,7 +293,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: a7a804b4bcd013587921d769ae7239d96fbcf92f
+  input: 9fde392e22a5d008b4c6d14c7c59317f77a91785
   status: 0
-  total: f43c76acca71428091be49e2e6e4838c42548315
+  total: 4a862c08e4fa165cf97dc95e4610a70b3ee10c07
   version: 8

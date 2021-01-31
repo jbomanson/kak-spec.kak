@@ -11,6 +11,9 @@ REPORTER="$root_dir/lib/reporter.rb"
 
 version=0.1.4
 
+# A grace period following shutdown after which this script kills its kak child processes.
+shutdown_timeout=1s
+
 scratch_dir=$(mktemp -d "${TMPDIR:-/tmp}/kak-spec.XXXXXXXX")
 
 clean_up () {
@@ -18,10 +21,17 @@ clean_up () {
     trap - TERM
     test -f "$scratch_dir/debug" && cat "$scratch_dir/debug"
     {
-        for pid in $reporter_pid $kak_pid_list $fifo_holder_pid_list
-        do
-            kill $pid
-        done
+        # Kill any remaining non-kak child processes.
+        if test "$reporter_pid$fifo_holder_pid_list"; then
+            kill $reporter_pid $fifo_holder_pid_list
+        fi
+        # Kill any remaining kak child processes after a delay.
+        if test "$kak_pid_list"; then
+            (
+                sleep "$shutdown_timeout"
+                kill $kak_pid_list
+            ) &
+        fi
         rm -rf "$scratch_dir"
     } 2>/dev/null
     exit $code
@@ -197,9 +207,8 @@ do
 done
 
 # Wait for all kak processes and the reporter process.
-wait $kak_pid_list $reporter_pid
+wait $reporter_pid
 reporter_status=$?
 reporter_pid=
-kak_pid_list=
 
 exit "$reporter_status"
