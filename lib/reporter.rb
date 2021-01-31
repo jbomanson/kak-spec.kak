@@ -321,7 +321,7 @@ class ExpectedElement
       when "str"
         new(terminal_s) {|actual_value| argument == actual_value}
       else
-        throw "Expected a matcher of type bool, regex, or str, got '#{type}' in matcher '#{string}'"
+        from_error("An unknown type in #{string}, expected either bool, regex, or str")
       end
     else
       new(string) {|actual_value| string == actual_value}
