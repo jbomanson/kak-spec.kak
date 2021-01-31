@@ -1,0 +1,11 @@
+kak-spec \
+    -title 'Test matching against a string that might be mistaken for an explicitly typed value' \
+    -input '  1 some_function() 2  ' \
+    -expect-%val(selection) '  1 some_function() 2  '
+
+kak-spec \
+    -title 'Test matching against a multiline that might be mistaken for an explicitly typed value' \
+    -input '
+some_function()' \
+    -expect-%val(selection) '
+some_function()'

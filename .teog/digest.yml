@@ -1,10 +1,10 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 567, words: 1903, bytes: 18938 }
+  size: { lines: 570, words: 1919, bytes: 19047 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: 7ce60858c0b56a71a4be7c867a4491867ad924c0
+  hash: 949d41679cd964e5e13aa0beabb858812c0c02b2
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -212,8 +212,8 @@ program-call-counts.err: empty
 program-call-counts.out:
   size: { lines: 11, words: 22, bytes: 144 }
   first: "      5 ruby"
-  last: "    213 grep"
-  hash: fc4d056f382c291ad90bd49ebc5c873bb87ab548
+  last: "    219 grep"
+  hash: 350476e6ec00fc9e5bed8382da42dd7741b81054
 spec/bool.kak-spec.err: empty
 spec/bool.kak-spec.out:
   size: { lines: 8, words: 17, bytes: 215 }
@@ -221,6 +221,17 @@ spec/bool.kak-spec.out:
   last: "\e[36m-\e[0m \e[32m8 examples, 0 failures, 0 errors\e[0m"
   hash: b2a132b3cd267a00847870285ea50beb66e69f25
 spec/bool.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+spec/not-explicitly-typed.kak-spec.err: empty
+spec/not-explicitly-typed.kak-spec.out:
+  size: { lines: 11, words: 32, bytes: 244 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[32m1 examples, 0 failures, 0 errors\e[0m"
+  hash: bb83793c45a10f5f2313b08b665ec6fce10dd7ca
+spec/not-explicitly-typed.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
@@ -259,7 +270,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 24ba59792069984c54a1f7e17d8b7e648d1b9089
+  input: f47bc46b1dc17aba296fc46c8267ef18f92f6ca9
   status: 0
-  total: cb07701794ab933e69a48a2bd92dd2962d1f7c95
+  total: 7bf6c791081fa019bed88a3b38bbbaed8b35ec76
   version: 8
