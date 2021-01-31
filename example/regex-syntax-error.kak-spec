@@ -1,0 +1,4 @@
+kak-spec \
+    -title "Test matching against an innvalid regular expression (this should fail)" \
+    -input "one-two-three" \
+    -expect-%val(selection) "regex(*)"

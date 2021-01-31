@@ -1,10 +1,10 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 537, words: 1788, bytes: 17796 }
+  size: { lines: 47, words: 133, bytes: 3182 }
   first: "\e[36m# kak-spec\e[0m"
-  last: ''
-  hash: d7d8af5dd5ca447df78b2ddcf40edde4a42d2306
+  last: "€PWD/share/kak-spec/lib/reporter.rb:673:in `<main>'"
+  hash: 53a3db82afe37e222862aec451622e28ed9c3f92
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -142,6 +142,17 @@ example/regex-mismatch.kak-spec.status:
   first: '0'
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/regex-syntax-error.kak-spec.err: empty
+example/regex-syntax-error.kak-spec.out:
+  size: { lines: 45, words: 118, bytes: 2389 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "€PWD/share/kak-spec/lib/reporter.rb:673:in `<main>'"
+  hash: e6aaca7153cbed9b6c0da2334fd3ebd0263bdd07
+example/regex-syntax-error.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/selections.kak-spec.err: empty
 example/selections.kak-spec.out:
   size: { lines: 68, words: 211, bytes: 2098 }
@@ -201,8 +212,8 @@ program-call-counts.err: empty
 program-call-counts.out:
   size: { lines: 11, words: 22, bytes: 144 }
   first: "      5 ruby"
-  last: "    210 grep"
-  hash: 69bf0b3918b16ae513ee28dcf805d046a7c76678
+  last: "    213 grep"
+  hash: fc4d056f382c291ad90bd49ebc5c873bb87ab548
 spec/bool.kak-spec.err: empty
 spec/bool.kak-spec.out:
   size: { lines: 8, words: 17, bytes: 215 }
@@ -248,7 +259,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 58c8d38f384b979453a8a5827c63d370d3466234
+  input: 44f56d5bf0073c7841404563484f7f5118a2f4fb
   status: 0
-  total: 6d892eb4a642e74eaf30d4eb464f3ea77c249086
+  total: 3b81fd670a4e536ec0a1f5fb79e82aa82e23dd4e
   version: 8
