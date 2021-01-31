@@ -1,10 +1,10 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 583, words: 1965, bytes: 19570 }
+  size: { lines: 583, words: 1971, bytes: 19594 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: 48f70b986b6959be51ab01464e7bbf3c692d317c
+  hash: c39f2567b1a1d1008bd36da61bda03947706d9d9
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -144,10 +144,10 @@ example/multiline.kak-spec.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/regex-mismatch.kak-spec.err: empty
 example/regex-mismatch.kak-spec.out:
-  size: { lines: 42, words: 129, bytes: 1311 }
+  size: { lines: 42, words: 135, bytes: 1334 }
   first: "\e[36m# kak-spec\e[0m"
   last: "\e[36m-\e[0m \e[31m2 examples, 2 failures, 0 errors\e[0m"
-  hash: 211ee7acf9f67ed3b0f011574026c663adfe6440
+  hash: 06204526fe269995696b7863836849376cfccd52
 example/regex-mismatch.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -155,10 +155,10 @@ example/regex-mismatch.kak-spec.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/regex-syntax-error.kak-spec.err: empty
 example/regex-syntax-error.kak-spec.out:
-  size: { lines: 26, words: 86, bytes: 800 }
+  size: { lines: 26, words: 86, bytes: 801 }
   first: "\e[36m# kak-spec\e[0m"
   last: "\e[36m-\e[0m \e[31m1 examples, 1 failures, 0 errors\e[0m"
-  hash: 7fa769e465af68ae05f4bf75b3a392576312b365
+  hash: 16dd2b1b2b138fa4626b95737ec5f2a3903cdbee
 example/regex-syntax-error.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -281,7 +281,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 99133eba1600ae36be3abaed815f1d1d71acb0db
+  input: b7b04b33b43f9fb7dc420fd0669e2c5b88853d3f
   status: 0
-  total: 18fde51559b886d7d49dca3e62f4b6545ef825ec
+  total: e0f3839fd6cb1cf8894b415a1e088fc2baae19ed
   version: 8

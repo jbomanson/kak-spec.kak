@@ -4,6 +4,6 @@ kak-spec \
     -expect-%val(selection) "regex(\d)"
 
 kak-spec \
-    -title "Test matching against an anchored regular expression (this should fail)" \
-    -input "zero-one-two-three" \
-    -expect-%val(selection) "regex(^\w+-\w+-\w+$)"
+    -title "Test matching against a regular expression matching only a substring (this should fail)" \
+    -input "one-two-three" \
+    -expect-%val(selection) "regex(.two.)"

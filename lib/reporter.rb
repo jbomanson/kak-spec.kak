@@ -309,12 +309,17 @@ class ExpectedElement
         end
       when "regex"
         begin
-          regex = /#{argument}/
+          # Use multiline mode like kakoune does.
+          regex = /#{argument}/m
         rescue RegexpError => e
           error = e
         end
         if regex
-          new(terminal_s) {|actual_value| regex =~ actual_value}
+          new(terminal_s) do |actual_value|
+            (match = regex.match(actual_value)) &&
+              match.begin(0) == 0 &&
+              match.end(0) == actual_value.length
+          end
         else
           from_error("An invalid expression #{string}: #{error.to_s}")
         end
