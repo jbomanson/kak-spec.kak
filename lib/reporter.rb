@@ -451,9 +451,11 @@ def stubbornly
     yield
   rescue TranslationException => e
     puts
+    print "BUG: "
     puts e
   rescue StandardError => e
     puts
+    print "BUG: "
     puts "Caught unexpected Ruby exception: #{e}"
     puts e.backtrace
     puts
@@ -567,7 +569,7 @@ end
 StateMachine = Struct.new(:state) do
   def transition(method_name, *args)
     unless new_state = state.send(method_name, *args)
-      raise "BUG: State #{state}##{method_name} -> #{new_state}"
+      raise "State #{state}##{method_name} -> #{new_state}"
     end
     self.state = new_state
   end
