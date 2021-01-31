@@ -1,0 +1,4 @@
+kak-spec \
+    -title 'Test matching dragon(thunder) and thunder (this should fail)' \
+    -input 'thunder' \
+    -expect-%val(selection) 'dragon(thunder)'

@@ -1,10 +1,10 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 567, words: 1903, bytes: 18958 }
+  size: { lines: 569, words: 1918, bytes: 19049 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: 268b718bca9bc122cad736f3fdb55f616197f8b9
+  hash: 516e8a405393428cca76c6fe0585a485d2cf0752
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -83,6 +83,17 @@ example/exec.kak-spec.out:
   last: "\e[36m-\e[0m \e[31m3 examples, 1 failures, 0 errors\e[0m"
   hash: bc8047dbce3c3557ee7436c0e0db04d0b8fad416
 example/exec.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/explicitly-typed-syntax-error.kak-spec.err: empty
+example/explicitly-typed-syntax-error.kak-spec.out:
+  size: { lines: 10, words: 30, bytes: 226 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[32m0 examples, 0 failures, 0 errors\e[0m"
+  hash: db39a154ea1299aa9463fd31d577c7f7ae015398
+example/explicitly-typed-syntax-error.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
@@ -212,8 +223,8 @@ program-call-counts.err: empty
 program-call-counts.out:
   size: { lines: 11, words: 22, bytes: 144 }
   first: "      5 ruby"
-  last: "    219 grep"
-  hash: 350476e6ec00fc9e5bed8382da42dd7741b81054
+  last: "    222 grep"
+  hash: ef5eb141032520cad9b8148a1e976808c560b879
 spec/bool.kak-spec.err: empty
 spec/bool.kak-spec.out:
   size: { lines: 8, words: 17, bytes: 215 }
@@ -270,7 +281,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 6cfc0c9db221ec88503e135a2c47233cddb2e203
+  input: 9ffffab6b93332a33fc10ee9bde12e0ca67f4a03
   status: 0
-  total: 12fb13c867f866fa66754b90c01b6044b311ff93
+  total: 826744942192d6494fe03e5f7999562acac7d92a
   version: 8
