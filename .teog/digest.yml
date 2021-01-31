@@ -1,10 +1,10 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 553, words: 1855, bytes: 18439 }
+  size: { lines: 567, words: 1903, bytes: 18938 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: da42d8f979400e6e039f925b9fd6da6ed9fed818
+  hash: 7ce60858c0b56a71a4be7c867a4491867ad924c0
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -23,10 +23,10 @@ example/bool-mismatch.kak-spec.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/bool-syntax-error.kak-spec.err: empty
 example/bool-syntax-error.kak-spec.out:
-  size: { lines: 10, words: 28, bytes: 218 }
+  size: { lines: 26, words: 80, bytes: 739 }
   first: "\e[36m# kak-spec\e[0m"
-  last: "\e[36m-\e[0m \e[32m0 examples, 0 failures, 0 errors\e[0m"
-  hash: 78e9cc3843348dec0c28ef2ef44c9d7c8d22ea88
+  last: "\e[36m-\e[0m \e[31m1 examples, 1 failures, 0 errors\e[0m"
+  hash: 503212f81369ef29874ef6d266c9279aeccd4760
 example/bool-syntax-error.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -259,7 +259,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: d7b4992a19de3f487a64aa1166f5bda0a7f9125b
+  input: 24ba59792069984c54a1f7e17d8b7e648d1b9089
   status: 0
-  total: 59169c44edfe6dfab8c4245c42a2a44bb9f602a8
+  total: cb07701794ab933e69a48a2bd92dd2962d1f7c95
   version: 8

@@ -302,16 +302,11 @@ class ExpectedElement
       terminal_s = for_terminal(type, argument)
       case type
       when "bool"
-        new(
-          terminal_s,
-          &(
-            case argument
-            when "true", "yes" then %w(true yes)
-            when "false", "no" then %w(false no)
-            else throw "Expected bool(...) to specify a boolean value, yes/true or no/false, got '#{argument}'"
-            end.method(:include?)
-          )
-        )
+        case argument
+        when "true", "yes" then new(terminal_s, &%w(true yes).method(:include?))
+        when "false", "no" then new(terminal_s, &%w(false no).method(:include?))
+        else from_error("An invalid #{string}: expected a boolean value, yes/true or no/false")
+        end
       when "regex"
         begin
           regex = /#{argument}/
