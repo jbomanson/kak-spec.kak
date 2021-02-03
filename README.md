@@ -199,47 +199,53 @@ This is important, because the installation process makes soft links to content 
 
 #### Defining Tests: Kakoune Command Usage
 
-**kak-spec** _option_...: Define a unit test.
+*kak-spec* _option_...:
+    Define a unit test.
+    This command is available only in kakoune scripts evaluated with the `kak-spec` executable.
 
-- **-title** _title_
-  A title to be shown if the test fails.
+- *-title* _title_
+      A title to be shown if the test fails.
 
-- **-input** _input_
-  Initial contents written to and selected in the scratch buffer where the test begins.
-  The scratch buffer will always contain a newline in addition to _input_.
+- *-input* _input_
+      Initial contents written to and selected in the scratch buffer where the test begins.
+      The scratch buffer will always contain a newline in addition to _input_.
 
-- **-eval** _commands_
-  Commands evaluated in the test.
-  Mutually exclusive with **-exec**.
-  - Example: **-eval** %(**set-register** dquote "Hello world!"; **execute-keys** R)
+- *-eval* _commands_
+      Commands evaluated in the test.
+      Mutually exclusive with *-exec*.
+      - Example: *-eval* %(*set-register* dquote "Hello world!"; *execute-keys* R)
 
-- **-exec** _keys_
-  A shorthand for **-eval** %(**execute-keys** **-with-hooks** **-with-maps** _keys_).
-  Mutually exclusive with **-eval**.
-  - Example: **-exec** %(cHello world!)
+- *-exec* _keys_
+      A shorthand for *-eval* %(*execute-keys* *-with-hooks* *-with-maps* _keys_).
+      Mutually exclusive with -eval.
+      - Example: *-exec* %(cHello world!)
 
-- **-expect-_expansion_** _value_
-  Expects kakoune _expansion_ to expand to _value_.
-  When _value_ is of the form _type_(_argument_), the comparison is specialized for one of the
-  types: bool, regex, or str.
-  - Example: **-expect-%val(selection)** "Hello world!"
-  - Example: **-expect-%val(error)**     "Something went wrong"
-  - Example: **-expect-%val(selection)** "bool(true)"
-  - Example: **-expect-%val(selection)** "regex(\bH\w*o\b)"
-  - Example: **-expect-%val(selection)** "str(Hello world!)"
+- *-expect-_expansion_* _value_
+      Expects kakoune _expansion_ to expand to _value_.
+      When _value_ is of the form _type_(_argument_), the comparison is specialized for one of the
+      types: *bool*, *regex*, or *str*.
+      - Example: *-expect-%val(selection)* "Hello world!"
+      - Example: *-expect-%val(error)*     "Something went wrong"
+      - Example: *-expect-%val(selection)* "bool(true)"
+      - Example: *-expect-%val(selection)* "regex(\bH\w+o\b)"
+      - Example: *-expect-%val(selection)* "str(Hello world!)"
 
-- **-expect-_expansion_-(** _value_... **)**
-  Expects kakoune _expansion_ to expand to an array matching the given values.
-  The delimiters can be (), [], {}, or <>.
-  - Example: **-expect-%val(selections)-[** "word" "pair of words" **]**
-  - Example: **-expect-%val(selections)-[** "word" "regex(pair.+words)" **]**
+- *-expect-_expansion_-(* _value_... *)*
+      Expects kakoune _expansion_ to expand to an array matching the given values.
+      The delimiters can be (), [], {}, or <>.
+      - Example: *-expect-%val(selections)-[* "word" "pair of words" *]*
+      - Example: *-expect-%val(selections)-[* "word" "regex(pair.+words)" *]*
+
+== Command Line Usage
+
+See `man kak-spec`.
 
 ### Running Tests: Command Line Usage
 
 
 Usage: **kak-spec** [_option_...] _script_...
 
-Runs tests specified in kakoune _script_ files or in files under a "spec" directory matching the pattern "*.**kak-spec**".
+Runs tests specified in kakoune _script_ files or in files under a `spec` directory matching the pattern `*.kak-spec`.
 
 Each _script_ is ran in a separate **temporary kakoune session**.
 Different _script_ runs may happen in any order, possibly in parallel.

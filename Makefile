@@ -2,7 +2,7 @@ PREFIX		?= /usr/local
 BIN_SOURCE	:= $(wildcard bin/*)
 MAN_SOURCE	:= $(wildcard man/*.1.md.erb)
 MAN_OUTPUT	:= $(patsubst man/%.1.md.erb,share/man/man1/%.1,$(MAN_SOURCE))
-README_DEPENDENCIES	:= README.md.erb $(wildcard lib/*)
+README_DEPENDENCIES	:= README.md.erb $(wildcard lib/*) $(wildcard rc/*)
 
 all:
 	true

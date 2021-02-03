@@ -7,41 +7,6 @@ declare-option -hidden int scratch_unit_test_debug_line_count 0
 
 define-command kak-spec \
     -params .. \
-    -docstring 'kak-spec <option>...: Define a unit test.
-
--title <title>
-  A title to be shown if the test fails.
-
--input <input>
-  Initial contents written to and selected in the scratch buffer where the test begins.
-  The scratch buffer will always contain a newline in addition to <input>.
-
--eval <commands>
-  Commands evaluated in the test.
-  Mutually exclusive with -exec.
-  Example: -eval %(set-register dquote "Hello world!"; execute-keys R)
-
--exec <keys>
-  A shorthand for -eval %(execute-keys -with-hooks -with-maps <keys>).
-  Mutually exclusive with -eval.
-  Example: -exec %(cHello world!)
-
--expect-<expansion> <value>
-  Expects kakoune <expansion> to expand to <value>.
-  When <value> is of the form <type>(<argument>), the comparison is specialized for one of the
-  types: bool, regex, or str.
-  Example: -expect-%val(selection) "Hello world!"
-  Example: -expect-%val(error)     "Something went wrong"
-  Example: -expect-%val(selection) "bool(true)"
-  Example: -expect-%val(selection) "regex(\bH\w*o\b)"
-  Example: -expect-%val(selection) "str(Hello world!)"
-
--expect-<expansion>-( <value>... )
-  Expects kakoune <expansion> to expand to an array matching the given values.
-  The delimiters can be (), [], {}, or <>.
-  Example: -expect-%val(selections)-[ "word" "pair of words" ]
-  Example: -expect-%val(selections)-[ "word" "regex(pair.+words)" ]
-' \
 %(
     kak-spec-context "Implicit kak-spec context" %sh(
         . "$KAK_SPEC_PRELUDE_PATH"
