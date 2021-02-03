@@ -189,8 +189,8 @@ do
             kak_escape try "
                 declare-option str kak_spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
                 declare-option str kak_spec_tmp $(kak_escape "$KAK_SPEC_DIR/$index.dir")
-                source $(kak_escape "$root_dir/lib/kak-spec-scratch-eval.kak-spec")
-                source $(kak_escape "$root_dir/lib/kak-spec.kak-spec")
+                source $(kak_escape "$root_dir/lib/kak-spec-scratch-eval.kak-no-autoload")
+                source $(kak_escape "$root_dir/lib/kak-spec.kak-no-autoload")
             " catch "
                 buffer '*debug*'
                 write $(kak_escape "$KAK_SPEC_DIR/debug")
