@@ -1,0 +1,110 @@
+#! /bin/sh
+
+kak_spec_options="-color=always"
+
+required_programs="kak"
+
+#
+#               Parse command line arguments
+#
+
+if test $# -ne 1; then
+    echo "usage: ${0##*/} <output_dir>"
+    exit 1
+fi >&2
+
+output_dir="$1"
+test "${output_dir#/}" = "$output_dir" && output_dir="$PWD/${output_dir#/}"
+mkdir -p "$output_dir"
+
+cd "${0%/*}"
+script_dir="$PWD"
+
+# Copy the directory tree from the repository to the output directory.
+(
+    cd "$output_dir" || exit 1
+    ( cd "$script_dir"; find -type d -print0 ) | xargs -0 mkdir -p
+)
+
+# Prepare to use an almost minimal PATH as set by `env -i` with the addition of the local bin/.
+# Make local soft links to all required programs that are not on the minimal PATH created by
+# env -i.
+# This process makes strace output nicer.
+
+for program in $required_programs
+do
+    if ! location="$(command -v "$program" 2>/dev/null)"; then
+        echo "${0##*/}: missing program \"$program\"";
+        exit 1;
+    fi >&2
+    eval "$program=\"\$location\""
+done
+
+PATH="$output_dir/bin:$(env -i sh -c 'echo "$PATH"')"
+
+for program in $required_programs
+do
+    command -v "program" >/dev/null 2>&1 || eval ln -s "\"\$$program\"" "$output_dir/bin/"
+done
+
+# Run kak-spec in an empty directory.
+{
+    mkdir -p "$output_dir/empty"
+    cd "$output_dir/empty"
+    "$script_dir"/bin/kak-spec | "$script_dir"/script/stabilize "$output_dir"
+} >"$output_dir/empty.out" 2>"$output_dir/empty.err" &
+
+# Run kak-spec with a missing file argument.
+{
+    bin/kak-spec missing-file | script/stabilize "$output_dir"
+} >"$output_dir/missing-file.out" 2>"$output_dir/missing-file.err" &
+
+# Run kak-spec on all samples one by one.
+{
+    for sample in example/*.kak-spec spec/*.kak-spec
+    do
+        {
+            bin/kak-spec $kak_spec_options "$sample" |
+                script/stabilize "$output_dir"
+        } >"$output_dir/$sample.out" 2>"$output_dir/$sample.err"
+        echo $? >"$output_dir/$sample.status"
+    done
+} &
+
+# Run kak-spec on all samples in a batch.
+{
+    bin/kak-spec $kak_spec_options example/*.kak-spec spec/*.kak-spec |
+        script/stabilize "$output_dir"
+    echo $? >"$output_dir/all.status"
+} >"$output_dir/all.out" 2>"$output_dir/all.err" &
+
+# Run kak-spec with a title filter.
+{
+    bin/kak-spec $kak_spec_options --title=an.error example/switches.kak-spec |
+        script/stabilize "$output_dir"
+    echo $? >"$output_dir/option-title.status"
+} >"$output_dir/option-title.out" 2>"$output_dir/option-title.err" &
+
+# Process all examples through strace.
+{
+    strace -f --output="$output_dir/.strace.txt" \
+        bin/kak-spec $kak_spec_options example/*.kak-spec spec/*.kak-spec \
+        >/dev/null 2>&1
+
+    # Make a histogram of calls to programs by their basename.
+    # Show those that are called more than once.
+    cat "$output_dir/.strace.txt" | grep -Eo 'execve\("[^"]*"' | sed -r 's,.*/|",,g' |
+        sort | uniq -c | sort -n |
+        grep -E '^\s*([2-9]|1[0-9])'
+} >"$output_dir/program-call-counts.out" 2>"$output_dir/program-call-counts.err" &
+
+wait
+
+# Remove soft links to programs so that teog does not report them.
+for program in $required_programs
+do
+    rm -f "$output_dir/bin/$program"
+done
+
+# Remove hidden files and directories.
+find "$output_dir" -name ".*" -exec rm -rf {} +

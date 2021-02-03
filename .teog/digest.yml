@@ -293,7 +293,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 32c92cd500150625cdb9692b0477851176694d45
+  input: 7676421410367b39bc86f1ea03f46589358608ec
   status: 0
-  total: 027464563dc999dd74f9fb9e464b40b12518d74a
-  version: 8
+  total: f5f228c355b4d816dd5aaa11619b2c98b4f46312
+  version: 9
