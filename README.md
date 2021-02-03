@@ -93,7 +93,7 @@ Test output produced by `kak-spec example/selections.kak-spec`:
       1|one-two-three
 
 - Evaluated commands:
-      1|execute-keys '%H'
+      1|execute-keys -with-hooks -with-maps '%H'
 
 - Expected %val(selections) with 1 element:
       1:  1|fire
@@ -110,7 +110,7 @@ Test output produced by `kak-spec example/selections.kak-spec`:
       1|one-two-three
 
 - Evaluated commands:
-      1|execute-keys 's\w+<ret>'
+      1|execute-keys -with-hooks -with-maps 's\w+<ret>'
 
 - Expected %val(selections) with 1 element:
       1:  1|fire
@@ -129,7 +129,7 @@ Test output produced by `kak-spec example/selections.kak-spec`:
       1|one-two-three
 
 - Evaluated commands:
-      1|execute-keys 's\w+<ret>'
+      1|execute-keys -with-hooks -with-maps 's\w+<ret>'
 
 - Expected %val(selections) with 4 elements:
       1:  1|one
@@ -214,7 +214,7 @@ This is important, because the installation process makes soft links to content 
   - Example: **-eval** %(**set-register** dquote "Hello world!"; **execute-keys** R)
 
 - **-exec** _keys_
-  Keys to be executed in the buffer.
+  A shorthand for **-eval** %(**execute-keys** **-with-hooks** **-with-maps** _keys_).
   Mutually exclusive with **-eval**.
   - Example: **-exec** %(cHello world!)
 

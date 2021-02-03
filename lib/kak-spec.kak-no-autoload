@@ -22,7 +22,7 @@ define-command kak-spec \
   Example: -eval %(set-register dquote "Hello world!"; execute-keys R)
 
 -exec <keys>
-  Keys to be executed in the buffer.
+  A shorthand for -eval %(execute-keys -with-hooks -with-maps <keys>).
   Mutually exclusive with -eval.
   Example: -exec %(cHello world!)
 
@@ -115,7 +115,7 @@ define-command kak-spec \
                 shift 2
                 ;;
             (-exec)
-                option_eval="execute-keys $(kak_escape "$2")"
+                option_eval="execute-keys -with-hooks -with-maps $(kak_escape "$2")"
                 # Prettify reports by removing a trailing space produced by kak_escape.
                 option_eval="${option_eval% }"
                 shift 2
