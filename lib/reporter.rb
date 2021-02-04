@@ -583,8 +583,8 @@ end
 module MessageHandler
   Uninitiated = Struct.new(:presenter) do
     def handle_message(task, session, client)
-      unless task == "message_init" && session && client
-        throw "Expected message_init <session> <client>, received: #{[task, session, client]}"
+      unless task == "message:init" && session && client
+        throw "Expected message:init <session> <client>, received: #{[task, session, client]}"
       end
       Initiated.new(*values, session, client)
     end
@@ -601,15 +601,15 @@ module MessageHandler
 
     def handle_message(task, *arguments)
       case task.chomp
-      when "message_assert"
+      when "message:command:kak-spec"
         presenter.present_assertion(Assertion.from_arguments(scope_stack.last, arguments))
-      when "message_non_assertion_error"
+      when "message:non_assertion_error"
         presenter.present_error(NonAssertionError.new(scope_stack.last, arguments.join(" ")))
-      when "message_scope_begin"
+      when "message:command:kak-spec-context:begin"
         description, debug_line_begin = arguments
         scope_stack << Scope.new(scope_stack.last, description, parse_debug_line_number(debug_line_begin))
         scope_universe << scope_stack.last
-      when "message_scope_end"
+      when "message:command:kak-spec-context:end"
         description, debug_line_end = arguments
         if scope_stack.last.description == description
           scope_stack.pop.debug_line_end = parse_debug_line_number(debug_line_end)
@@ -662,7 +662,7 @@ Main = Struct.new(:presenter) do
     File.open(fifo, "r") do |io|
       message_reader = MessageReader.new(io)
       machine.transition(:handle_message, *message_reader.read_message)
-      until_reader = message_reader.until_message("message_quit")
+      until_reader = message_reader.until_message("message:quit")
       until_reader.to_a.each do |message_components|
         stubbornly do
           machine.transition(:handle_message, *message_components)

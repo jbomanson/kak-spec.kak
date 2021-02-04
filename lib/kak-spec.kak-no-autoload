@@ -105,7 +105,7 @@ define-command kak-spec \
         # sends a message to the translator.
         kak_escape kak-spec-scratch-eval "$option_input" "$option_eval" \
             "kak-spec-send \
-                message_assert \
+                'message:command:kak-spec' \
                 $error_comparison \
                 $comparisons \
                 END_OF_EXPECTATIONS \
@@ -119,17 +119,17 @@ define-command kak-spec-context \
     -docstring 'kak-spec-context <context-message> <commands>:
 Evaluates <commands> so that any assertions in them have context information.' \
 %(
-    kak-spec-send-scope-message message_scope_begin %arg(1)
+    kak-spec-send-scope-message 'message:command:kak-spec-context:begin' %arg(1)
     try %(
         evaluate-commands %arg(2)
     ) catch %(
         # Send the error as a command to the translator.
-        kak-spec-send message_non_assertion_error %val(error)
-        kak-spec-send-scope-message message_scope_end %arg(1)
+        kak-spec-send 'message:non_assertion_error' %val(error)
+        kak-spec-send-scope-message 'message:command:kak-spec-context:end' %arg(1)
         # Re-raise the caught error.
         fail "%val(error)"
     )
-    kak-spec-send-scope-message message_scope_end %arg(1)
+    kak-spec-send-scope-message 'message:command:kak-spec-context:end' %arg(1)
 )
 
 define-command kak-spec-send-scope-message \
@@ -163,7 +163,7 @@ define-command kak-spec-quit-begin \
 %(
     buffer *debug*
     execute-keys '%'
-    kak-spec-send message_quit %val(selection)
+    kak-spec-send 'message:quit' %val(selection)
 )
 
 define-command kak-spec-quit-end \
@@ -173,4 +173,4 @@ define-command kak-spec-quit-end \
     quit!
 )
 
-kak-spec-send message_init %val(session) %opt(scratch_unit_test_client)
+kak-spec-send 'message:init' %val(session) %opt(scratch_unit_test_client)
