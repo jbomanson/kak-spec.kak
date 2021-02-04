@@ -1,1 +1,3 @@
-fail "This is a failure inside a test context block"
+kak-spec-context 'Some context' %(
+    fail "This is a failure inside a test context block"
+)
