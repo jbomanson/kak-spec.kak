@@ -80,7 +80,7 @@ However, tests defined in the same source file:
 - can use options, commands, etc defined before them in tests or on the top level, and
 - may inadvertently disturb one another due to the above.
 
-See <https://github.com/jbomanson/kak-spec> for instructions on how to write tests.
+See <https://github.com/jbomanson/kak-spec.kak> for instructions on how to write tests.
 
 Options:
 -color=(never|always|auto)

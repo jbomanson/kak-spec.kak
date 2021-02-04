@@ -1,6 +1,6 @@
 # kak-spec
 
-[![License](https://img.shields.io/github/license/jbomanson/kak-spec)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/github/license/jbomanson/kak-spec.kak)](https://opensource.org/licenses/Apache-2.0)
 
 **kak-spec** is a unit test framework for
 [Kakoune](https://github.com/mawww/kakoune) scripts and plugins.
@@ -13,7 +13,7 @@ Using **kak-spec** is a matter of
 
 ## Example
 
-Example test [example/selections.kak-spec](https://github.com/jbomanson/kak-spec/example/selections.kak-spec):
+Example test [example/selections.kak-spec](https://github.com/jbomanson/kak-spec.kak/tree/main/example/selections.kak-spec):
 ```kak
 <%= File.read("example/selections.kak-spec") -%>
 ```
@@ -24,7 +24,7 @@ Test output produced by `kak-spec example/selections.kak-spec`:
 ```
 
 More examples can be found in the
-[example](https://github.com/jbomanson/kak-spec/example) directory.
+[example](https://github.com/jbomanson/kak-spec.kak/tree/main/example) directory.
 
 ## Dependencies
 
@@ -34,7 +34,7 @@ More examples can be found in the
 
 ## Installation of kak-spec and the prelude.kak dependency
 
-The following alternative steps will install a `kak-spec` executable under
+The following steps install a `kak-spec` executable under
 `/path/to/prefix/directory/bin`, and man pages under
 `/path/to/prefix/directory/share/man/man1`.
 A typical choice for `/path/to/prefix/directory` would be `~/.local`.
@@ -47,7 +47,7 @@ your `kakrc` with:
 
 ```kak
 plug "alexherbo2/prelude.kak"
-plug "jbomanson/kak-spec" noload do %(
+plug "jbomanson/kak-spec.kak" do %(
     make install PREFIX=/path/to/prefix/directory
 )
 ```
@@ -59,8 +59,9 @@ Then start Kakoune and run `:plug-install`.
 ```sh
 cd /path/to/plugins/directory
 git clone --depth=1 https://github.com/alexherbo2/prelude.kak
-git clone --depth=1 https://github.com/jbomanson/kak-spec
+git clone --depth=1 https://github.com/jbomanson/kak-spec.kak
 cd kak-spec && make install PREFIX=/path/to/prefix/directory
+# OPTIONAL: Place a soft link of the rc directory in your %val(config)/autoload directory.
 ```
 
 After the installation is done, the cloned directories should stay where they are.
@@ -73,8 +74,10 @@ This is important, because the installation process makes soft links to content 
 
 <%=
   # Extract and format the docstring of the kak-spec command.
-  File.read("rc/kak-spec.asciidoc")[/== Commands[\n]+\K.*/m].
-    gsub(/^ +(\*.*):::$/, '- \1').
+  File.read("rc/kak-spec.asciidoc")[/== Commands[\n]+\K.*?(?===|\Z)/m].
+    gsub(/^ {4}/, '').
+    gsub(/^ *(\*.*):::$/, "- \\1\n").
+    gsub('*', '**').
     gsub(/::/, ':').
     gsub(/<(\w+)>/, '_\1_')
 -%>

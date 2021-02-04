@@ -16,37 +16,74 @@ Using *kak-spec* is a matter of
     This command is available only in kakoune scripts evaluated with the `kak-spec` executable.
 
     *-title* <title>:::
-      A title to be shown if the test fails.
+        A title to be shown if the test fails.
 
     *-input* <input>:::
-      Initial contents written to and selected in the scratch buffer where the test begins.
-      The scratch buffer will always contain a newline in addition to <input>.
+        Initial contents written to and selected in the scratch buffer where the test begins.
+        The scratch buffer will always contain a newline in addition to <input>.
 
     *-eval* <commands>:::
-      Commands evaluated in the test.
-      Mutually exclusive with *-exec*.
-      - Example: *-eval* %(*set-register* dquote "Hello world!"; *execute-keys* R)
+        Commands evaluated in the test.
+        This is mutually exclusive with *-exec*.
+        For example:
+
+        - `-eval %(set-register dquote "Hello world!"; execute-keys R)` replaces the buffer contents with a greeting.
 
     *-exec* <keys>:::
-      A shorthand for *-eval* %(*execute-keys* *-with-hooks* *-with-maps* <keys>).
-      Mutually exclusive with -eval.
-      - Example: *-exec* %(cHello world!)
+        A shorthand for *-eval* %(*execute-keys* *-with-hooks* *-with-maps* <keys>).
+        This is mutually exclusive with -eval.
+        For example:
+
+        - `-exec %(cHello world!<esc>)` replaces the buffer contents with a greeting.
 
     *-expect-<expansion>* <value>:::
-      Expects kakoune <expansion> to expand to <value>.
-      When <value> is of the form <type>(<argument>), the comparison is specialized for one of the
-      types: *bool*, *regex*, or *str*.
-      - Example: *-expect-%val(selection)* "Hello world!"
-      - Example: *-expect-%val(error)*     "Something went wrong"
-      - Example: *-expect-%val(selection)* "bool(true)"
-      - Example: *-expect-%val(selection)* "regex(\bH\w+o\b)"
-      - Example: *-expect-%val(selection)* "str(Hello world!)"
+        Expects kakoune <expansion> to expand to <value>.
+        For example:
+
+        - `-expect-%val(selection) "Hello world!"`         checks that the main selection consists of exactly the string "Hello world!",
+
+        - `-expect-%val(error)     "Something went wrong"` checks that the test results in a failure with this exact error.
+
+        For more flexible matching, <value> can be given in one of the following forms:
+
+        - *bool(*<b>*)*
+
+          Matches different string representations of the boolean <b>.
+          For matching, "true" and "yes" are considered identical and "false" and "no" are considered identical.
+          For example:
+
+          - `-expect-%val(autoreload) "bool(yes)"`   checks that the autoreload value is either "true" or "yes",
+
+          - `-expect-%val(autoreload) "bool(false)"` checks that the autoreload value is either "false" or "no".
+
+        - *regex(*<r>*)*
+
+          Matches strings fully matched by the regular expression <r>.
+          In the expression, "." matches any character, including newlines.
+          For example:
+
+          - `-expect-%val(error)     "regex(.+)"`  checks that there was an error with a nonempty message,
+
+          - `-expect-%val(selection) "regex(\d+)"` checks that the main selection consists of only digits.
+
+        - *str(*<s>*)*
+
+          Expects kakoune <expansion> to expand to string <s>.
+          This works mostly the same as a plain <value> but with the advantage of also allowing strings <s> that are themselves of the form <word>(...) and might be confused for a special matcher.
+          For example:
+
+          - `-expect-%val(selection) "foo(123)"` checks that the main selection consists of exactly the string "foo(123)".
 
     *-expect-<expansion>-(* <value>... *)*:::
-      Expects kakoune <expansion> to expand to an array matching the given values.
-      The delimiters can be (), [], {}, or <>.
-      - Example: *-expect-%val(selections)-[* "word" "pair of words" *]*
-      - Example: *-expect-%val(selections)-[* "word" "regex(pair.+words)" *]*
+        Expects kakoune <expansion> to expand to an array matching the given values.
+        The delimiters can be (), [], {}, or <>.
+        For example:
+
+        - `-expect-%val(selections)-[ "word" "pair of words" ]`
+
+        - `-expect-%val(selections)-[ "word" "regex(pair.+words)" ]`
+
+        Each <value> can also specify a *bool*, *regex*, or *str* in the same manner as when matching single values.
 
 == Command Line Usage
 

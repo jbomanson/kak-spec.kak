@@ -1,6 +1,6 @@
 # kak-spec
 
-[![License](https://img.shields.io/github/license/jbomanson/kak-spec)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/github/license/jbomanson/kak-spec.kak)](https://opensource.org/licenses/Apache-2.0)
 
 **kak-spec** is a unit test framework for
 [Kakoune](https://github.com/mawww/kakoune) scripts and plugins.
@@ -13,7 +13,7 @@ Using **kak-spec** is a matter of
 
 ## Example
 
-Example test [example/selections.kak-spec](https://github.com/jbomanson/kak-spec/example/selections.kak-spec):
+Example test [example/selections.kak-spec](https://github.com/jbomanson/kak-spec.kak/tree/main/example/selections.kak-spec):
 ```kak
 kak-spec \
     -title 'Test "selections" of a substring' \
@@ -152,7 +152,7 @@ Test output produced by `kak-spec example/selections.kak-spec`:
 ```
 
 More examples can be found in the
-[example](https://github.com/jbomanson/kak-spec/example) directory.
+[example](https://github.com/jbomanson/kak-spec.kak/tree/main/example) directory.
 
 ## Dependencies
 
@@ -162,7 +162,7 @@ More examples can be found in the
 
 ## Installation of kak-spec and the prelude.kak dependency
 
-The following alternative steps will install a `kak-spec` executable under
+The following steps install a `kak-spec` executable under
 `/path/to/prefix/directory/bin`, and man pages under
 `/path/to/prefix/directory/share/man/man1`.
 A typical choice for `/path/to/prefix/directory` would be `~/.local`.
@@ -175,7 +175,7 @@ your `kakrc` with:
 
 ```kak
 plug "alexherbo2/prelude.kak"
-plug "jbomanson/kak-spec" noload do %(
+plug "jbomanson/kak-spec.kak" do %(
     make install PREFIX=/path/to/prefix/directory
 )
 ```
@@ -187,8 +187,9 @@ Then start Kakoune and run `:plug-install`.
 ```sh
 cd /path/to/plugins/directory
 git clone --depth=1 https://github.com/alexherbo2/prelude.kak
-git clone --depth=1 https://github.com/jbomanson/kak-spec
+git clone --depth=1 https://github.com/jbomanson/kak-spec.kak
 cd kak-spec && make install PREFIX=/path/to/prefix/directory
+# OPTIONAL: Place a soft link of the rc directory in your %val(config)/autoload directory.
 ```
 
 After the installation is done, the cloned directories should stay where they are.
@@ -199,46 +200,86 @@ This is important, because the installation process makes soft links to content 
 
 #### Defining Tests: Kakoune Command Usage
 
-*kak-spec* _option_...:
-    Define a unit test.
-    This command is available only in kakoune scripts evaluated with the `kak-spec` executable.
+**kak-spec** _option_...:
+Define a unit test.
+This command is available only in kakoune scripts evaluated with the `kak-spec` executable.
 
-- *-title* _title_
-      A title to be shown if the test fails.
+- **-title** _title_
 
-- *-input* _input_
-      Initial contents written to and selected in the scratch buffer where the test begins.
-      The scratch buffer will always contain a newline in addition to _input_.
+    A title to be shown if the test fails.
 
-- *-eval* _commands_
-      Commands evaluated in the test.
-      Mutually exclusive with *-exec*.
-      - Example: *-eval* %(*set-register* dquote "Hello world!"; *execute-keys* R)
+- **-input** _input_
 
-- *-exec* _keys_
-      A shorthand for *-eval* %(*execute-keys* *-with-hooks* *-with-maps* _keys_).
-      Mutually exclusive with -eval.
-      - Example: *-exec* %(cHello world!)
+    Initial contents written to and selected in the scratch buffer where the test begins.
+    The scratch buffer will always contain a newline in addition to _input_.
 
-- *-expect-_expansion_* _value_
-      Expects kakoune _expansion_ to expand to _value_.
-      When _value_ is of the form _type_(_argument_), the comparison is specialized for one of the
-      types: *bool*, *regex*, or *str*.
-      - Example: *-expect-%val(selection)* "Hello world!"
-      - Example: *-expect-%val(error)*     "Something went wrong"
-      - Example: *-expect-%val(selection)* "bool(true)"
-      - Example: *-expect-%val(selection)* "regex(\bH\w+o\b)"
-      - Example: *-expect-%val(selection)* "str(Hello world!)"
+- **-eval** _commands_
 
-- *-expect-_expansion_-(* _value_... *)*
-      Expects kakoune _expansion_ to expand to an array matching the given values.
-      The delimiters can be (), [], {}, or <>.
-      - Example: *-expect-%val(selections)-[* "word" "pair of words" *]*
-      - Example: *-expect-%val(selections)-[* "word" "regex(pair.+words)" *]*
+    Commands evaluated in the test.
+    This is mutually exclusive with **-exec**.
+    For example:
 
-== Command Line Usage
+    - `-eval %(set-register dquote "Hello world!"; execute-keys R)` replaces the buffer contents with a greeting.
 
-See `man kak-spec`.
+- **-exec** _keys_
+
+    A shorthand for **-eval** %(**execute-keys** **-with-hooks** **-with-maps** _keys_).
+    This is mutually exclusive with -eval.
+    For example:
+
+    - `-exec %(cHello world!_esc_)` replaces the buffer contents with a greeting.
+
+- **-expect-_expansion_** _value_
+
+    Expects kakoune _expansion_ to expand to _value_.
+    For example:
+
+    - `-expect-%val(selection) "Hello world!"`         checks that the main selection consists of exactly the string "Hello world!",
+
+    - `-expect-%val(error)     "Something went wrong"` checks that the test results in a failure with this exact error.
+
+    For more flexible matching, _value_ can be given in one of the following forms:
+
+    - **bool(**_b_**)**
+
+      Matches different string representations of the boolean _b_.
+      For matching, "true" and "yes" are considered identical and "false" and "no" are considered identical.
+      For example:
+
+      - `-expect-%val(autoreload) "bool(yes)"`   checks that the autoreload value is either "true" or "yes",
+
+      - `-expect-%val(autoreload) "bool(false)"` checks that the autoreload value is either "false" or "no".
+
+    - **regex(**_r_**)**
+
+      Matches strings fully matched by the regular expression _r_.
+      In the expression, "." matches any character, including newlines.
+      For example:
+
+      - `-expect-%val(error)     "regex(.+)"`  checks that there was an error with a nonempty message,
+
+      - `-expect-%val(selection) "regex(\d+)"` checks that the main selection consists of only digits.
+
+    - **str(**_s_**)**
+
+      Expects kakoune _expansion_ to expand to string _s_.
+      This works mostly the same as a plain _value_ but with the advantage of also allowing strings _s_ that are themselves of the form _word_(...) and might be confused for a special matcher.
+      For example:
+
+      - `-expect-%val(selection) "foo(123)"` checks that the main selection consists of exactly the string "foo(123)".
+
+- **-expect-_expansion_-(** _value_... **)**
+
+    Expects kakoune _expansion_ to expand to an array matching the given values.
+    The delimiters can be (), [], {}, or <>.
+    For example:
+
+    - `-expect-%val(selections)-[ "word" "pair of words" ]`
+
+    - `-expect-%val(selections)-[ "word" "regex(pair.+words)" ]`
+
+    Each _value_ can also specify a **bool**, **regex**, or **str** in the same manner as when matching single values.
+
 
 ### Running Tests: Command Line Usage
 
@@ -254,7 +295,7 @@ However, tests defined in the same source file:
 - can use options, commands, etc defined before them in tests or on the top level, and
 - may inadvertently disturb one another due to the above.
 
-See <https://github.com/jbomanson/kak-spec> for instructions on how to write tests.
+See <https://github.com/jbomanson/kak-spec.kak> for instructions on how to write tests.
 
 Options:
 - **-color**=(never|always|auto)
