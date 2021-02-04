@@ -2,9 +2,6 @@ declare-option str scratch_unit_test_client %val(client)
 
 require-module kak-spec-scratch-eval
 
-# A temporary variable used to monitor the growth of the debug buffer from test to test.
-declare-option -hidden int scratch_unit_test_debug_line_count 0
-
 define-command kak-spec \
     -params .. \
 %(
@@ -122,29 +119,29 @@ define-command kak-spec-context \
     -docstring 'kak-spec-context <context-message> <commands>:
 Evaluates <commands> so that any assertions in them have context information.' \
 %(
-    # Save the current length of *debug*.
-    evaluate-commands -buffer *debug* %(
-        set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
-    )
-    kak-spec-send message_scope_begin %arg(1) %opt(scratch_unit_test_debug_line_count)
+    kak-spec-send-scope-message message_scope_begin %arg(1)
     try %(
         evaluate-commands %arg(2)
     ) catch %(
         # Send the error as a command to the translator.
         kak-spec-send message_non_assertion_error %val(error)
-        # Save the current length of *debug*.
-        evaluate-commands -buffer *debug* %(
-            set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
-        )
-        kak-spec-send message_scope_end %arg(1) %opt(scratch_unit_test_debug_line_count)
+        kak-spec-send-scope-message message_scope_end %arg(1)
         # Re-raise the caught error.
         fail "%val(error)"
     )
-    # Save the current length of *debug*.
+    kak-spec-send-scope-message message_scope_end %arg(1)
+)
+
+define-command kak-spec-send-scope-message \
+    -hidden \
+    -params 1.. \
+    -docstring 'kak-spec-send-scope-message <message-name> [<argument>]+:
+Send a message that contains the current length of the debug buffer to the reporter.
+The length is used to distinguish debug messages resulting from different tests.' \
+%(
     evaluate-commands -buffer *debug* %(
-        set-option global scratch_unit_test_debug_line_count %val(buf_line_count)
+        kak-spec-send %arg(@) %val(buf_line_count)
     )
-    kak-spec-send message_scope_end %arg(1) %opt(scratch_unit_test_debug_line_count)
 )
 
 define-command kak-spec-send \
