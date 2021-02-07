@@ -1,9 +1,6 @@
 # Treat kak-spec files as kak files.
 hook global BufCreate .*[.](kak-spec) %{
     set-option buffer filetype kak
-}
-
-hook global ModuleLoaded kak %{
     require-module kak-spec
 }
 
