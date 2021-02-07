@@ -1,0 +1,30 @@
+# Architecture
+
+```
+<%=
+    %x(
+        graph-easy --as boxart <<________EOF
+            digraph {
+
+            graph [rankdir=TB];
+
+            kak_set  [label="kak client #1\\n...\\nkak client #n"]
+            runner   [label="lib/runner.sh"]
+            reporter [label="lib/reporter.rb"]
+
+            "bin/kak-spec" -> runner [label=executes]
+
+            runner -> reporter [label="launches and\\nwaits for"]
+            runner -> kak_set [label="launches one\\nper spec file"]
+
+            reporter -> kak_set [label="eventually\\ncommands each to\\nquit via kak -p"]
+            reporter -> "/dev/stdout" [label="prints to"]
+
+            kak_set -> reporter [label="each informs\\nvia a separate\\nFIFO"]
+            kak_set -> "lib/kak-spec.kak-no-autoload" [label="each loads"]
+
+           }
+________EOF
+    )
+-%>
+```

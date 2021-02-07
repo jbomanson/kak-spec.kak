@@ -11,13 +11,14 @@ doc: lib/reporter.rb preprocess
 	yard doc $<
 
 # This target represents files that should be checked in the repository.
-preprocess: README.md $(MAN_OUTPUT)
+preprocess: README.md ARCHITECTURE.md $(MAN_OUTPUT)
 
 #
 #       Preprocess Documentation
 #
 
 README.md: $(README_DEPENDENCIES)
+%.md: %.md.erb
 	erb -T- $< >$@
 
 #
