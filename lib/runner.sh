@@ -9,7 +9,7 @@ export KAK_SPEC_DELIMITER
 
 REPORTER="$root_dir/lib/reporter.rb"
 
-version=0.1.6
+version=0.2.0
 
 # A grace period following shutdown after which this script kills its kak child processes.
 shutdown_timeout=1s
