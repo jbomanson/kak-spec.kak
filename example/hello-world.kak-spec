@@ -1,0 +1,10 @@
+kak-spec -title "Paste with p" -input "Hello" -eval %(
+    set-register dquote ", world!"
+    execute-keys p%H
+) -expect-%val(selection) "Hello, world!"
+
+kak-spec -title "Paste with p (this should fail)" -input "Greetings" -eval %(
+    set-register dquote ", there!"
+    execute-keys p%H
+) -expect-%val(selection) "Hello, world!"
+

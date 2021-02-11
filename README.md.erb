@@ -13,18 +13,12 @@ Using **kak-spec** is a matter of
 
 ## Example
 
-Example test [example/selections.kak-spec](https://github.com/jbomanson/kak-spec.kak/tree/main/example/selections.kak-spec):
-```kak
-<%= File.read("example/selections.kak-spec") -%>
-```
+Example of running `kak-spec example/hello-world.kak-spec`:
+![screenshot](https://user-images.githubusercontent.com/11866614/107675697-01c2a500-6ca1-11eb-9ecd-0a14dd1dcc3a.png)
 
-Test output produced by `kak-spec example/selections.kak-spec`:
-```markdown
-<%= %x(bin/kak-spec -color=never example/selections.kak-spec).gsub(/\d+\.\d\d/, "81.22") -%>
-```
-
-More examples can be found in the
-[example](https://github.com/jbomanson/kak-spec.kak/tree/main/example) directory.
+More examples can be found
+- in the [example](https://github.com/jbomanson/kak-spec.kak/tree/main/example) directory, which contains both passing and intentionally failing tests, and
+- in the [spec](https://github.com/jbomanson/kak-spec.kak/tree/main/spec) directory, which contains tests intended to pass.
 
 ## Dependencies
 
