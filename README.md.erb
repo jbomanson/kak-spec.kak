@@ -70,11 +70,12 @@ This is important, because the installation process makes soft links to content 
 
 ## Usage
 
-#### Defining Tests: Kakoune Command Usage
+### Defining Tests in Kakoune Script
 
 <%=
   # Extract and format the docstring of the kak-spec command.
-  File.read("rc/kak-spec.asciidoc")[/== Commands[\n]+\K.*?(?===|\Z)/m].
+  File.read("rc/kak-spec.asciidoc")[/^== Commands.*^== Options.*?(?===|\Z)/m].
+    gsub(/^== /, "#### ").
     gsub(/^ {4}/, '').
     gsub(/^ *(\*.*):::$/, "- \\1\n").
     gsub('*', '**').
@@ -82,12 +83,13 @@ This is important, because the installation process makes soft links to content 
     gsub(/<(\w+)>/, '_\1_')
 -%>
 
-### Running Tests: Command Line Usage
+### Running Tests from the Command Line Usage
 
 <%=
   quoted = []
   # Extract and format the help text from the executable.
   File.read("lib/runner.sh")[/cat <<EOF\K.*?^(?=EOF)/m].
+    each_line.grep_v(/See.*github.com/).join.
     gsub(/"([^"]*)"/) {quoted << "`#{$~[1]}`"; "€QUOTED€"}.
     gsub(/^(?=-\w)/, '- ').
     gsub(/<(\w+)>/, '_\1_').

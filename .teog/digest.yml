@@ -1,10 +1,10 @@
 ---
 all.err: empty
 all.out:
-  size: { lines: 594, words: 2002, bytes: 19920 }
+  size: { lines: 572, words: 1924, bytes: 19387 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: bd4cb142ccc73ff32b9519334f5750e7a9efce47
+  hash: 01c108639f5ec144fd31d394c4ee0f6a1ce9584d
 all.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -34,17 +34,6 @@ example/bool-syntax-error.kak-spec.out:
   last: "\e[36m-\e[0m \e[31m1 examples, 1 failures, 0 errors\e[0m"
   hash: 503212f81369ef29874ef6d266c9279aeccd4760
 example/bool-syntax-error.kak-spec.status:
-  size: { lines: 1, words: 1, bytes: 2 }
-  first: '0'
-  last: '0'
-  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
-example/current-directory.kak-spec.err: empty
-example/current-directory.kak-spec.out:
-  size: { lines: 43, words: 131, bytes: 1231 }
-  first: "\e[36m# kak-spec\e[0m"
-  last: "\e[36m-\e[0m \e[31m2 examples, 2 failures, 0 errors\e[0m"
-  hash: be26914f66c6e535bcee4a96e2a6b7f79b9f58cb
-example/current-directory.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
@@ -106,10 +95,10 @@ example/explicitly-typed-syntax-error.kak-spec.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-context.kak-spec.err: empty
 example/fail-in-context.kak-spec.out:
-  size: { lines: 33, words: 78, bytes: 735 }
+  size: { lines: 33, words: 78, bytes: 750 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: 144431706724ab8de8b07c0d39e256e09a05c72a
+  hash: 9dc6e63048d8f5d22a5b215504c21c284104f53f
 example/fail-in-context.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
@@ -117,11 +106,22 @@ example/fail-in-context.kak-spec.status:
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 example/fail-in-source.kak-spec.err: empty
 example/fail-in-source.kak-spec.out:
-  size: { lines: 22, words: 55, bytes: 495 }
+  size: { lines: 22, words: 55, bytes: 510 }
   first: "\e[36m# kak-spec\e[0m"
   last: ''
-  hash: 0ba701667c486f1942456ed716ab2ae7c88b6565
+  hash: b02a71efbe0af35290b615807717eabb665d1872
 example/fail-in-source.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/fail-in-sourced-file.kak-spec.err: empty
+example/fail-in-sourced-file.kak-spec.out:
+  size: { lines: 22, words: 57, bytes: 697 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: ''
+  hash: e2b5c3e4b97d4b3672001998b6ab459e068d6495
+example/fail-in-sourced-file.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
@@ -144,6 +144,17 @@ example/multiline.kak-spec.out:
   last: "\e[36m-\e[0m \e[31m2 examples, 1 failures, 0 errors\e[0m"
   hash: 5e6381b060eca43790f33e7cb63883058a39ed16
 example/multiline.kak-spec.status:
+  size: { lines: 1, words: 1, bytes: 2 }
+  first: '0'
+  last: '0'
+  hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
+example/pwd/current-directory.kak-spec.err: empty
+example/pwd/current-directory.kak-spec.out:
+  size: { lines: 43, words: 131, bytes: 1260 }
+  first: "\e[36m# kak-spec\e[0m"
+  last: "\e[36m-\e[0m \e[31m2 examples, 2 failures, 0 errors\e[0m"
+  hash: ac24ba00cbf497a56a33d781edb47c193406d586
+example/pwd/current-directory.kak-spec.status:
   size: { lines: 1, words: 1, bytes: 2 }
   first: '0'
   last: '0'
@@ -235,8 +246,8 @@ program-call-counts.err: empty
 program-call-counts.out:
   size: { lines: 11, words: 22, bytes: 144 }
   first: "      5 ruby"
-  last: "    222 grep"
-  hash: 34af00c9259f52e320f911b1d4580048dc2ed8fc
+  last: "    216 grep"
+  hash: 98b9efd8d20533bf6be79fea28e6f5c5e5ab8c90
 spec/bool.kak-spec.err: empty
 spec/bool.kak-spec.out:
   size: { lines: 8, words: 17, bytes: 215 }
@@ -293,7 +304,7 @@ spec/str.kak-spec.status:
   last: '0'
   hash: '09d2af8dd22201dd8d48e5dcfcaed281ff9422c7'
 teog:
-  input: 6c4cf1347fb1efcdb0dcda9d97e673278cd480bf
+  input: b1d0ff429a0f6b438604f34dbaf8823020c16e84
   status: 0
-  total: e72093008b34600d40c4305bfccf28e2a60932fa
+  total: 44ba86661e1b3641ca9aa57c19ee8f5f5d20cc65
   version: 9

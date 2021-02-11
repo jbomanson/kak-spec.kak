@@ -1,0 +1,1 @@
+fail "This is a failure inside a file that is intended to be sourced"

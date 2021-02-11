@@ -23,7 +23,7 @@ Using *kak-spec* is a matter of
         The scratch buffer will always contain a newline in addition to <input>.
 
     *-eval* <commands>:::
-        Commands evaluated in the test.
+        Commands to be evaluated in a temporary scratch buffer.
         This is mutually exclusive with *-exec*.
         For example:
 
@@ -84,6 +84,14 @@ Using *kak-spec* is a matter of
         - `-expect-%val(selections)-[ "word" "regex(pair.+words)" ]`
 
         Each <value> can also specify a *bool*, *regex*, or *str* in the same manner as when matching single values.
+
+== Options
+
+*kak_spec_source_dir* `str`::
+    an absolute path to the directory containing the currently executed spec source file.
+    For example:
+
+    - `source "%opt(kak_spec_source_dir)/extra.kak` sources a file called `extra.kak` in the same directory.
 
 == Command Line Usage
 

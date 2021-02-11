@@ -16,9 +16,8 @@ a \[lq]spec\[rq] directory matching the pattern
 \[dq]*.\f[B]kak\-spec\f[R]\[dq].
 .PP
 Each \f[I]script\f[R] is ran in a separate \f[B]temporary kakoune
-session\f[R].
-Different \f[I]script\f[R] runs may happen in any order, possibly in
-parallel.
+session\f[R] after changing to an \f[B]empty temporary directory\f[R].
+Different runs may happen in any order, possibly in parallel.
 However, tests defined in the same source file: \- are executed in they
 order they are defined, \- can use options, commands, etc defined before
 them in tests or on the top level, and \- may inadvertently disturb one

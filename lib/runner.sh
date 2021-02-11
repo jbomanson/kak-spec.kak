@@ -73,8 +73,8 @@ Usage: kak-spec [<option>...] <script>...
 
 Runs tests specified in kakoune <script> files or in files under a "spec" directory matching the pattern "*.kak-spec".
 
-Each <script> is ran in a separate **temporary kakoune session**.
-Different <script> runs may happen in any order, possibly in parallel.
+Each <script> is ran in a separate **temporary kakoune session** after changing to an **empty temporary directory**.
+Different runs may happen in any order, possibly in parallel.
 However, tests defined in the same source file:
 - are executed in they order they are defined,
 - can use options, commands, etc defined before them in tests or on the top level, and
@@ -181,14 +181,16 @@ eval env -- $reporter_env '"$REPORTER" "$@" &'
 reporter_pid=$!
 
 index=0
-for argument
+for file_argument
 do
-    mkdir "$KAK_SPEC_DIR/$index.dir"
-    env --chdir="$(dirname "$argument")" \
+    file="$file_argument"
+    test "${file#/}" = "$file" && file="$PWD/${file#/}"
+    mkdir "$KAK_SPEC_DIR/$index.dir" || break
+    env --chdir="$KAK_SPEC_DIR/$index.dir" \
         kak -ui dummy -n -e "$(
             kak_escape try "
                 declare-option str kak_spec_fifo $(kak_escape "$KAK_SPEC_DIR/$index.fifo")
-                declare-option str kak_spec_tmp $(kak_escape "$KAK_SPEC_DIR/$index.dir")
+                declare-option str kak_spec_source_dir $(kak_escape "$(dirname "$file")")
                 source $(kak_escape "$root_dir/lib/kak-spec-scratch-eval.kak-no-autoload")
                 source $(kak_escape "$root_dir/lib/kak-spec.kak-no-autoload")
             " catch "
@@ -196,9 +198,9 @@ do
                 write $(kak_escape "$KAK_SPEC_DIR/debug")
                 quit! 1
             "
-            kak_escape try "$(kak_escape kak-spec-context "$argument" "$(
-                # Source the absolute path of the argument.
-                kak_escape source "${argument##*/}"
+            kak_escape try "$(kak_escape kak-spec-context "$file_argument" "$(
+                # Source the absolute path of the file.
+                kak_escape source "${file}"
             )")"
             kak_escape kak-spec-quit-begin
         )" &

@@ -61,7 +61,7 @@ done
 
 # Run kak-spec on all samples one by one.
 {
-    for sample in example/*.kak-spec spec/*.kak-spec
+    for sample in example/*.kak-spec example/*/*.kak-spec spec/*.kak-spec
     do
         {
             bin/kak-spec $kak_spec_options "$sample" |
@@ -71,7 +71,7 @@ done
     done
 } &
 
-# Run kak-spec on all samples in a batch.
+# Run kak-spec on almost all samples in a batch.
 {
     bin/kak-spec $kak_spec_options example/*.kak-spec spec/*.kak-spec |
         script/stabilize "$output_dir"

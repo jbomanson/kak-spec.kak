@@ -198,7 +198,9 @@ This is important, because the installation process makes soft links to content 
 
 ## Usage
 
-#### Defining Tests: Kakoune Command Usage
+### Defining Tests in Kakoune Script
+
+#### Commands
 
 **kak-spec** _option_...:
 Define a unit test.
@@ -215,7 +217,7 @@ This command is available only in kakoune scripts evaluated with the `kak-spec` 
 
 - **-eval** _commands_
 
-    Commands evaluated in the test.
+    Commands to be evaluated in a temporary scratch buffer.
     This is mutually exclusive with **-exec**.
     For example:
 
@@ -280,22 +282,29 @@ This command is available only in kakoune scripts evaluated with the `kak-spec` 
 
     Each _value_ can also specify a **bool**, **regex**, or **str** in the same manner as when matching single values.
 
+#### Options
 
-### Running Tests: Command Line Usage
+**kak_spec_source_dir** `str`:
+an absolute path to the directory containing the currently executed spec source file.
+For example:
+
+- `source "%opt(kak_spec_source_dir)/extra.kak` sources a file called `extra.kak` in the same directory.
+
+
+### Running Tests from the Command Line Usage
 
 
 Usage: **kak-spec** [_option_...] _script_...
 
 Runs tests specified in kakoune _script_ files or in files under a `spec` directory matching the pattern `*.kak-spec`.
 
-Each _script_ is ran in a separate **temporary kakoune session**.
-Different _script_ runs may happen in any order, possibly in parallel.
+Each _script_ is ran in a separate **temporary kakoune session** after changing to an **empty temporary directory**.
+Different runs may happen in any order, possibly in parallel.
 However, tests defined in the same source file:
 - are executed in they order they are defined,
 - can use options, commands, etc defined before them in tests or on the top level, and
 - may inadvertently disturb one another due to the above.
 
-See <https://github.com/jbomanson/kak-spec.kak> for instructions on how to write tests.
 
 Options:
 - **-color**=(never|always|auto)
