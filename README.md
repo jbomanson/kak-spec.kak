@@ -186,12 +186,12 @@ Options:
 
 **kak-spec** works well with file watcher programs such as
 [entr](http://eradman.com/entrproject/) that rerun arbitrary commands as some files change.
-For example, in a git project with test files in a directory hierarchy under `kak-spec`, one could
+For example, in a git project with test files in a directory hierarchy under `spec`, one could
 run:
 ```sh
 while true; do
   git ls-files | entr -cd kak-spec
 done
 ```
-These commands would rerun kak-spec on *.kak-spec files under `kak-spec` whenever any file currently
+These commands would rerun kak-spec on all *.kak-spec files under the `spec` directory whenever any file currently
 tracked by git changes.
