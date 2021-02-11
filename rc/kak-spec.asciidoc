@@ -72,7 +72,7 @@ Using *kak-spec* is a matter of
           This works mostly the same as a plain <value> but with the advantage of also allowing strings <s> that are themselves of the form <word>(...) and might be confused for a special matcher.
           For example:
 
-          - `-expect-%val(selection) "foo(123)"` checks that the main selection consists of exactly the string "foo(123)".
+          - `-expect-%val(selection) "str(foo(123))"` checks that the main selection consists of exactly the string "foo(123)".
 
     *-expect-<expansion>-(* <value>... *)*:::
         Expects kakoune <expansion> to expand to an array matching the given values.

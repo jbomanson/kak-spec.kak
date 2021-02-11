@@ -134,7 +134,7 @@ This command is available only in kakoune scripts evaluated with the `kak-spec` 
       This works mostly the same as a plain _value_ but with the advantage of also allowing strings _s_ that are themselves of the form _word_(...) and might be confused for a special matcher.
       For example:
 
-      - `-expect-%val(selection) "foo(123)"` checks that the main selection consists of exactly the string "foo(123)".
+      - `-expect-%val(selection) "str(foo(123))"` checks that the main selection consists of exactly the string "foo(123)".
 
 - **-expect-_expansion_-(** _value_... **)**
 
