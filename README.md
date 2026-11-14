@@ -11,6 +11,20 @@ Using **kak-spec** is a matter of
 - writing unit tests in kakoune script, and
 - running the tests using an executable called **kak-spec**.
 
+## Compatibility
+
+**kak-spec** is tested against and compatible with Kakoune **2026.05.21** and later.
+The framework relies on core Kakoune scripting primitives (`declare-option`, `define-command`,
+`require-module`, `provide-module`, `execute-keys`, `evaluate-commands`, `echo -to-file`) that
+have remained stable across releases.
+
+Known compatible Kakoune features used by kak-spec:
+- `kak -ui dummy -n -e <commands>` for headless test execution
+- `kak_escape` shell helper from prelude.kak
+- FIFO-based inter-process communication via `echo -to-file`
+- Scratch buffers via `edit! -scratch`
+- Debug buffer via `buffer *debug*`
+
 ## Example
 
 Example of running `kak-spec example/hello-world.kak-spec`:
